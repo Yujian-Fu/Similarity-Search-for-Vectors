@@ -30,7 +30,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder = np.zeros((CONFIG.NUMBER_OF_EXPERIMENTS, 3))
     dimension = dataset.shape[1]
     query_length = query.shape[0]
-    distance = np.zeros((CONFIG.NUMBER_OF_EXPERIMENTS, quenry_length, k))
+    distance = np.zeros((CONFIG.NUMBER_OF_EXPERIMENTS, query_length, k))
     ID = np.zeros((CONFIG.NUMBER_OF_EXPERIMENTS, query_length, k))
     counter = 0
 
