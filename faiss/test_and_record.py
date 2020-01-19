@@ -11,7 +11,7 @@ def print_result(distance, ID, time_recorder, dataset_name, k):
     if not os.path.exists(path):
         os.makedirs(path)
 
-    path = os.path.join(CONFIG.RECORDING_FILE, dataset_name, k)
+    path = os.path.join(CONFIG.RECORDING_FILE, dataset_name, str(k))
     if not os.path.exits():
         os.makedirs(path)
 
