@@ -1,4 +1,4 @@
-from easydict import Easydict as edict
+from easydict import EasyDict as edict
 CONFIG = edict()
 
 #directory for evaluation datasets
