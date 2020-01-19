@@ -4,7 +4,7 @@ import faiss
 import time
 import os
 
-function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GPU', 'GPUs']
+function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GPU']
 
 def print_result(distance, ID, time_recorder, dataset_name):
     path = os.path.join(CONFIG.RECORDING_FILE, datset_name)
@@ -16,6 +16,7 @@ def print_result(distance, ID, time_recorder, dataset_name):
         os.mkdirs(path)
 
     file = open(os.path.join(path, dataset_name+'_function_time.txt'), 'w')
+    assert len(function_list) == CONFIG.NUMBER_OF_EXPERIMENTS
     for i in range(CONFIG.NUMBER_OF_EXPERIMENTS):
         time_recorder[i, 0] = time_recorder[i, 1] - time_recorder[i, 0]
         file.write(function_list[i]+' '+str(time_recorder[i, 0])+'\n')
@@ -108,6 +109,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     counter += 1
 
     #search with multiple GPUs
+    '''
     time_recorder[counter, 0] = time.time()
     num_gpus = faiss.get_num_gpus()
     index = faiss.index_cpu_to_all_gpus(quantilizer)
@@ -115,6 +117,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
+    '''
 
     assert counter == CONFIG.NUMBER_OF_EXPERIMENTS
 

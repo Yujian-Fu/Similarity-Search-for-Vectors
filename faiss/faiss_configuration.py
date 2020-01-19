@@ -41,7 +41,7 @@ CONFIG.K = range(10, 500, 10) #the number of neighbors that you want to search
 CONFIG.NLIST = 100 #the total number of cells
 CONFIG.M = 8 #number of subquantilizers
 CONFIG.NPROBE = 10 #number of cells to be visited
-CONFIG.NUMBER_OF_EXPERIMENTS = 8 #number of index functions used in faiss
+CONFIG.NUMBER_OF_EXPERIMENTS = 7 #number of index functions used in faiss
 CONFIG.NBITS = 8 #how many bits that each sub-vector is encoded as
 
 #the name of recording file
