@@ -23,7 +23,7 @@ assert len(datasets) == len(queries) == len(train)
 num_datasets = len(datasets)
 
 
-for i in range(1:num_datasets):
+for i in range(1,num_datasets):
     query_path = queries[i]
     dataset_path = datasets[i]
     train_path = train[i]
