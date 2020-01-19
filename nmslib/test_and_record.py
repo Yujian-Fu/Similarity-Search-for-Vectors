@@ -54,7 +54,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     counter += 1
 
 
-    #search by bnsw
+    #search by hnsw
     index_time_params = {'indexThreadQty': CONFIG.num_threads}
 
     time_recorder[counter, 0] = time.time()
