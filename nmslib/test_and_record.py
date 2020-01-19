@@ -5,6 +5,7 @@ import time
 import os 
 from sklearn.neighbors import NearestNeighbors
 
+
 function_list = ['brute force', 'bnsw', 'sw-graph', 'vp-tree', 'napp', 'simple_invindx']
 
 def print_result(distance, ID, time_recorder, dataset_name, k):

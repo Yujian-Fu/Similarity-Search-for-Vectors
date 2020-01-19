@@ -32,6 +32,10 @@ for i in range(num_datasets):
     query_set = read_dataset(query_path)
     train_set = read_dataset(train_path)
 
+    dataset = dataset.astype('float32')
+    query_set = query_set.astype('float32')
+    train_set = train_set.astype('float32')
+
     (instances, length) = dataset.shape
 
     dataset_name = dataset_path.split('/')[-1].split('.')[0]
