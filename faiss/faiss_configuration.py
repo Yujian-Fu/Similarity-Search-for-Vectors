@@ -3,49 +3,41 @@ CONFIG = edict()
 
 #directory for evaluation datasets
 CONFIG.DATASET_PATH_LIST = [
-    '/home/yujian/Downloads/similarity_search_datasets/siftsmall_base.fvecs',
-    '/media/yujian/Seagate Backup Plus Drive/Datasets for Similarity Search/ANN_SIFT1M/sift/sift_base.fvecs',
-    '/media/yujian/Seagate Backup Plus Drive/Datasets for Similarity Search/ANN_GIST1M/gist/gist_base.fvecs' ,
-
-    '''
-    'SIFT10M',
-    'Deep1B',
-    'MNIST',
-    'Deep_feature',
-    'SIFT_1B',
-    '''
+    '/home/y/yujian/similarity_search/datasets/ANN_GIST1M/gist_base.fvecs'
+    '/home/y/yujian/similarity_search/datasets/ANN_SIFT1M/sift_base.fvecs'
+    '/home/y/yujian/similarity_search/datasets/ANN_SIFT10K/siftsmall_base.fvecs'
+    '/home/y/yujian/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train.npy'
+    '/home/y/yujian/similarity_search/datasets/deep_1M/deep1M_base.fvecs'
+    '/home/y/yujian/similarity_search/datasets/Glove/glove_840_300d.npy'
+    '/home/y/yujian/similarity_search/datasets/MNIST/MNIST_train_data.npy'
+    '/home/y/yujian/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy'
 ]
 
 #directory for evaluation queries
 CONFIG.QUERY_PATH_LIST = [
-    '/home/yujian/Downloads/similarity_search_datasets/siftsmall_query.fvecs',
-    '/media/yujian/Seagate Backup Plus Drive/Datasets for Similarity Search/ANN_SIFT1M/sift/sift_query.fvecs',
-    '/media/yujian/Seagate Backup Plus Drive/Datasets for Similarity Search/ANN_GIST1M/gist/gist_query.fvecs',
-    
-    '''
-    'SIFT10M',
-    'Deep1B',
-    'MNIST',
-    'Deep_feature',
-    'SIFT_1B',
-    '''
+    '/home/y/yujian/similarity_search/datasets/ANN_GIST1M/gist_query.fvecs'
+    '/home/y/yujian/similarity_search/datasets/ANN_SIFT1M/sift_query.fvecs'
+    '/home/y/yujian/similarity_search/datasets/ANN_SIFT10K/siftsmall_query.fvecs'
+    '/home/y/yujian/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train_query.npy'
+    '/home/y/yujian/similarity_search/datasets/deep_1M/deep1M_query.fvecs'
+    '/home/y/yujian/similarity_search/datasets/Glove/glove_840_300d_query.npy'
+    '/home/y/yujian/similarity_search/datasets/MNIST/MNIST_train_data_query.npy'
+    '/home/y/yujian/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
 ]
-CONFIG.TRAIN_PATH_LIST = [
-    '/home/yujian/Downloads/similarity_search_datasets/siftsmall_learn.fvecs',
-    '/media/yujian/Seagate Backup Plus Drive/Datasets for Similarity Search/ANN_SIFT1M/sift/sift_query.fvecs',
-    '/media/yujian/Seagate Backup Plus Drive/Datasets for Similarity Search/ANN_GIST1M/gist/gist_query.fvecs',
-    
-    '''
-    'SIFT10M',
-    'Deep1B',
-    'MNIST',
-    'Deep_feature',
-    'SIFT_1B',
-    '''
 
+#path to evaluation train dataset
+CONFIG.TRAIN_PATH_LIST = [
+    '/home/y/yujian/similarity_search/datasets/ANN_GIST1M/gist_learn.fvecs'
+    '/home/y/yujian/similarity_search/datasets/ANN_SIFT1M/sift_learn.fvecs'
+    '/home/y/yujian/similarity_search/datasets/ANN_SIFT10K/siftsmall_learn.fvecs'
+    '/home/y/yujian/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train_learn.npy'
+    '/home/y/yujian/similarity_search/datasets/deep_1M/deep1M_learn.fvecs'
+    '/home/y/yujian/similarity_search/datasets/Glove/glove_840_300d_learn.npy'
+    '/home/y/yujian/similarity_search/datasets/MNIST/MNIST_train_data_learn.npy'
+    '/home/y/yujian/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
 ]
 #parameters used in faiss
-CONFIG.K = 2 #the number of neighbors that you want to search
+CONFIG.K = range(10, 500, 10) #the number of neighbors that you want to search
 CONFIG.NLIST = 100 #the total number of cells
 CONFIG.M = 8 #number of subquantilizers
 CONFIG.NPROBE = 10 #number of cells to be visited
@@ -53,7 +45,7 @@ CONFIG.NUMBER_OF_EXPERIMENTS = 8 #number of index functions used in faiss
 CONFIG.NBITS = 8 #how many bits that each sub-vector is encoded as
 
 #the name of recording file
-CONFIG.RECORDING_FILE = './searching_record'
+CONFIG.RECORDING_FILE = './searching_record/'
 
 #index functions in use
 CONFIG.FUNCTION_LIST = ['']
