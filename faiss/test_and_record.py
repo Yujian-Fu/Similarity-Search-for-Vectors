@@ -12,7 +12,7 @@ def print_result(distance, ID, time_recorder, dataset_name, k):
         os.makedirs(path)
 
     path = os.path.join(CONFIG.RECORDING_FILE, dataset_name, str(k))
-    if not os.path.exists():
+    if not os.path.exists(path):
         os.makedirs(path)
 
     file = open(os.path.join(path, dataset_name+'_function_time.txt'), 'w')
