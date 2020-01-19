@@ -35,6 +35,29 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     ID = np.zeros((CONFIG.NUMBER_OF_EXPERIMENTS, query_length, k))
     counter = 0
 
+
+    #search by vp-tree
+    index_time_params = {'indexThreadQty': CONFIG.num_threads}
+
+    time_recorder[counter, 0] = time.time()
+    index = nmslib.init(method = 'vp-tree', space = 'l2')
+    index.addDataPointBatch(dataset)
+    index.createIndex(print_progress = True)
+
+    time_recorder[counter, 1] = time.time()
+    query_time_params = {'efSearch': CONFIG.efS}
+    index.setQueryTimeParams(query_time_params)
+    neighbors = index.knnQueryBatch(query, k, CONFIG.num_threads)
+
+    time_recorder[counter, 2] = time.time()
+    for i in range(len(neighbors)):
+        neighbor = np.array(neighbors[i])
+        ID[counter, i, :] = neighbor[0, :]
+        distance[counter, i, :] = neighbor[1, :]
+    counter += 1
+    print('vp-tree completed!')
+
+
     #search by brute force
 
     time_recorder[counter, 0] = time.time()
@@ -53,6 +76,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
         ID[counter, i, :] = neighbor[0, :]
         distance[counter, i, :] = neighbor[1, :]
     counter += 1
+    print('brute force completed!')
 
 
     #search by hnsw
@@ -74,6 +98,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
         ID[counter, i, :] = neighbor[0, :]
         distance[counter, i, :] = neighbor[1, :]
     counter += 1
+    print('hnsw completed!')
 
     #search by sw-graph
     index_time_params = {'indexThreadQty': CONFIG.num_threads}
@@ -94,26 +119,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
         ID[counter, i, :] = neighbor[0, :]
         distance[counter, i, :] = neighbor[1, :]
     counter += 1
-
-    #search by vp-tree
-    index_time_params = {'indexThreadQty': CONFIG.num_threads}
-
-    time_recorder[counter, 0] = time.time()
-    index = nmslib.init(method = 'vp-tree', space = 'l2')
-    index.addDataPointBatch(dataset)
-    index.createIndex(index_time_params, print_progress = True)
-
-    time_recorder[counter, 1] = time.time()
-    query_time_params = {'efSearch': CONFIG.efS}
-    index.setQueryTimeParams(query_time_params)
-    neighbors = index.knnQueryBatch(query, k, CONFIG.num_threads)
-
-    time_recorder[counter, 2] = time.time()
-    for i in range(len(neighbors)):
-        neighbor = np.array(neighbors[i])
-        ID[counter, i, :] = neighbor[0, :]
-        distance[counter, i, :] = neighbor[1, :]
-    counter += 1
+    print('sw-graph completed!')
 
     #search by napp
     index_time_params = {'indexThreadQty': CONFIG.num_threads}
@@ -134,6 +140,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
         ID[counter, i, :] = neighbor[0, :]
         distance[counter, i, :] = neighbor[1, :]
     counter += 1
+    print('napp completed!')
 
     #search by simple_invindx
     index_time_params = {'indexThreadQty': CONFIG.num_threads}
@@ -154,6 +161,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
         ID[counter, i, :] = neighbor[0, :]
         distance[counter, i, :] = neighbor[1, :]
     counter += 1
+    print('simple_invindx completed!')
 
     assert counter == CONFIG.NUMBER_OF_EXPERIMENTS
 
