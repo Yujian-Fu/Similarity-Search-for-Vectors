@@ -32,9 +32,9 @@ for i in range(num_datasets):
     query_set = read_dataset(query_path)
     train_set = read_dataset(train_path)
 
-    dataset = dataset.astype('float32')
-    query_set = query_set.astype('float32')
-    train_set = train_set.astype('float32')
+    dataset = np.ascontiguousarray(dataset.astype('float32'))
+    query_set = np.ascontiguousarray(query_set.astype('float32'))
+    train_set = np.ascontiguousarray(train_set.astype('float32'))
 
     (instances, length) = dataset.shape
 
