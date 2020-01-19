@@ -39,7 +39,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'brute_force', space = 'l2')
     index.addDataPointBatch(dataset)
-    index.createIndex(print_process = True)
+    index.createIndex(print_progress = True)
 
     time_recorder[counter, 1] = time.time()
     query_time_params = {'efSearch': CONFIG.efS}
@@ -60,7 +60,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'hnsw', space = 'l2')
     index.addDataPointBatch(dataset)
-    index.createIndex(index_time_params, print_process = True)
+    index.createIndex(index_time_params, print_progress = True)
 
     time_recorder[counter, 1] = time.time()
     query_time_params = {'efSearch': CONFIG.efS}
@@ -80,7 +80,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'sw-graph', space = 'l2')
     index.addDataPointBatch(dataset)
-    index.createIndex(index_time_params, print_process = True)
+    index.createIndex(index_time_params, print_progress = True)
 
     time_recorder[counter, 1] = time.time()
     query_time_params = {'efSearch': CONFIG.efS}
@@ -100,7 +100,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'vp-tree', space = 'l2')
     index.addDataPointBatch(dataset)
-    index.createIndex(index_time_params, print_process = True)
+    index.createIndex(index_time_params, print_progress = True)
 
     time_recorder[counter, 1] = time.time()
     query_time_params = {'efSearch': CONFIG.efS}
@@ -120,7 +120,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'napp', space = 'l2')
     index.addDataPointBatch(dataset)
-    index.createIndex(index_time_params, print_process = True)
+    index.createIndex(index_time_params, print_progress = True)
 
     time_recorder[counter, 1] = time.time()
     query_time_params = {'efSearch': CONFIG.efS}
@@ -140,7 +140,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'simple_invindx', space = 'l2')
     index.addDataPointBatch(dataset)
-    index.createIndex(index_time_params, print_process = True)
+    index.createIndex(index_time_params, print_progress = True)
 
     time_recorder[counter, 1] = time.time()
     query_time_params = {'efSearch': CONFIG.efS}
