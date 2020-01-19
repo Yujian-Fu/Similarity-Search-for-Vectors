@@ -9,11 +9,11 @@ function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GP
 def print_result(distance, ID, time_recorder, dataset_name, k):
     path = os.path.join(CONFIG.RECORDING_FILE, dataset_name)
     if not os.path.exists(path):
-        os.mkdirs(path)
+        os.makedirs(path)
 
     path = os.path.join(CONFIG.RECORDING_FILE, dataset_name, k)
     if not os.path.exits():
-        os.mkdirs(path)
+        os.makedirs(path)
 
     file = open(os.path.join(path, dataset_name+'_function_time.txt'), 'w')
     assert len(function_list) == CONFIG.NUMBER_OF_EXPERIMENTS
