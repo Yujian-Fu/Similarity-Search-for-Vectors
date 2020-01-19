@@ -8,11 +8,11 @@ function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GP
 
 def print_result(distance, ID, time_recorder, dataset_name):
     path = os.path.join(CONFIG.RECORDING_FILE, datset_name)
-    if !os.path.exists(path):
+    if not os.path.exists(path):
         os.mkdirs(path)
 
     path = os.path.join(CONFIG.RECORDING_FILE, dataset_name, k)
-    if !os.path.exits():
+    if not os.path.exits():
         os.mkdirs(path)
 
     file = open(os.path.join(path, dataset_name+'_function_time.txt'), 'w')
