@@ -41,7 +41,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
 
     time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'vp-tree', space = 'l2')
-    index.addDataPointBatch(dataset)
+    index.addDataPointBatch(dataset.astype('int'))
     index.createIndex(print_progress = True)
 
     time_recorder[counter, 1] = time.time()
