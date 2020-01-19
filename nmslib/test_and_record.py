@@ -35,7 +35,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     ID = np.zeros((CONFIG.NUMBER_OF_EXPERIMENTS, query_length, k))
     counter = 0
 
-'''
+    '''
     #search by vp-tree
     index_time_params = {'indexThreadQty': CONFIG.num_threads}
 
@@ -56,10 +56,9 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
         distance[counter, i, :] = neighbor[1, :]
     counter += 1
     print('vp-tree completed!')
-'''
+    '''
 
     #search by brute force
-
     time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'brute_force', space = 'l2')
     index.addDataPointBatch(dataset)
