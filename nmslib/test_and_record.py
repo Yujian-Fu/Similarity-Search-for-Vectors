@@ -98,7 +98,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     #search by vp-tree
     index_time_params = {'M': CONFIG.M, 'indexThreadQty': CONFIG.num_threads, 'post':0}
 
-    time_recorder[counter, 0] time.time()
+    time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'vp-tree', space = 'l2')
     index.addDataPointBatch(dataset)
     index.createIndex(index_time_params, print_process = True)
@@ -118,7 +118,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     #search by napp
     index_time_params = {'M': CONFIG.M, 'indexThreadQty': CONFIG.num_threads, 'post':0}
 
-    time_recorder[counter, 0] time.time()
+    time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'napp', space = 'l2')
     index.addDataPointBatch(dataset)
     index.createIndex(index_time_params, print_process = True)
@@ -138,7 +138,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     #search by simple_invindx
     index_time_params = {'M': CONFIG.M, 'indexThreadQty': CONFIG.num_threads, 'post':0}
 
-    time_recorder[counter, 0] time.time()
+    time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'simple_invindx', space = 'l2')
     index.addDataPointBatch(dataset)
     index.createIndex(index_time_params, print_process = True)
