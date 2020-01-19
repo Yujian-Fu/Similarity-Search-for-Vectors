@@ -6,8 +6,8 @@ CONFIG.DATASET_PATH_LIST = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/gist_base.fvecs',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/sift_base.fvecs',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/siftsmall_base.fvecs',
-    '/home/y/yujianfu/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep_1M/deep1M_base.fvecs',
+    #'/home/y/yujianfu/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.fvecs',
     '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d.npy',
     '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data.npy',
     '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy'
@@ -18,8 +18,8 @@ CONFIG.QUERY_PATH_LIST = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/gist_query.fvecs',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/sift_query.fvecs',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/siftsmall_query.fvecs',
-    '/home/y/yujianfu/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train_query.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep_1M/deep1M_query.fvecs',
+    #'/home/y/yujianfu/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train_query.npy',
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.fvecs',
     '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d_query.npy',
     '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data_query.npy',
     '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
@@ -30,8 +30,8 @@ CONFIG.TRAIN_PATH_LIST = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/gist_learn.fvecs',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/sift_learn.fvecs',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/siftsmall_learn.fvecs',
-    '/home/y/yujianfu/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train_learn.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep_1M/deep1M_learn.fvecs',
+    #'/home/y/yujianfu/similarity_search/datasets/Cifar/cifar-10-batches-py/images_train_learn.npy',
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs',
     '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d_learn.npy',
     '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data_learn.npy',
     '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
