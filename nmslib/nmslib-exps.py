@@ -27,8 +27,8 @@ def read_dataset(filename):
     return file
 
 
-datasets = CONFIG.DATA_PATH_LIST
-queries = CONFIG>QUERY_PATH_LIST
+datasets = CONFIG.DATASET_PATH_LIST
+queries = CONFIG.QUERY_PATH_LIST
 train = CONFIG.TRAIN_PATH_LIST
 
 assert len(datasets) == len(queries) == len(train)
