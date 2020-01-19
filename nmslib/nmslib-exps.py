@@ -17,9 +17,9 @@ def fvecs_read(filename):
     return ffile
 
 def read_dataset(filename):
-    if file_name.split('.')[-1] == 'npy':
+    if filename.split('.')[-1] == 'npy':
         file = np.load(filename)
-    elif file_name.split('.')[-1] == 'fvecs':
+    elif filename.split('.')[-1] == 'fvecs':
         file = fvecs_read(filename)
     else:
         print('the file name', file_name, 'is wrong!')
