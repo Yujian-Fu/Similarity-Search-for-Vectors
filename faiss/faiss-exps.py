@@ -1,6 +1,5 @@
 import faiss
 import numpy as np
-import random
 from faiss_configuration import CONFIG
 from fvecs_read import fvecs_read
 from test_and_record import test_and_record
@@ -11,7 +10,7 @@ def read_dataset(file_name):
     elif file_name.split('.')[-1] == 'fvecs':
         file = fvecs_read(file_name)
     else:
-        print ('the file name', file_name, 'wrong!')
+        print ('the file name', file_name, 'is wrong!')
 
     return file
 
@@ -23,7 +22,6 @@ assert len(datasets) == len(queries) == len(train)
 
 num_datasets = len(datasets)
 
-#compute SIFT dataset
 
 for i in range(num_datasets):
     query_path = queries[i]
@@ -36,7 +34,7 @@ for i in range(num_datasets):
 
     (instances, length) = dataset.shape
 
-    dataset_name = query_path.split('/')[-1].split('.')[0]
+    dataset_name = dataset_path.split('/')[-1].split('.')[0]
     print(dataset.shape, dataset_name)
 
     for k in CONFIG.K:

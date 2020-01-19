@@ -36,6 +36,7 @@ CONFIG.TRAIN_PATH_LIST = [
     '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data_learn.npy',
     '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
 ]
+
 #parameters used in faiss
 CONFIG.K = range(10, 500, 10) #the number of neighbors that you want to search
 CONFIG.NLIST = 100 #the total number of cells
