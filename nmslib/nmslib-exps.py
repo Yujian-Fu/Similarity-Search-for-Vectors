@@ -1,7 +1,6 @@
 import nmslib
 import numpy as np  
 from nmslib_configuration import CONFIG
-from fvecs_read import fvecs_read
 
 
 def fvecs_read(filename):
