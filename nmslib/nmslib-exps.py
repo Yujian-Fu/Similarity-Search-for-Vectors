@@ -45,7 +45,7 @@ for i in range(num_datasets):
 
     dataset = read_dataset(dataset_path)
     query_set = read_dataset(query_path)
-    train_path = read_dataset(train_path)
+    train_set = read_dataset(train_path)
 
     (instances, length) = dataset.shape
 
