@@ -37,7 +37,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     #search by brute force
     index_time_params = {'M': CONFIG.M, 'indexThreadQty': CONFIG.num_threads, 'post':0}
 
-    time_recorder[counter, 0] time.time()
+    time_recorder[counter, 0] = time.time()
     index = nmslib.init(method = 'vp-tree', space = 'l2')
     index.addDataPointBatch(dataset)
     index.createIndex(index_time_params, print_process = True)
