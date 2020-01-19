@@ -6,7 +6,7 @@ import os
 from sklearn.neighbors import NearestNeighbors
 
 
-function_list = ['brute force', 'bnsw', 'sw-graph', 'vp-tree', 'napp', 'simple_invindx']
+function_list = ['brute force', 'bnsw', 'sw-graph', 'napp', 'simple_invindx']
 
 def print_result(distance, ID, time_recorder, dataset_name, k):
     path = os.path.join(CONFIG.RECORDING_FILE, datset_name)
@@ -35,7 +35,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     ID = np.zeros((CONFIG.NUMBER_OF_EXPERIMENTS, query_length, k))
     counter = 0
 
-
+'''
     #search by vp-tree
     index_time_params = {'indexThreadQty': CONFIG.num_threads}
 
@@ -56,7 +56,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
         distance[counter, i, :] = neighbor[1, :]
     counter += 1
     print('vp-tree completed!')
-
+'''
 
     #search by brute force
 

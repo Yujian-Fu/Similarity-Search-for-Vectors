@@ -42,7 +42,7 @@ CONFIG.TRAIN_PATH_LIST = [
 #parameters used in nmslib
 CONFIG.K = range(10, 500, 10)
 CONFIG.num_threads = 4
-CONFIG.NUMBER_OF_EXPERIMENTS = 6
+CONFIG.NUMBER_OF_EXPERIMENTS = 5
 CONFIG.RECORDING_FILE = './recording_file/'
 
 #index parameters, the most important onese
