@@ -39,7 +39,7 @@ num_datasets = len(datasets)
 
 for i in range(num_datasets):
     query_path = queries[i]
-    datasets_path = datasets[i]
+    dataset_path = datasets[i]
     train_path = train[i]
 
     dataset = read_dataset(dataset_path)
