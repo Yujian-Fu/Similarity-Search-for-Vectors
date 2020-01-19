@@ -1,5 +1,5 @@
 import numpy as np 
-import nmslib_configuration import CONFIG
+from nmslib_configuration import CONFIG
 import nmslib
 import time 
 import os 
