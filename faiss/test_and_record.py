@@ -7,7 +7,7 @@ import os
 function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GPU']
 
 def print_result(distance, ID, time_recorder, dataset_name, k):
-    path = os.path.join(CONFIG.RECORDING_FILE, datset_name)
+    path = os.path.join(CONFIG.RECORDING_FILE, dataset_name)
     if not os.path.exists(path):
         os.mkdirs(path)
 
