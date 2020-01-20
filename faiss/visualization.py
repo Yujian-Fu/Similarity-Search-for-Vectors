@@ -6,7 +6,7 @@ from sklearn.metrics import recall_score
 
 dataset_name = 'deep1M_base'
 ID_name = 'deep1M_base_ID.npy'
-recording_path = 'E:\Code_for_Similarity_Search\FAISS\searching_record'
+recording_path =  '/home/y/yujianfu/similarity_search/Similarity-Search-for-Vectors/faiss/searching_record/'
 
 recall_matrix = np.zeros((len(CONFIG.K),6))
 recall = 0
