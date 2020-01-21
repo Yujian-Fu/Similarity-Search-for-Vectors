@@ -25,7 +25,7 @@ def compute_recall():
             for query in range(num_query):
                 ground_truth = ID[0, query, :]
                 search_result = ID[search_methods, query, :]
-                recall += recall_score(ground_truth, search_result, average = 'micro')
+                recall += len(set(ground_truth) & set(search_result))/len(set(ground_truth))
                 #print(ground_truth,search_result, recall)
             
             recall = recall / num_query
