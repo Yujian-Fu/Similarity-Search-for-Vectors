@@ -77,6 +77,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     index.add(dataset)
     print('test35')
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
+    print('test36')
     time_recorder[counter, 1] = time.time()
     counter += 1
     print('test3')
