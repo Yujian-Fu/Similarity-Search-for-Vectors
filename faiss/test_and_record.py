@@ -23,6 +23,7 @@ def print_result(distance, ID, time_recorder, dataset_name, k):
 
     #np.save(os.path.join(path, dataset_name+'_dis.npy'), distance)
     np.save(os.path.join(path, dataset_name+'_ID.npy'), ID)
+    print('test_print')
     file.close()
 
 
@@ -74,6 +75,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
+    print('test3')
 
     #search by PQ
     time_recorder[counter, 0] = time.time()
@@ -87,6 +89,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
+    print('test4')
 
     #search by HNSWFlat
     time_recorder[counter, 0] = time.time()
@@ -97,6 +100,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
+    print('test5')
 
 
     #search by LSH
@@ -110,6 +114,8 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
+    print('test6')
+
 
     #search with GPU
     time_recorder[counter, 0] = time.time()
@@ -120,6 +126,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
+    print('test7')
 
     #search with multiple GPUs
     '''
