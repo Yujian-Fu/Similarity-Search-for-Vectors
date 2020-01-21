@@ -46,8 +46,10 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
 
 
     #search by IVFFlat 
+    #built the inverse index and search some of the cells
     time_recorder[counter, 0] = time.time()
     index = faiss.IndexIVFFlat(quantilizer, dimension, CONFIG.NLIST)
+    index.probe = CONFIG.NPROBE #set this parameter by handcraft, or it will be set to 1 by default
     assert not index.is_trained
     index.train(train_dataset) #how much time does this train process take? can we ignore this?
     assert index.is_trained
@@ -58,7 +60,10 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
 
     #search by IVFPQ
     time_recorder[counter, 0] = time.time()
-    index = faiss.IndexIVFPQ(quantilizer, dimension, CONFIG.NLIST, CONFIG.M, CONFIG.NBITS)
+    #not sure what is the NBITS here? any difference to CODE_SIZE?
+    #dimension should be a multiple of NBITS 
+    index = faiss.IndexIVFPQ(quantilizer, dimension, CONFIG.NLIST, CONFIG.CODE_SZIE, CONFIG.NBITS)
+    index.nprobe = CONFIG.NPROBE # the number of cells visited
     assert not index.is_trained
     index.train(train_dataset)
     assert index.is_trained
@@ -69,7 +74,9 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
 
     #search by PQ
     time_recorder[counter, 0] = time.time()
+    #should NBITS the same as IVFPQ?
     index = faiss.IndexPQ(dimension, CONFIG.M, CONFIG.NBITS)
+    index.probe = CONFIG>NPROBE
     assert not index.is_trained
     index.train(train_dataset)
     assert index.is_trained
@@ -80,7 +87,8 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
 
     #search by HNSWFlat
     time_recorder[counter, 0] = time.time()
-    index = faiss.IndexHNSWFlat(dimension, CONFIG.M)
+    index = faiss.IndexHNSWFlat(dimension, CONFIG.NUM_OF_NEIGHBORS, )
+    
     index.add(train_dataset)
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()

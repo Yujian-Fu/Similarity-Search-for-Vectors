@@ -44,6 +44,10 @@ CONFIG.M = 4 #number of subquantilizers
 CONFIG.NPROBE = 10 #number of cells to be visited
 CONFIG.NUMBER_OF_EXPERIMENTS = 7 #number of index functions used in faiss
 CONFIG.NBITS = 8 #how many bits that each sub-vector is encoded as
+CONFIG.CODE_SIZE = 64 #used in PQ, the size of the code (how many bits)
+CONFIG.NUM_OF_NEIGHBORS = 5 #used in HNSW, the number of neighbors of every point
+CONFIG.DEPTH_CONSTRUCTION = 6 #the depth for construction and search
+CONFIG.DEPTH_SEARCH = 6
 CONFIG.function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GPU']
 
 #the name of recording file
