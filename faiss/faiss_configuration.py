@@ -44,6 +44,7 @@ CONFIG.M = 4 #number of subquantilizers
 CONFIG.NPROBE = 10 #number of cells to be visited
 CONFIG.NUMBER_OF_EXPERIMENTS = 7 #number of index functions used in faiss
 CONFIG.NBITS = 8 #how many bits that each sub-vector is encoded as
+CONFIG.function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GPU']
 
 #the name of recording file
 CONFIG.RECORDING_FILE = './searching_record/'

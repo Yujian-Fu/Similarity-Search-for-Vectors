@@ -4,7 +4,6 @@ import faiss
 import time
 import os
 
-function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GPU']
 
 def print_result(distance, ID, time_recorder, dataset_name, k):
     path = os.path.join(CONFIG.RECORDING_FILE, dataset_name)
@@ -16,10 +15,10 @@ def print_result(distance, ID, time_recorder, dataset_name, k):
         os.makedirs(path)
 
     file = open(os.path.join(path, dataset_name+'_function_time.txt'), 'w')
-    assert len(function_list) == CONFIG.NUMBER_OF_EXPERIMENTS
+    assert len(CONFIG.function_list) == CONFIG.NUMBER_OF_EXPERIMENTS
     for i in range(CONFIG.NUMBER_OF_EXPERIMENTS):
         time_recorder[i, 0] = time_recorder[i, 1] - time_recorder[i, 0]
-        file.write(function_list[i]+' '+str(time_recorder[i, 0])+'\n')
+        file.write(CONFIG.function_list[i]+' '+str(time_recorder[i, 0])+'\n')
 
     np.save(os.path.join(path, dataset_name+'_dis.npy'), distance)
     np.save(os.path.join(path, dataset_name+'_ID.npy'), ID)

@@ -3,14 +3,13 @@ from faiss_configuration import CONFIG
 import os
 import matplotlib.pyplot as plt
 
-dataset_name = 'siftsmall_base'
+dataset_name = 'sift_base'
 ID_name = dataset_name+'_ID.npy'
 time_name = dataset_name+'_function_time.txt'
 recording_path = 'E:\Code_for_Similarity_Search\FAISS\searching_record'
 #recording_path =  '/home/y/yujianfu/similarity_search/Similarity-Search-for-Vectors/faiss/searching_record/'
 
 def compute_recall():
-
 
     recall_matrix = np.zeros((len(CONFIG.K),6))
     recall_sum = 0
@@ -37,13 +36,27 @@ def compute_recall():
             recall = 0
 
     np.save(os.path.join(recording_path, dataset_name, 'recall_matrix.npy'), recall_matrix)
+    return recall_matrix
 
+def draw_figure(recall_matrix):
 
-def draw_figure():
-    matrix_path = ''
-    recall_matrix = np.load(matrix_path)
-    x = CONFIG.k
-    plt.plot(x, recall_matrix[:, 0], x, recall_matrix[:, 1], x, recall_matrix[:, 2], x, recall_matrix[:, 3], x, recall_matrix[:, 4], x, recall_matrix[:, 5], x, recall_matrix[:, 6],)
+    Ks, num_experiment = recall_matrix.shape
+
+    x = CONFIG.K
+
+    plt.plot(x, recall_matrix[:, 0], label = 'IVFFlat')
+    plt.plot(x, recall_matrix[:, 1], label = 'IVFPQ')
+    plt.plot(x, recall_matrix[:, 2], label = 'PQ')
+    plt.plot(x, recall_matrix[:, 3], label = 'HNSWFlat')
+    plt.plot(x, recall_matrix[:, 4], label = 'LSH')
+    plt.plot(x, recall_matrix[:, 5], label = 'GPU')
+    plt.legend()
+    plt.xlabel('number of k')
+    plt.ylabel('recall')
+
+    #plt.show()
+    plt.savefig(os.path.join(recording_path, dataset_name, 'recall.png'))
+
 
 def compute_acceleration():
     time_matrix = np.zeros((len(CONFIG.K), 7))
@@ -66,7 +79,9 @@ def compute_acceleration():
     print(time_matrix)
 
 
-compute_recall()
+#recall_matrix = compute_recall()
+recall_matrix = np.load(os.path.join(recording_path, dataset_name, 'recall_matrix.npy'))
+draw_figure(recall_matrix)
 #compute_acceleration()
 
 
