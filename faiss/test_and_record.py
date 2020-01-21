@@ -67,11 +67,15 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     #not sure what is the NBITS here? any difference to CODE_SIZE?
     #dimension should be a multiple of NBITS 
     index = faiss.IndexIVFPQ(quantilizer, dimension, CONFIG.NLIST, CONFIG.CODE_SIZE, CONFIG.NBITS)
+    print('tet31')
     index.nprobe = CONFIG.NPROBE # the number of cells visited
+    print('test32')
     assert not index.is_trained
     index.train(train_dataset)
+    print('test34')
     assert index.is_trained
     index.add(dataset)
+    print('test35')
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
