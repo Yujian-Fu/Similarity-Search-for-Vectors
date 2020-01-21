@@ -63,7 +63,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     #not sure what is the NBITS here? any difference to CODE_SIZE?
     #dimension should be a multiple of NBITS 
-    index = faiss.IndexIVFPQ(quantilizer, dimension, CONFIG.NLIST, CONFIG.CODE_SZIE, CONFIG.NBITS)
+    index = faiss.IndexIVFPQ(quantilizer, dimension, CONFIG.NLIST, CONFIG.CODE_SIZE, CONFIG.NBITS)
     index.nprobe = CONFIG.NPROBE # the number of cells visited
     assert not index.is_trained
     index.train(train_dataset)
