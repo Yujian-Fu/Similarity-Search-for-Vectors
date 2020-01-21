@@ -16,6 +16,7 @@ def print_result(distance, ID, time_recorder, dataset_name, k):
 
     file = open(os.path.join(path, dataset_name+'_function_time.txt'), 'w')
     assert len(CONFIG.FUNCTION_LIST) == CONFIG.NUMBER_OF_EXPERIMENTS
+    file.write('the number of query: '+str(distance.shape[1]) + '\n')
     for i in range(CONFIG.NUMBER_OF_EXPERIMENTS):
         time_recorder[i, 0] = time_recorder[i, 1] - time_recorder[i, 0]
         file.write(CONFIG.FUNCTION_LIST[i]+' '+str(time_recorder[i, 0])+'\n')
