@@ -38,7 +38,7 @@ CONFIG.TRAIN_PATH_LIST = [
 ]
 
 #parameters used in faiss
-CONFIG.K = range(10, 500, 10) #the number of neighbors that you want to search
+CONFIG.K = range(10, 500, 50) #the number of neighbors that you want to search
 CONFIG.NLIST = 100 #the total number of cells
 CONFIG.M = 4 #number of subquantilizers
 CONFIG.NPROBE = 10 #number of cells to be visited
@@ -48,11 +48,9 @@ CONFIG.CODE_SIZE = 64 #used in PQ, the size of the code (how many bits)
 CONFIG.NUM_OF_NEIGHBORS = 5 #used in HNSW, the number of neighbors of every point
 CONFIG.DEPTH_CONSTRUCTION = 6 #the depth for construction and search
 CONFIG.DEPTH_SEARCH = 6
-CONFIG.function_list = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GPU']
+CONFIG.FUNCTION_LIST = ['brute force', 'IVFFlat', 'IVFPQ', 'PQ', 'HNSWFlat', 'LSH', 'GPU']
 
 #the name of recording file
 CONFIG.RECORDING_FILE = './searching_record/'
 
-#index functions in use
-CONFIG.FUNCTION_LIST = ['']
 
