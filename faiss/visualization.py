@@ -1,7 +1,6 @@
 import numpy as np
 from faiss_configuration import CONFIG
 import os
-from sklearn.metrics import recall_score
 import matplotlib.pyplot as plt
 
 dataset_name = 'deep1M_base'
@@ -14,7 +13,7 @@ def compute_recall():
 
 
     recall_matrix = np.zeros((len(CONFIG.K),6))
-    recall = 0
+    recall_sum = 0
     for i in range(len(CONFIG.K)):
         path = os.path.join(recording_path, dataset_name, str(CONFIG.K[i]))
         ID = np.load(os.path.join(path, ID_name))
@@ -25,10 +24,13 @@ def compute_recall():
             for query in range(num_query):
                 ground_truth = ID[0, query, :]
                 search_result = ID[search_methods, query, :]
-                recall += len(set(ground_truth) & set(search_result))/len(set(ground_truth))
+                #the recall for every instance
+                recall = len(set(ground_truth) & set(search_result))/len(set(ground_truth))
+                recall_sum += recall
                 #print(ground_truth,search_result, recall)
             
-            recall = recall / num_query
+            #the recall for all instances
+            recall = recall_sum / num_query
             print(recall)
             recall_matrix[i, search_methods-1] = recall
             recall = 0
@@ -63,7 +65,7 @@ def compute_acceleration():
     print(time_matrix)
 
 
-#compute_recall()
-compute_acceleration()
+compute_recall()
+#compute_acceleration()
 
 
