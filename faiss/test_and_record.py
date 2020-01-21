@@ -44,6 +44,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
+    print('test1')
 
 
     #search by IVFFlat 
@@ -58,6 +59,7 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
     counter += 1
+    print('test2')
 
     #search by IVFPQ
     time_recorder[counter, 0] = time.time()
