@@ -3,9 +3,9 @@ from faiss_configuration import CONFIG
 import os
 import matplotlib.pyplot as plt
 
-dataset_name = 'deep1M_base'
-ID_name = 'deep1M_base_ID.npy'
-time_name = 'deep1M_base_function_time.txt'
+dataset_name = 'siftsmall_base'
+ID_name = dataset_name+'_ID.npy'
+time_name = dataset_name+'_function_time.txt'
 recording_path = 'E:\Code_for_Similarity_Search\FAISS\searching_record'
 #recording_path =  '/home/y/yujianfu/similarity_search/Similarity-Search-for-Vectors/faiss/searching_record/'
 
@@ -21,6 +21,7 @@ def compute_recall():
         assert exps == 7
 
         for search_methods in range(1, exps):
+            recall_sum = 0
             for query in range(num_query):
                 ground_truth = ID[0, query, :]
                 search_result = ID[search_methods, query, :]
@@ -31,7 +32,7 @@ def compute_recall():
             
             #the recall for all instances
             recall = recall_sum / num_query
-            print(recall)
+            #print(recall)
             recall_matrix[i, search_methods-1] = recall
             recall = 0
 
