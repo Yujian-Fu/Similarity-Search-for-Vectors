@@ -31,7 +31,7 @@ def compute_recall():
             
             #the recall for all instances
             recall = recall_sum / num_query
-            #print(recall)
+            print(recall)
             recall_matrix[i, search_methods-1] = recall
             recall = 0
 
@@ -79,9 +79,9 @@ def compute_acceleration():
     print(time_matrix)
 
 
-#recall_matrix = compute_recall()
-recall_matrix = np.load(os.path.join(recording_path, dataset_name, 'recall_matrix.npy'))
-draw_figure(recall_matrix)
+recall_matrix = compute_recall()
+#recall_matrix = np.load(os.path.join(recording_path, dataset_name, 'recall_matrix.npy'))
+#draw_figure(recall_matrix)
 #compute_acceleration()
 
 

@@ -1,6 +1,8 @@
 from easydict import EasyDict as edict
 CONFIG = edict()
 
+#the training points seems not enough for several datasets
+
 #directory for evaluation datasets
 CONFIG.DATASET_PATH_LIST = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/gist_base.fvecs',
