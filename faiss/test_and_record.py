@@ -40,7 +40,6 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     index = faiss.IndexFlatL2(dimension)
     index.add(dataset)
-    D, I = index.search(query, k)
     print(dataset.shape, D.shape, I.shape, query.shape)
     distance[counter,:,:], ID[counter,:,:] = index.search(query, k)
     time_recorder[counter, 1] = time.time()
