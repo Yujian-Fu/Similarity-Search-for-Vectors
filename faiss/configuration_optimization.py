@@ -12,7 +12,8 @@ learn_set_list = [learn_set_list[2], learn_set_list[1], learn_set_list[7]]
 
 # the tested algorithms include: IVFFlat, IVFPQ,  PQ, HNSWFlat, LSH
 time_weight = 
-recall_weight = 1 - time_weight
+recall_weight = 1 - time_weight 
+# how to set a proper price function 
 
 # parameter for IVFFlat: 
 # the number of centroids in IVFFlat
@@ -25,9 +26,9 @@ nprobe = [1, 2, 3, 4, 5, 8, 10, 20, 50, 100, 200]
 #
 num_of_neighbors = [4, 8, 12, 24, 36, 48, 64, 96]
 #
-efConstruction = [100, 200, 300, 400, 500, 600, 700, 800, 900]
+efConstruction = [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900]
 #
-efSearch = [10, 20, 40, 80, 120, 200, 400, 600, 800]
+efSearch = [10, 20, 40, 80, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
 
 
 
