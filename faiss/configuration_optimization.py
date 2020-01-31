@@ -243,13 +243,15 @@ for i in range(len(search_set_list)):
     
     file.close()
     
+
     # parameters for IVFPQ:
     # the number of centroids
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
     # the number of 
     code_size_list = [4, 8, 16, 32, 64]
     # the number of 
-    nbits_list = [4, 8, 16, 32, 64]
+    #**********************By testing, nbits must larger than 8, or there is an error *********************
+    nbits_list = [8, 16, 32, 64]
     # the number of centroids to be discovered
     nprobe_list = [1, 3, 5, 8, 10, 20, 50, 80, 150]
 
@@ -271,9 +273,7 @@ for i in range(len(search_set_list)):
                     index.train(learn_dataset)
                     assert index.is_trained
                     index.add(search_dataset)
-                    print('test1')
                     dis_IVFPQ, ID_IVFPQ = index.search(query_dataset, k)
-                    print('test2')
                     time_end = time.time()
                     time_IVFPQ = time_end - time_start
                     for j in range(query_length):

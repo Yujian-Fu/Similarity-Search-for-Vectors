@@ -67,6 +67,7 @@ index = faiss.IndexIVFPQ(quantilizer, dimension, nlist, m, 8)
 
 index.train(xb)
 index.add(xb)
+print('good')
 
 D, I = index.search(xq, k)
 print(I[:5])
