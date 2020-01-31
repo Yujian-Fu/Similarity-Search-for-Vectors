@@ -62,7 +62,7 @@ for dataset_path in dataset_list[start_num:start_num+8]:
 
 
     for i in range(instances):
-        distance = dis_matrix[i, 1:k + 1]
+        distance = dis_matrix[i, 1:K + 1]
         
         d_mean = np.mean(distance)
         d_min = np.min(distance)
