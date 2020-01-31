@@ -23,8 +23,8 @@ def read_dataset(file_name):
     return file
 
 
-start_num = sys.argv[1:]
-start_num = int(start_num[0])
+#start_num = sys.argv[1:]
+#start_num = int(start_num[0])
 
 dataset_list = [
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
@@ -35,11 +35,12 @@ dataset_list = [
     '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d.npy',
     '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data.npy',
     '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy'
+    #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_base.npy'
 ]
 
 
 K = 1000
-for dataset_path in dataset_list[start_num:start_num+8]:
+for dataset_path in dataset_list:
     print('the dataset path is ', dataset_path)
     search_dataset = read_dataset(dataset_path)
     record_path = '/'
@@ -62,7 +63,8 @@ for dataset_path in dataset_list[start_num:start_num+8]:
 
 
     for i in range(instances):
-        distance = dis_matrix[i, 1:K + 1]
+        K = 1000
+        distance = dis_matrix[i, 1:K + 1].reshape(1, K)
         
         d_mean = np.mean(distance)
         d_min = np.min(distance)
@@ -82,7 +84,7 @@ for dataset_path in dataset_list[start_num:start_num+8]:
         # LID_MLE_500
         IDx = 0
         for m in range(K):
-            IDx = IDx + (1/K)*np.log(distance[0 , m]/distance[ 0, K])
+            IDx = IDx + (1/K)*np.log(distance[0 , m]/distance[ 0, K - 1])
         IDx = -1 / IDx
         LID_MLE_500[i, 0] = IDx
         #LID_RV_500
