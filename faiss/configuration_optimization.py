@@ -83,6 +83,57 @@ for i in range(len(search_set_list)):
     np.save(os.path.join(save_path, dataset_name, 'truth_dis.npy'), dis_truth)
     
     
+    # parameters for IVFPQ:
+    # the number of centroids
+    nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
+    # the number of 
+    code_size_list = [4, 8, 16, 32, 64]
+    # the number of 
+    #**********************By testing, nbits must larger than 8, or there is an error *********************
+    nbits_list = [8]
+    # the number of centroids to be discovered
+    nprobe_list = [1, 3, 5, 8, 10, 20, 50, 80, 150]
+
+    if not os.path.exists(os.path.join(save_path, dataset_name, 'IVFPQ')):
+        os.makedirs(os.path.join(save_path, dataset_name, 'IVFPQ'))
+
+    file = open(os.path.join(save_path, dataset_name, 'IVFPQ', 'qps_recall_IVFPQ.txt'), 'w')
+    
+    for nlist in nlist_list:
+        for code_size in code_size_list:
+            for nbits in nbits_list:
+                for nprobe in nprobe_list[0 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
+                    recall_record = np.zeros((query_length, 1))
+                    time_start = time.time()
+                    quantilizer = faiss.IndexFlatL2(dimension)
+                    index = faiss.IndexIVFPQ(quantilizer, dimension, nlist, code_size, nbits)
+                    index.nprobe = nprobe
+                    assert not index.is_trained
+                    index.train(learn_dataset)
+                    assert index.is_trained
+                    index.add(search_dataset)
+                    dis_IVFPQ, ID_IVFPQ = index.search(query_dataset, k)
+                    time_end = time.time()
+                    time_IVFPQ = time_end - time_start
+                    for j in range(query_length):
+                        ground_truth = ID_truth[j, :]
+                        search_result = ID_IVFPQ[j, :]
+                        recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+                    recall = 0
+                    for j in range(query_length):
+                        recall += recall_record[j, :]
+                    recall = recall / query_length
+                    print('test3')
+                    print('the IVFPQ recall with parameter is ', recall, nlist, code_size, nbits, nprobe)
+                    qps_IVFPQ = query_length / time_IVFPQ
+
+                    file.write('nlist: ' + str(nlist)+ ' code_size: ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe: ' + str(nprobe) + ' recall: ' + str(recall) + ' qps: ' +str(qps_IVFPQ) + '\n')
+            
+                    np.save(os.path.join(save_path, dataset_name, 'IVFPQ', ' nlist ' + str(nlist) + ' code_size ' + str(code_size) + ' nbits ' + str(nbits) + ' nrpobe ' + str(nprobe) + '_recall.npy'), recall_record)
+                    np.save(os.path.join(save_path, dataset_name, 'IVFPQ', ' nlist ' + str(nlist) + ' code_size ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe ' + str(nprobe) + '_dis.npy'), dis_IVFPQ)
+    
+    file.close()
+    
     # parameter for IVFFlat: 
     # the number of centroids in IVFFlat
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -244,57 +295,7 @@ for i in range(len(search_set_list)):
     file.close()
     
 
-    # parameters for IVFPQ:
-    # the number of centroids
-    nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
-    # the number of 
-    code_size_list = [4, 8, 16, 32, 64]
-    # the number of 
-    #**********************By testing, nbits must larger than 8, or there is an error *********************
-    nbits_list = [8]
-    # the number of centroids to be discovered
-    nprobe_list = [1, 3, 5, 8, 10, 20, 50, 80, 150]
 
-    if not os.path.exists(os.path.join(save_path, dataset_name, 'IVFPQ')):
-        os.makedirs(os.path.join(save_path, dataset_name, 'IVFPQ'))
-
-    file = open(os.path.join(save_path, dataset_name, 'IVFPQ', 'qps_recall_IVFPQ.txt'), 'w')
-    
-    for nlist in nlist_list:
-        for code_size in code_size_list:
-            for nbits in nbits_list:
-                for nprobe in nprobe_list[0 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
-                    recall_record = np.zeros((query_length, 1))
-                    time_start = time.time()
-                    quantilizer = faiss.IndexFlatL2(dimension)
-                    index = faiss.IndexIVFPQ(quantilizer, dimension, nlist, code_size, nbits)
-                    index.nprobe = nprobe
-                    assert not index.is_trained
-                    index.train(learn_dataset)
-                    assert index.is_trained
-                    index.add(search_dataset)
-                    dis_IVFPQ, ID_IVFPQ = index.search(query_dataset, k)
-                    time_end = time.time()
-                    time_IVFPQ = time_end - time_start
-                    for j in range(query_length):
-                        ground_truth = ID_truth[j, :]
-                        search_result = ID_IVFPQ[j, :]
-                        recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
-                    recall = 0
-                    for j in range(query_length):
-                        recall += recall_record[j, :]
-                    recall = recall / query_length
-                    print('test3')
-                    print('the IVFPQ recall with parameter is', recall, nlist, code_size, nbits, nprobe)
-                    qps_IVFPQ = query_length / time_IVFPQ
-
-                    file.write('nlist: ' + str(nlist)+ ' code_size: ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe: ' + str(nprobe) + ' recall: ' + str(recall) + ' qps: ' +str(qps_IVFPQ) + '\n')
-            
-                    np.save(os.path.join(save_path, dataset_name, 'IVFPQ', ' nlist ' + str(nlist) + ' code_size ' + str(code_size) + ' nbits ' + str(nbits) + ' nrpobe ' + str(nprobe) + '_recall.npy'), recall_record)
-                    np.save(os.path.join(save_path, dataset_name, 'IVFPQ', ' nlist ' + str(nlist) + ' code_size ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe ' + str(nprobe) + '_dis.npy'), dis_IVFPQ)
-    
-    file.close()
-    
                     
 
 
