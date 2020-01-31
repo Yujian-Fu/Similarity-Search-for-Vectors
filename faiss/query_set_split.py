@@ -39,6 +39,7 @@ dataset_list = [
 
 K = 1000
 for dataset_path in dataset_list[start_num:start_num+1]:
+    print('the dataset path is ', dataset_path)
     search_dataset = read_dataset(dataset_path)
     record_path = '/'
     for split_part in dataset_path.split('/')[0:-1]:
