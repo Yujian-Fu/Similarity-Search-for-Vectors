@@ -1,3 +1,8 @@
+# this program doesnot consider construction time and search time
+# seperately, but for better consideration, you should test them 
+# seperately
+
+
 import numpy as np
 import faiss
 import os
@@ -118,7 +123,7 @@ for i in range(len(search_set_list)):
             print('the IVF recall is with parameter: ', recall, nlist, nprobe)
             qps_IVF = query_length / time_IVF
             file.write('nlist: ' + str(nlist) + ' nprobe: ' + str(nprobe) + ' recall: ' + str(recall) + ' qps: ' + str(qps_IVF) + '\n')
-            np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_ID.npy'), recall_record)
+            np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_recall.npy'), recall_record)
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_dis.npy'), dis_IVF)
 
     file.close()
@@ -157,36 +162,115 @@ for i in range(len(search_set_list)):
                 print('the hnsw recall with parameter is', recall, num_of_neighbors, efConstruction, efSearch)
                 qps_hnsw = query_length / time_hnsw
                 file.write('num_neighbor: '+ str(num_of_neighbors) + ' efCon: ' + str(efConstruction) + ' efS: ' + str(efSearch) + ' recall: ' +  str(recall) + ' qps: ' + str(qps_hnsw) + '\n')
-                np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + '_ID.npy'), recall_record)
+                np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + '_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + '_dis.npy'), dis_hnsw)
     file.close()
 
+    # parameters for LSH
+    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096]
 
+    if not os.path.exists(os.path.join(save_path, dataset_name, 'LSH')):
+        os.makedirs(os.path.join(save_path, dataset_name, 'LSH'))
 
-
-'''
-    # parameters for IVFPQ:
-    #the number of 
-    nlist = 
-    # the number of 
-    code_size = 
-    #the number of 
-    nbits = 
-    #
-    nprobe = 
-
+    file = open(os.path.join(save_path, dataset_name, 'LSH', 'qps_recall_HNSW.txt'), 'w')
+    
+    for nbits in nbits:
+        recall_record = np.zeros((query_length, 1))
+        time_start = time.time()
+        index = faiss.IndexLSH(dimension, nbits)
+        index.train(learn_dataset)
+        assert index.is_trained 
+        index.add(search_dataset)
+        dis_LSH, ID_LSH = index.search(query_dataset, k)
+        time_end = time.time()
+        time_LSH = time_end - time_start
+        for j in range(query_length):
+            ground_truth = ID_truth[j, :]
+            search_result = ID_LSH[j, :]
+            recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+        recall = 0
+        for j in range(query_length):
+            recall += recall_record[j, 0]
+        recall = recall / query_length
+        print('the LSH recall with parameter is', recall, nbits)
+        qps_LSH = query_length / time_LSH
+        file.write('nbits: ' + str(nbits)+' recall ' + str(recall) + ' qps: ' + str(qps_LSH) + '\n')
+        
+        np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + '_recall.npy'), recall_record)
+        np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + '_dis.npy'), dis_LSH)
+    file.close()
 
     # parameters for PQ
-    #
-    M = 
-    #
-    nbits = 
-    #
-    nprobe = 
+    # number of sub-quantilizers
+    # ********************** dimension should be a multiple of M **********************
+    M_list = [2, 4, 8, 16, 32, 64, 128]
+    # bits allocated to every sub-quantilizer, tipically 8, 12, or 16
+    nbits_list = [4, 8, 12, 16, 32, 64, 128]
+    
+    if not os.path.exists(os.path.join(save_path, dataset_name, 'PQ')):
+        os.makedirs(os.path.join(save_path, dataset_name, 'PQ'))
+
+    file = open(os.path.join(save_path, dataset_name, 'PQ', 'qps_recall_HNSW.txt'), 'w')
+    
+    for M in M_list:
+        for nbits in nbits_list:
+            recall_record = np.zeros((query_length))
+            time_start = time.time()
+            index = faiss.IndexPQ(dimension, M, nbits)
+            assert not index.is_trained
+            index.train(learn_dataset)
+            assert index.is_trained
+            index.add(search_dataset)
+            dis_PQ, ID_PQ = index.search(query_dataset, k)
+            time_end = time.time()
+            time_PQ = time_end - time_start
+            for j in range(query_length):
+                ground_truth = ID_truth[j, :]
+                search_result = ID_PQ[j, :]
+                recall_record = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+            recall = 0
+            for j in range(query_length):
+                recall += recall[j, 0]
+            recall = recall / query_length
+            print('the PQ recall with parameter is', recall, M, nbits)
+            qps_PQ = query_length / time_PQ
+
+            file.write('M: ' + str(M)+ ' nbits: ' + str(nbits) + ' recall ' + str(recall) + ' qps: ' + str(qps_PQ) + '\n')
+            
+            np.save(os.path.join(save_path, dataset_name, 'PQ', ' M ' + str(M) + 'nbits ' + str(nbits) + '_recall.npy'), recall_record)
+            np.save(os.path.join(save_path, dataset_name, 'PQ', ' M ' + str(M) + 'nbits ' + str(nbits) + '_dis.npy'), dis_PQ)
+    
+    file.close()
+
+    # parameters for IVFPQ:
+    # the number of centroids
+    nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
+    # the number of 
+    code_size_list = [4, 8, 16, 32, 64]
+    # the number of 
+    nbits_list = [4, 8, 16, 32, 64]
+    # the number of centroids to be discovered
+    nprobe_list = [1, 3, 5, 8, 10, 20, 50, 80, 150]
+
+    for nlist in nlist_list:
+        for code_size in code_size_list:
+            for nbits in nbits_list:
+                for nprobe in nprobe_list[0 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
+                    recall_record = np.zeros((query_length, 1))
+                    
 
 
 
 
-    # parameters for LSH
+
+
+
+
+
+
 '''
+
+
+'''
+
 

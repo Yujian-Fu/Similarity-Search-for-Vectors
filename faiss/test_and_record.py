@@ -80,7 +80,6 @@ def test_and_record(dataset, query, train_dataset, dataset_name, k):
     time_recorder[counter, 0] = time.time()
     #should NBITS the same as IVFPQ?
     index = faiss.IndexPQ(dimension, CONFIG.M, CONFIG.NBITS)
-    index.probe = CONFIG.NPROBE
     assert not index.is_trained
     index.train(train_dataset)
     assert index.is_trained
