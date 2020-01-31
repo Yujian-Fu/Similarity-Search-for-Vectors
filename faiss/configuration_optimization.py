@@ -121,7 +121,7 @@ for i in range(len(search_set_list)):
                         recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                     recall = 0
                     for j in range(query_length):
-                        recall += recall_record[j, :]
+                        recall += recall_record[j, 0]
                     recall = recall / query_length
                     print('test3')
                     print('the IVFPQ recall with parameter is ', recall, nlist, code_size, nbits, nprobe)
