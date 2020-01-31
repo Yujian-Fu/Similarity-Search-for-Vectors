@@ -25,27 +25,27 @@ def read_dataset(file_name):
 # the evaluate dataset include ANN_SIFT10K, ANN_SIFT1M and SIFT10M, the dimension is 128 for all
 
 search_set_list = [
-    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_base.npy', 
-    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    '/home/yujian/Downloads/similarity_search_datasets/SIFT10M/SIFT10M_feature.npy'
+    '~/similarity_search/datasets/ANN_SIFT10K/siftsmall_base.fvecs', 
+    '~/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
+    #'~/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy'
 ]
 
 
 query_set_list = [
-    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_query.npy',
-    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
-    '/home/yujian/Downloads/similarity_search_datasets/SIFT10M/SIFT10M_feature_query.npy'
+    '~/similarity_search/datasets/ANN_SIFT10K/siftsmall_query.fvecs',
+    '~/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
+    #'~/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
 ]
 
 
 learn_set_list = [
-    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_train.npy',
-    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    '/home/yujian/Downloads/similarity_search_datasets/SIFT10M/SIFT10M_feature_learn.npy'
+    '~/similarity_search/datasets/ANN_SIFT10K/siftsmall_learn.fvecs',
+    '~/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
+    #'~/similarity_search/datasets/SIFT10M/SIFT10M_query_sub.npy'
 ]
 
 #the path to save your recall and qps
-save_path = '/home/yujian/Downloads/similarity_search_datasets/exp_record/'
+save_path = '~/similarity_search/datasets/exp_record/'
 k = 100
 
 # the tested algorithms include: IVFFlat, IVFPQ,  PQ, HNSWFlat, LSH
@@ -242,7 +242,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'PQ', ' M ' + str(M) + 'nbits ' + str(nbits) + '_dis.npy'), dis_PQ)
     
     file.close()
-    '''
+    
     # parameters for IVFPQ:
     # the number of centroids
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -294,7 +294,7 @@ for i in range(len(search_set_list)):
                     np.save(os.path.join(save_path, dataset_name, 'IVFPQ', ' nlist ' + str(nlist) + ' code_size ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe ' + str(nprobe) + '_dis.npy'), dis_IVFPQ)
     
     file.close()
-    '''
+    
                     
 
 
