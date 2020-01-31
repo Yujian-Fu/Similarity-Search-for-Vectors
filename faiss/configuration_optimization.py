@@ -123,7 +123,6 @@ for i in range(len(search_set_list)):
                     for j in range(query_length):
                         recall += recall_record[j, 0]
                     recall = recall / query_length
-                    print('test3')
                     print('the IVFPQ recall with parameter is ', recall, nlist, code_size, nbits, nprobe)
                     qps_IVFPQ = query_length / time_IVFPQ
 
