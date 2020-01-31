@@ -70,24 +70,24 @@ for dataset_path in dataset_list[start_num:start_num+8]:
         # LID_MLE_1000
         IDx = 0
         for m in range(K):
-            IDx = IDx + (1/K)*np.log(distance[0 , m]/distance[0, k])
+            IDx = IDx + (1/K)*np.log(distance[0 , m]/distance[0, K-1])
         IDx = -1 / IDx
         LID_MLE_1000[i, 0] = IDx
         #LID_RV_1000
         numerator = np.log(K) - np.log(int(K/2))
-        demoninator = np.log(distance[0, K]) - np.log(distance[0 , int(K/2)])
+        demoninator = np.log(distance[0, K - 1]) - np.log(distance[0 , int(K/2)])
         LID_RV_1000[i, 0] = numerator / demoninator
 
         K = 500
-        # LID_MLE
+        # LID_MLE_500
         IDx = 0
         for m in range(K):
             IDx = IDx + (1/K)*np.log(distance[0 , m]/distance[ 0, K])
         IDx = -1 / IDx
         LID_MLE_500[i, 0] = IDx
-        #LID_RV
+        #LID_RV_500
         numerator = np.log(K) - np.log(int(K/2))
-        demoninator = np.log(distance[0 , K]) - np.log(distance[0, int(K/2)])
+        demoninator = np.log(distance[0 , K - 1]) - np.log(distance[0, int(K/2)])
         LID_RV_500[i, 0] = numerator / demoninator
 
     if not os.path.exists(os.path.join(record_path,'LID_and_RC')):
