@@ -44,6 +44,10 @@ for dataset_path in dataset_list[start_num:start_num+1]:
     record_path = '/'
     for split_part in dataset_path.split('/')[0:-1]:
         record_path = os.path.join(record_path, split_part)
+    
+    if not os.path.exists(os.path.join(record_path,'LID_and_RC')):
+        os.makedirs(os.path.join(record_path,'LID_and_RC'))
+    print(record_path)
     (instances, dimension) = search_dataset.shape
     assert instances > dimension
 
@@ -62,7 +66,7 @@ for dataset_path in dataset_list[start_num:start_num+1]:
         for j in range(instances):
             if distance[j, ] == 0:
                 zero_sum += 1
-        if zero_sum == 1:
+        if zero_sum == 1 and i % 100 == 0:
             print('computing ', i, 'in', instances)
         elif zero_sum > 1:
             print('something about the distance computing wrong: sum_zero = ', zero_sum)
