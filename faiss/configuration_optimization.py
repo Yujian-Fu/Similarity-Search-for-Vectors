@@ -18,28 +18,28 @@ def read_dataset(file_name):
     else:
         print ('the file name', file_name, 'is wrong!')
 
-    return file
+    return np.ascontiguousarray(file.astype('float32'))
 
 
 # this is used to find the optimal setting for various algorithm implementations
 # the evaluate dataset include ANN_SIFT10K, ANN_SIFT1M and SIFT10M, the dimension is 128 for all
 
 search_set_list = [
-    #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_base.npy', 
+    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/yujian/Downloads/similarity_search_datasets/SIFT10M/SIFT10M_feature.npy'
 ]
 
 
 query_set_list = [
-    #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_query.npy',
+    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_query.npy',
     '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
     '/home/yujian/Downloads/similarity_search_datasets/SIFT10M/SIFT10M_feature_query.npy'
 ]
 
 
 learn_set_list = [
-    #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_train.npy',
+    '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_train.npy',
     '/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_train.npy',
     '/home/yujian/Downloads/similarity_search_datasets/SIFT10M/SIFT10M_feature_learn.npy'
 ]
@@ -82,7 +82,7 @@ for i in range(len(search_set_list)):
     np.save(os.path.join(save_path, dataset_name, 'truth_ID.npy'), ID_truth)
     np.save(os.path.join(save_path, dataset_name, 'truth_dis.npy'), dis_truth)
     
-
+    
     # parameter for IVFFlat: 
     # the number of centroids in IVFFlat
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -125,8 +125,9 @@ for i in range(len(search_set_list)):
             file.write('nlist: ' + str(nlist) + ' nprobe: ' + str(nprobe) + ' recall: ' + str(recall) + ' qps: ' + str(qps_IVF) + '\n')
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_recall.npy'), recall_record)
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_dis.npy'), dis_IVF)
-
     file.close()
+
+
     # parameters for HNSWFlat
     #
     num_of_neighbors_list = [4, 8, 12, 24, 36, 48, 64, 96]
@@ -161,20 +162,20 @@ for i in range(len(search_set_list)):
                 recall = recall / query_length
                 print('the hnsw recall with parameter is', recall, num_of_neighbors, efConstruction, efSearch)
                 qps_hnsw = query_length / time_hnsw
-                file.write('num_neighbor: '+ str(num_of_neighbors) + ' efCon: ' + str(efConstruction) + ' efS: ' + str(efSearch) + ' recall: ' +  str(recall) + ' qps: ' + str(qps_hnsw) + '\n')
+                file.write('num_neigh: '+ str(num_of_neighbors) + ' efCon: ' + str(efConstruction) + ' efS: ' + str(efSearch) + ' recall: ' +  str(recall) + ' qps: ' + str(qps_hnsw) + '\n')
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + '_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + '_dis.npy'), dis_hnsw)
     file.close()
 
     # parameters for LSH
-    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096]
+    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]
 
     if not os.path.exists(os.path.join(save_path, dataset_name, 'LSH')):
         os.makedirs(os.path.join(save_path, dataset_name, 'LSH'))
 
-    file = open(os.path.join(save_path, dataset_name, 'LSH', 'qps_recall_HNSW.txt'), 'w')
+    file = open(os.path.join(save_path, dataset_name, 'LSH', 'qps_recall_LSH.txt'), 'w')
     
-    for nbits in nbits:
+    for nbits in nbits_list:
         recall_record = np.zeros((query_length, 1))
         time_start = time.time()
         index = faiss.IndexLSH(dimension, nbits)
@@ -199,22 +200,22 @@ for i in range(len(search_set_list)):
         np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + '_recall.npy'), recall_record)
         np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + '_dis.npy'), dis_LSH)
     file.close()
-
+    
     # parameters for PQ
     # number of sub-quantilizers
     # ********************** dimension should be a multiple of M **********************
     M_list = [2, 4, 8, 16, 32, 64, 128]
     # bits allocated to every sub-quantilizer, tipically 8, 12, or 16
-    nbits_list = [4, 8, 12, 16, 32, 64, 128]
+    nbits_list = [4, 8]
     
     if not os.path.exists(os.path.join(save_path, dataset_name, 'PQ')):
         os.makedirs(os.path.join(save_path, dataset_name, 'PQ'))
 
-    file = open(os.path.join(save_path, dataset_name, 'PQ', 'qps_recall_HNSW.txt'), 'w')
+    file = open(os.path.join(save_path, dataset_name, 'PQ', 'qps_recall_PQ.txt'), 'w')
     
     for M in M_list:
         for nbits in nbits_list:
-            recall_record = np.zeros((query_length))
+            recall_record = np.zeros((query_length, 1))
             time_start = time.time()
             index = faiss.IndexPQ(dimension, M, nbits)
             assert not index.is_trained
@@ -227,10 +228,10 @@ for i in range(len(search_set_list)):
             for j in range(query_length):
                 ground_truth = ID_truth[j, :]
                 search_result = ID_PQ[j, :]
-                recall_record = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+                recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
             recall = 0
             for j in range(query_length):
-                recall += recall[j, 0]
+                recall += recall_record[j, 0]
             recall = recall / query_length
             print('the PQ recall with parameter is', recall, M, nbits)
             qps_PQ = query_length / time_PQ
@@ -241,7 +242,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'PQ', ' M ' + str(M) + 'nbits ' + str(nbits) + '_dis.npy'), dis_PQ)
     
     file.close()
-
+    '''
     # parameters for IVFPQ:
     # the number of centroids
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -252,11 +253,48 @@ for i in range(len(search_set_list)):
     # the number of centroids to be discovered
     nprobe_list = [1, 3, 5, 8, 10, 20, 50, 80, 150]
 
+    if not os.path.exists(os.path.join(save_path, dataset_name, 'IVFPQ')):
+        os.makedirs(os.path.join(save_path, dataset_name, 'IVFPQ'))
+
+    file = open(os.path.join(save_path, dataset_name, 'IVFPQ', 'qps_recall_IVFPQ.txt'), 'w')
+    
     for nlist in nlist_list:
         for code_size in code_size_list:
             for nbits in nbits_list:
                 for nprobe in nprobe_list[0 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
                     recall_record = np.zeros((query_length, 1))
+                    time_start = time.time()
+                    quantilizer = faiss.IndexFlatL2(dimension)
+                    index = faiss.IndexIVFPQ(quantilizer, dimension, nlist, code_size, nbits)
+                    index.nprobe = nprobe
+                    assert not index.is_trained
+                    index.train(learn_dataset)
+                    assert index.is_trained
+                    index.add(search_dataset)
+                    print('test1')
+                    dis_IVFPQ, ID_IVFPQ = index.search(query_dataset, k)
+                    print('test2')
+                    time_end = time.time()
+                    time_IVFPQ = time_end - time_start
+                    for j in range(query_length):
+                        ground_truth = ID_truth[j, :]
+                        search_result = ID_IVFPQ[j, :]
+                        recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+                    recall = 0
+                    for j in range(query_length):
+                        recall += recall_record[j, :]
+                    recall = recall / query_length
+                    print('test3')
+                    print('the IVFPQ recall with parameter is', recall, nlist, code_size, nbits, nprobe)
+                    qps_IVFPQ = query_length / time_IVFPQ
+
+                    file.write('nlist: ' + str(nlist)+ ' code_size: ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe: ' + str(nprobe) + ' recall: ' + str(recall) + ' qps: ' +str(qps_IVFPQ) + '\n')
+            
+                    np.save(os.path.join(save_path, dataset_name, 'IVFPQ', ' nlist ' + str(nlist) + ' code_size ' + str(code_size) + ' nbits ' + str(nbits) + ' nrpobe ' + str(nprobe) + '_recall.npy'), recall_record)
+                    np.save(os.path.join(save_path, dataset_name, 'IVFPQ', ' nlist ' + str(nlist) + ' code_size ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe ' + str(nprobe) + '_dis.npy'), dis_IVFPQ)
+    
+    file.close()
+    '''
                     
 
 
@@ -264,13 +302,5 @@ for i in range(len(search_set_list)):
 
 
 
-
-
-
-
-'''
-
-
-'''
 
 
