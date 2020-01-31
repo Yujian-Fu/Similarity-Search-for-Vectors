@@ -34,14 +34,14 @@ search_set_list = [
 query_set_list = [
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_query_sub.npy'
 ]
 
 
 learn_set_list = [
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_query_sub.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
 ]
 
 #the path to save your recall and qps
