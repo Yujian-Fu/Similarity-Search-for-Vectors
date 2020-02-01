@@ -28,7 +28,7 @@ start_num = int(start_num[0])
 
 dataset_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
-    '/home/y/yujianfu/similarity_search/datasets/Cifar/images_train.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/Cifar/images_train.npy',
     '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
