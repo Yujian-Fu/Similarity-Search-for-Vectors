@@ -70,7 +70,7 @@ for dataset_path in dataset_list[start_num:start_num+1]:
     index = faiss.IndexFlatL2(dimension)
     gpu_index_flat = faiss.index_cpu_to_gpu(res, 0, index)
     gpu_index_flat.add(search_dataset)
-    dis_matrix, ID = gpu_index_flat.search(search_dataset, K+100)
+    dis_matrix, ID = gpu_index_flat.search(search_dataset, K+20)
     print('finish computing distance')
 
 
@@ -78,7 +78,7 @@ for dataset_path in dataset_list[start_num:start_num+1]:
         K = 1000
         if i % 1000 == 0:
             print ('now computing ', i, ' in ', instances)
-        distance = dis_matrix[i , :].reshape([1, K+100])
+        distance = dis_matrix[i , :].reshape([1, K+20])
         zero_sum = np.sum(list(map(lambda x:x == 0, distance)))
         distance = distance[ 0, zero_sum:zero_sum+K ].reshape([1, K])
 
