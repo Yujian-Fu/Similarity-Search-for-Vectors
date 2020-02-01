@@ -64,10 +64,13 @@ for dataset_path in dataset_list[start_num:start_num+1]:
     LID_RV_1000 = np.zeros((instances, 1))
     LID_RV_500 = np.zeros((instances, 1))
 
-    quantilizer = faiss.IndexFlatL2(dimension)
+
+    res = faiss.StandardGpuResources()
+    
     index = faiss.IndexFlatL2(dimension)
-    index.add(search_dataset)
-    dis_matrix, ID = index.search(search_dataset, K+100)
+    gpu_index_flat = faiss.index_cpu_to_gpu(res, 0, index)
+    gpu_index_flat.add(search_dataset)
+    dis_matrix, ID = gpu_index_flat.search(search_dataset, K+100)
     print('finish computing distance')
 
 
