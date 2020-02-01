@@ -63,12 +63,17 @@ for dataset_path in dataset_list[start_num:start_num+2]:
     index = faiss.IndexFlatL2(dimension)
     index.add(search_dataset)
     dis_matrix, ID = index.search(search_dataset, K+1)
+    print('finish compute distance')
 
 
     for i in range(instances):
         K = 1000
-        distance = dis_matrix[i, 1:K + 1].reshape(1, K)
-        
+        if i % 1000 == 0:
+            print ('now computing ', K, ' in ', instances)
+        distance = dis_matrix[i , :]
+        zero_sum = np.sum(list(map(lambda x:x == 0, distance)))
+        distance = distance[0, zero_sum:zero_sum+K]
+
         d_mean = np.mean(distance)
         d_min = np.min(distance)
         RC[i, 0] = d_mean / d_min
