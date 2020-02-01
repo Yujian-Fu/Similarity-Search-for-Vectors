@@ -41,8 +41,9 @@ dataset_list = [
 ]
 
 
-K = 1000
+
 for dataset_path in dataset_list:
+    K = 1000
     print('the dataset path is ', dataset_path)
     search_dataset = read_dataset(dataset_path)
     record_path = '/'
