@@ -27,13 +27,15 @@ def read_dataset(file_name):
 #start_num = int(start_num[0])
 
 dataset_list = [
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
+    '/home/y/yujianfu/similarity_search/datasets/cifar/images_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
-    '/home/y/yujianfu/similarity_search/datasets/cifar/images_train.npy',
+    
     '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d.npy',
-    '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data.npy',
+    
     '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy'
     #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_base.npy'
 ]
