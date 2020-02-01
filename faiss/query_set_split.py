@@ -117,6 +117,7 @@ for dataset_path in dataset_list[start_num:start_num+1]:
     np.save(os.path.join(record_path, 'LID_and_RC', 'LID_RV_1000.npy'), LID_RV_1000)
     np.save(os.path.join(record_path, 'LID_and_RC', 'LID_RV_500.npy'), LID_RV_500)
 
+'''
 LID_path = [
 
 ]
@@ -138,7 +139,7 @@ for LID_file in LID_path:
     origin_file = np.load(dataset_path)
     np.save(os.path.join(save_path, 'small_LID.npy'), origin_file[small_set_ID, :])
     np.save(os.path.join(save_path, 'small_LID.npy'), origin_file[small_set_ID, :])
-
+'''
 
 
 
