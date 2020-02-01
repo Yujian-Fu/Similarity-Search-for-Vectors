@@ -29,6 +29,7 @@ start_num = int(start_num[0])
 dataset_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     #'/home/y/yujianfu/similarity_search/datasets/Cifar/images_train.npy',
+    
     '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
@@ -37,6 +38,8 @@ dataset_list = [
     '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d.npy',
     
     '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy'
+    
+    
     #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_base.npy'
 ]
 
@@ -62,17 +65,17 @@ for dataset_path in dataset_list[start_num:start_num+2]:
     quantilizer = faiss.IndexFlatL2(dimension)
     index = faiss.IndexFlatL2(dimension)
     index.add(search_dataset)
-    dis_matrix, ID = index.search(search_dataset, K+1)
-    print('finish compute distance')
+    dis_matrix, ID = index.search(search_dataset, K+100)
+    print('finish computing distance')
 
 
     for i in range(instances):
         K = 1000
         if i % 1000 == 0:
             print ('now computing ', K, ' in ', instances)
-        distance = dis_matrix[i , :]
+        distance = dis_matrix[i , :].reshape([1, K+100])
         zero_sum = np.sum(list(map(lambda x:x == 0, distance)))
-        distance = distance[0, zero_sum:zero_sum+K]
+        distance = distance[ 0, zero_sum:zero_sum+K ].reshape([1, K])
 
         d_mean = np.mean(distance)
         d_min = np.min(distance)
