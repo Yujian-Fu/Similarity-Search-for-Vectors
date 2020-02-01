@@ -23,8 +23,8 @@ def read_dataset(file_name):
     return file.astype('float32')
 
 
-#start_num = sys.argv[1:]
-#start_num = int(start_num[0])
+start_num = sys.argv[1:]
+start_num = int(start_num[0])
 
 dataset_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
@@ -42,7 +42,7 @@ dataset_list = [
 
 
 
-for dataset_path in dataset_list:
+for dataset_path in dataset_list[start_num:start_num+2]:
     K = 1000
     print('the dataset path is ', dataset_path)
     search_dataset = read_dataset(dataset_path)
