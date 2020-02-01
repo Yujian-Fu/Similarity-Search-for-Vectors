@@ -20,7 +20,7 @@ def read_dataset(file_name):
     else:
         print ('the file name', file_name, 'is wrong!')
 
-    return file.astype('float32')
+    return np.ascontiguousarray(file.astype('float32'))
 
 
 start_num = sys.argv[1:]
