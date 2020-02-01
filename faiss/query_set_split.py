@@ -3,6 +3,8 @@ import os
 from fvecs_read import fvecs_read
 import sys
 import faiss
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def distance_computing(query_point, search_dataset):
     (instances, dimension) = search_dataset.shape
@@ -112,6 +114,27 @@ for dataset_path in dataset_list[start_num:start_num+1]:
     np.save(os.path.join(record_path, 'LID_and_RC', 'LID_RV_1000.npy'), LID_RV_1000)
     np.save(os.path.join(record_path, 'LID_and_RC', 'LID_RV_500.npy'), LID_RV_500)
 
+LID_path = [
+
+]
+
+RC_path = [
+
+]
+
+for LID_file in LID_path:
+    LID_record = np.load(LID_file)
+    sns.kdeplot(LID_record, shade = 'True', color = 'black')
+    sns.rugplot(LID_record, color = 'blue')
+    plt.vline(x, ymin, ymax, color = 'c', linestyles = 'dashed')
+    index_ID = np.argsort(LID_record)
+    small_set_ID = index_ID[0:1000]
+    largest_set_ID = index_ID[-1001:-1]
+    mean_LID = index_ID[int(len(index_ID)/2)-500:int(len(index_ID)/2)+500, :]
+    multiple_LID = index_ID[arange( int(len(index_ID)/2) - 500*int(len(index_ID)/1000), int(len(index_ID)/2) + 500*int(len(index_ID)/1000), int(len(index_ID)/1000), ]
+    origin_file = np.load(dataset_path)
+    np.save(os.path.join(save_path, 'small_LID.npy'), origin_file[small_set_ID, :])
+    np.save(os.path.join(save_path, 'small_LID.npy'), origin_file[small_set_ID, :])
 
 
 
