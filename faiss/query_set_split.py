@@ -72,7 +72,7 @@ for dataset_path in dataset_list[start_num:start_num+2]:
     for i in range(instances):
         K = 1000
         if i % 1000 == 0:
-            print ('now computing ', K, ' in ', instances)
+            print ('now computing ', i, ' in ', instances)
         distance = dis_matrix[i , :].reshape([1, K+100])
         zero_sum = np.sum(list(map(lambda x:x == 0, distance)))
         distance = distance[ 0, zero_sum:zero_sum+K ].reshape([1, K])
