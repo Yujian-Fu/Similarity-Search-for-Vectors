@@ -27,8 +27,8 @@ def read_dataset(file_name):
 search_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
-    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
 
 ]
@@ -37,8 +37,8 @@ search_set_list = [
 query_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
-    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
 
 ]
@@ -47,8 +47,8 @@ query_set_list = [
 learn_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
-    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
 
@@ -267,7 +267,7 @@ for i in range(len(search_set_list)):
     # parameters for PQ
     # number of sub-quantilizers
     # ********************** dimension should be a multiple of M **********************
-    M_list = [2, 4, 8, 16, 32, 64]
+    M_list = [2, 4, 8, 16, 32, 64, 128]
     # bits allocated to every sub-quantilizer, tipically 8, 12, or 16
     nbits_list = [4, 8]
     
