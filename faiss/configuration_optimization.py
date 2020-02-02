@@ -240,6 +240,7 @@ for i in range(len(search_set_list)):
         recall_record = np.zeros((query_length, 1))
         time_start = time.time()
         index = faiss.IndexLSH(dimension, nbits)
+        index.nprobe = 32
         index.train(learn_dataset)
         assert index.is_trained 
         index.add(search_dataset)
