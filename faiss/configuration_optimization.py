@@ -28,8 +28,8 @@ search_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
-    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
 
 ]
 
@@ -38,8 +38,8 @@ query_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
     #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
-    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
 
 ]
 
@@ -48,8 +48,8 @@ learn_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
     #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
-    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
 
 #the path to save your recall and qps
