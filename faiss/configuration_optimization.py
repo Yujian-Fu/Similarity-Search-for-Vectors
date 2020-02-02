@@ -27,9 +27,9 @@ def read_dataset(file_name):
 search_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
 
 ]
 
@@ -37,9 +37,9 @@ search_set_list = [
 query_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
-    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
 
 ]
 
@@ -47,9 +47,9 @@ query_set_list = [
 learn_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
 
 #the path to save your recall and qps
@@ -91,7 +91,7 @@ for i in range(len(search_set_list)):
     np.save(os.path.join(save_path, dataset_name, 'truth_ID.npy'), ID_truth)
     np.save(os.path.join(save_path, dataset_name, 'truth_dis.npy'), dis_truth)
     
-    
+    '''
     # parameters for IVFPQ:
     # the number of centroids
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -142,7 +142,7 @@ for i in range(len(search_set_list)):
     
     file.close()
     
-    '''
+    
     # parameter for IVFFlat: 
     # the number of centroids in IVFFlat
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -186,13 +186,15 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_recall.npy'), recall_record)
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_dis.npy'), dis_IVF)
     file.close()
-
+    '''
     
     # parameters for HNSWFlat
     #
-    num_of_neighbors_list = [4, 8, 12, 24, 36, 48, 64, 96]
+    num_of_neighbors_list = [36, 48, 64, 96]
+    #[4, 8, 12, 24, 36, 48, 64, 96]
     #
-    efConstruction_list = [100, 200,  300, 400, 500, 600, 700, 800, 900]
+    efConstruction_list = [500, 600, 700, 800]
+    #[100, 200,  300, 400, 500, 600, 700, 800, 900]
     #
     efSearch_list = [10, 20, 40, 80, 100, 200, 300, 400, 500, 600, 700, 800, 900]
     if not os.path.exists(os.path.join(save_path, dataset_name, 'HNSW')):
@@ -307,6 +309,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'PQ', ' M ' + str(M) + 'nbits ' + str(nbits) + '_dis.npy'), dis_PQ)
     
     file.close()
+    '''
     
     
 
