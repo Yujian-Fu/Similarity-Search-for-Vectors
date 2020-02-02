@@ -25,9 +25,9 @@ def read_dataset(file_name):
 # the evaluate dataset include ANN_SIFT10K, ANN_SIFT1M and SIFT10M, the dimension is 128 for all
 
 search_set_list = [
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
 
@@ -35,9 +35,9 @@ search_set_list = [
 
 
 query_set_list = [
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
 
@@ -45,9 +45,9 @@ query_set_list = [
 
 
 learn_set_list = [
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
@@ -91,7 +91,7 @@ for i in range(len(search_set_list)):
     np.save(os.path.join(save_path, dataset_name, 'truth_ID.npy'), ID_truth)
     np.save(os.path.join(save_path, dataset_name, 'truth_dis.npy'), dis_truth)
     
-    '''
+    
     # parameters for IVFPQ:
     # the number of centroids
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -142,6 +142,7 @@ for i in range(len(search_set_list)):
     
     file.close()
     
+    '''
     # parameter for IVFFlat: 
     # the number of centroids in IVFFlat
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -264,7 +265,7 @@ for i in range(len(search_set_list)):
         np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + '_dis.npy'), dis_LSH)
     file.close()
     
-    '''
+    
     # parameters for PQ
     # number of sub-quantilizers
     # ********************** dimension should be a multiple of M **********************
@@ -306,7 +307,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'PQ', ' M ' + str(M) + 'nbits ' + str(nbits) + '_dis.npy'), dis_PQ)
     
     file.close()
-    '''
+    
     
 
 
