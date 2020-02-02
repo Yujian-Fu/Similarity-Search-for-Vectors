@@ -229,7 +229,7 @@ for i in range(len(search_set_list)):
     
     '''
     # parameters for LSH
-    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]
+    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 8192*2, 8192*4]
 
     if not os.path.exists(os.path.join(save_path, dataset_name, 'LSH')):
         os.makedirs(os.path.join(save_path, dataset_name, 'LSH'))
