@@ -28,8 +28,8 @@ search_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
 
 ]
 
@@ -38,8 +38,8 @@ query_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
     #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
 
 ]
 
@@ -48,8 +48,8 @@ learn_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
     #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
 
 #the path to save your recall and qps
@@ -186,7 +186,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_dis.npy'), dis_IVF)
     file.close()
 
-    '''
+    
     # parameters for HNSWFlat
     #
     num_of_neighbors_list = [4, 8, 12, 24, 36, 48, 64, 96]
@@ -225,11 +225,12 @@ for i in range(len(search_set_list)):
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + '_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + '_dis.npy'), dis_hnsw)
     file.close()
+    '''
     
     
     
     # parameters for LSH
-    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 8192*2]
+    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 8192*2, 8192*4]
 
     if not os.path.exists(os.path.join(save_path, dataset_name, 'LSH')):
         os.makedirs(os.path.join(save_path, dataset_name, 'LSH'))
@@ -263,7 +264,7 @@ for i in range(len(search_set_list)):
         np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + '_dis.npy'), dis_LSH)
     file.close()
     
-    
+    '''
     # parameters for PQ
     # number of sub-quantilizers
     # ********************** dimension should be a multiple of M **********************
@@ -305,7 +306,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'PQ', ' M ' + str(M) + 'nbits ' + str(nbits) + '_dis.npy'), dis_PQ)
     
     file.close()
-    
+    '''
     
 
 
