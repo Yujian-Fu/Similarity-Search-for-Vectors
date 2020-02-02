@@ -90,7 +90,7 @@ for i in range(len(search_set_list)):
     np.save(os.path.join(save_path, dataset_name, 'truth_ID.npy'), ID_truth)
     np.save(os.path.join(save_path, dataset_name, 'truth_dis.npy'), dis_truth)
     
-    '''
+    
     # parameters for IVFPQ:
     # the number of centroids
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -185,7 +185,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_dis.npy'), dis_IVF)
     file.close()
 
-
+    '''
     # parameters for HNSWFlat
     #
     num_of_neighbors_list = [4, 8, 12, 24, 36, 48, 64, 96]
@@ -225,6 +225,7 @@ for i in range(len(search_set_list)):
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + '_dis.npy'), dis_hnsw)
     file.close()
     '''
+    
 
     # parameters for LSH
     nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]
