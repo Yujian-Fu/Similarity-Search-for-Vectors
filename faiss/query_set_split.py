@@ -128,6 +128,7 @@ dataset_list = [
     'SIFT10K'
 ]
 
+'''
 dataset_path_list = [
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Cifar/cifar-10-batches-py/images_train.npy',
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Deep1M(with PQ from Deep1B)/deep1M/deep1M_base.npy',
@@ -136,6 +137,18 @@ dataset_path_list = [
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/MNIST/MNIST_train_data.npy',
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/ANN_SIFT1M/sift/SIFT1M_base.npy',
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/ANN_SIFT10K/siftsmall/SIFT10K_train.npy'
+]
+'''
+
+dataset_path_list = [
+    '/home/y/yujianfu/similarity_search/datasets/Cifar/images_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d.npy',
+    '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_test_data.npy'
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy'
+
 ]
 
 Metrics_list = [
@@ -167,11 +180,12 @@ for metric in Metrics_list:
 
         dataset_path = dataset_path_list[i]
         origin_file = np.load(dataset_path)
-        save_path = os.path.join('/home/yujian/Desktop/Selected Dataset', dataset, metric)
+        save_path = os.path.join('/home/y/yujianfu/similarity_search/datasets/Selected_Dataset', dataset, metric)
+        #save_path = os.path.join('/home/yujian/Desktop/Selected Dataset', dataset, metric)
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         np.save(os.path.join(save_path, 'small_LID.npy'), origin_file[small_set_ID, :])
         np.save(os.path.join(save_path, 'large_LID.npy'), origin_file[largest_set_ID, :])
         np.save(os.path.join(save_path, 'mean_LID.npy'), origin_file[mean_set_ID, :])
         np.save(os.path.join(save_path, 'multiple_LID.npy'), origin_file[multiple_set_ID, :])
-    plt.show()
+    plt.save(os.path.join(save_path, metric+'.png'))
