@@ -1,4 +1,5 @@
 import numpy as np 
+import seaborn as sns
 
 k_list = [5, 10, 20, 40, 80, 120, 200, 400, 600, 800, 1000]
 
@@ -76,14 +77,16 @@ for dataset in dataset_list:
 
         for k in k_list:
             for metric in metric_list:
-                recall_dis = np.load(record_path, dataset, model,metric+str(k)+'.npy')
+                recall_dis = np.load(os.path.join(record_path, dataset, model,metric+str(k)+'.npy'))
                 recall_dis = recall_dis.reshape(recall_dis.shape[0],)
                 sns.kdeplot(recall_dis, shade = 'True', color = 'black')
                 sns.rugplot(recall_dis, color = 'black')
                 axes = plt.gca()
                 y_min, y_max = axes.get_ylim()
                 plt.vlines(np.median(recall_dis), y_min, y_max, color = 'black', linestyles = 'dashed')
-                print('the median is ', np.median(recall_dis))    
+                print('the median is ', np.median(recall_dis))
+                plt.savefig(os.path.join(record_path, dataset, model,metric+str(k)+'.png'))
+
                         
 
               
