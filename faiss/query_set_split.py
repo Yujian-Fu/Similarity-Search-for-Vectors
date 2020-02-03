@@ -167,8 +167,8 @@ for metric in Metrics_list:
     print('now processing ', metric)
     for i in range(len(dataset_list)):
         plt.subplot(len(dataset_list), 1, i+1)
-        print('now processing', )
         dataset = dataset_list[i]
+        print('now processing', dataset)
         LID_file = os.path.join(record_path, dataset, 'LID_and_RC', metric+'.npy')
         LID_record = np.load(LID_file)
         LID_record = LID_record.reshape(LID_record.shape[0],)
