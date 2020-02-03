@@ -203,11 +203,11 @@ for i in range(len(search_set_list)):
     
     
     # parameters for HNSWFlat
-    #
-    num_of_neighbors_list = [36, 48, 64, 96,96*2, 96*4]
+    # it seems that the efConstruction and efSearch does not affect the performance
+    num_of_neighbors_list = [4, 8, 16, 32, 48, 64, 96,96*2, 96*4]
     #[4, 8, 12, 24, 36, 48, 64, 96]
     #
-    efConstruction_list = [500, 800]
+    efConstruction_list = [500]
     #[100, 200,  300, 400, 500, 600, 700, 800, 900]
     #
     efSearch_list = [10]
