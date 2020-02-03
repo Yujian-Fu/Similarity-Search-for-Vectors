@@ -156,7 +156,8 @@ Metrics_list = [
     'RC'
 ]
 
-record_path = '/home/yujian/Desktop/LID_and_RC/'
+#record_path = '/home/yujian/Desktop/LID_and_RC/'
+record_path = '/home/y/yujianfu/similarity_search/datasets/'
 
 for metric in Metrics_list:
     plt.figure()
