@@ -132,7 +132,7 @@ for i in range(len(dataset_list)):
         #build for HNSW
         param_HNSW = HNSW_list[j]
         time_1 = time.time()
-        index_HNSW = faiss.IndexHNSW(dimension, param_HNSW[0])
+        index_HNSW = faiss.IndexHNSWFlat(dimension, param_HNSW[0])
         index_HNSW.hnsw.efConstruction = param_HNSW[1]
         index_HNSW.hnsw.efSearch = param_HNSW[2]
         index_HNSW.add(search_dataset)
