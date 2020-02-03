@@ -204,7 +204,7 @@ for i in range(len(search_set_list)):
     
     # parameters for HNSWFlat
     #
-    num_of_neighbors_list = [36, 48, 64, 96]
+    num_of_neighbors_list = [36, 48, 64, 96,96*2]
     #[4, 8, 12, 24, 36, 48, 64, 96]
     #
     efConstruction_list = [500, 600, 700, 800]
