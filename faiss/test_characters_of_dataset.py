@@ -72,7 +72,7 @@ IVFPQ_list = [[100, 64, 50]]
 #  
 HNSW_list = [[16, 100, 20]]
 LSH_List = [[8192]]
-PQ_list = [[128, 8]]
+PQ_list = [[64, 8]]
 
 
 for i in range(len(dataset_list)):
