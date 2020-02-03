@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\workshop\\Anaconda3\\envs\\similarity_search\\python.exe",
+    "python.pythonPath": "/home/yujian/anaconda3/envs/similarity_search_gpu/bin/python",
     "python.formatting.provider": "yapf"
 }
