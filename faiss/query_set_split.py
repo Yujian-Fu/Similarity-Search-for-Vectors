@@ -121,11 +121,11 @@ for dataset_path in dataset_list[start_num:start_num+1]:
 dataset_list = [
     'Cifar',
     'deep1M',
-    'GIST1M',
+    'ANN_GIST1M',
     'Glove',
     'MNIST',
-    'SIFT1M',
-    'SIFT10K'
+    'ANN_SIFT1M',
+    'ANN_SIFT10K'
 ]
 
 '''
