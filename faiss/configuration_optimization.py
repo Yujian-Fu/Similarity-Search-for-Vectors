@@ -322,7 +322,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'PQ', ' M ' + str(M) + 'nbits ' + str(nbits) + '_dis.npy'), dis_PQ)
     
     file.close()
-    
+    '''
     
     
 
