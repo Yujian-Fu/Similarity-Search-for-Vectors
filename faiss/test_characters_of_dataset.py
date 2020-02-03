@@ -191,7 +191,7 @@ for i in range(len(dataset_list)):
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall_record[j, 0] = recall / query_length
-                qps = query_length / (time2 - time1)
+                qps = query_length / (time_2 - time_1)
                 IVFFlat_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'IVFFlat', query_name+'_'+str(k)+'_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'IVFFlat', query_name+'_'+str(k)+'_dis.npy'), dis_IVF)
@@ -210,7 +210,7 @@ for i in range(len(dataset_list)):
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall = recall / query_length
-                qps = query_length / (time2 - time1)
+                qps = query_length / (time_2 - time_1)
                 IVFPQ_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'IVFPQ', query_name+'_'+str(k)+'_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'IVFPQ', query_name+'_'+str(k)+'_dis.npy'), dis_IVFPQ)
@@ -229,7 +229,7 @@ for i in range(len(dataset_list)):
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall = recall / query_length
-                qps = query_length / (time2 - time1)
+                qps = query_length / (time_2 - time_1)
                 HNSW_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', query_name+'_'+str(k)+'_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', query_name+'_'+str(k)+'_dis.npy'), dis_HNSW)
@@ -248,7 +248,7 @@ for i in range(len(dataset_list)):
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall = recall / query_length
-                qps = query_length / (time2 - time1)
+                qps = query_length / (time_2 - time_1)
                 LSH_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'LSH', query_name+'_'+str(k)+'_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'LSH', query_name+'_'+str(k)+'_dis.npy'), dis_LSH)
@@ -267,7 +267,7 @@ for i in range(len(dataset_list)):
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall = recall / query_length
-                qps = query_length / (time2 - time1)
+                qps = query_length / (time_2 - time_1)
                 PQ_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'PQ', query_name+'_'+str(k)+'_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'PQ', query_name+'_'+str(k)+'_dis.npy'), dis_PQ)
