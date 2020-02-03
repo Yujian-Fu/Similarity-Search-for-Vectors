@@ -62,7 +62,7 @@ LSH_List = [[8192]]
 PQ_list = [[128, 8]]
 
 
-for i in range(dataset_list):
+for i in range(len(dataset_list)):
 
     dataset_name = dataset_list[i].split('/')[-1].split('_')[0]
 
