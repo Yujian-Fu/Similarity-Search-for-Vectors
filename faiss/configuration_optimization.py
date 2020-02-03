@@ -93,6 +93,7 @@ for i in range(len(search_set_list)):
     
     #check 
     dis_twice, ID_twice = index.search(query_dataset, k)
+    recall_record = np.zeros((query_length, 1))
     for j in range(query_length):
         ground_truth = ID_truth[j, :]
         search_result = ID_twice[j, :]
