@@ -47,7 +47,7 @@ learn_list = [
     '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
 
-save_path = 
+save_path = '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset_performance/'
 
 query_k_list = [5, 10, 20, 40, 80, 120, 200, 400, 600, 800, 1000]
 

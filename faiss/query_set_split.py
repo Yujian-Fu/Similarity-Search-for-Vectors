@@ -178,6 +178,7 @@ for metric in Metrics_list:
         dimension = origin_file.shape[1]
         sns.kdeplot(LID_record, shade = 'True', color = 'black', label = dataset+' '+ str(dimension))
         sns.rugplot(LID_record, color = 'black')
+        plt.xlim(0, 250)
         axes = plt.gca()
         y_min, y_max = axes.get_ylim()
         plt.vlines(np.median(LID_record), y_min, y_max, color = 'black', linestyles = 'dashed')
@@ -207,4 +208,5 @@ for metric in Metrics_list:
             os.makedirs(save_path)
     plt.legend()
     plt.suptitle(metric)
+    plt.xlim(0, 250)
     plt.savefig(os.path.join(save_path, metric+'.png'))
