@@ -207,10 +207,11 @@ for i in range(len(search_set_list)):
     num_of_neighbors_list = [36, 48, 64, 96,96*2, 96*4]
     #[4, 8, 12, 24, 36, 48, 64, 96]
     #
-    efConstruction_list = [500, 600, 700, 800]
+    efConstruction_list = [500, 800]
     #[100, 200,  300, 400, 500, 600, 700, 800, 900]
     #
-    efSearch_list = [10, 20, 40, 80, 100, 200, 300, 400, 500, 600, 700, 800, 900]
+    efSearch_list = [10]
+    #[10, 20, 40, 80, 100, 200, 300, 400, 500, 600, 700, 800, 900]
     if not os.path.exists(os.path.join(save_path, dataset_name, 'HNSW')):
         os.makedirs(os.path.join(save_path, dataset_name, 'HNSW'))
 
