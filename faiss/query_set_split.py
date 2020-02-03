@@ -145,15 +145,18 @@ dataset_path_list = [
     '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d.npy',
-    '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_test_data.npy'
+    '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_test_data.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy'
-
 ]
 
 Metrics_list = [
+    'LID_MLE_500',
     'LID_MLE_1000',
-    'RC'
+    'LID_RV_500',
+    'LID_RV_1000'
+    'RC',
+    
 ]
 
 #record_path = '/home/yujian/Desktop/LID_and_RC/'
@@ -161,6 +164,7 @@ record_path = '/home/y/yujianfu/similarity_search/datasets/'
 
 for metric in Metrics_list:
     plt.figure()
+    print('now processing ', metric)
     for i in range(len(dataset_list)):
         plt.subplot(len(dataset_list), 1, i+1)
         dataset = dataset_list[i]
