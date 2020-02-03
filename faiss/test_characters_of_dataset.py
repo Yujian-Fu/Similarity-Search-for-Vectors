@@ -149,7 +149,7 @@ for i in range(dataset_list):
         index_LSH.add(search_dataset)
         time_2 = time.time()
         time_LSH_con = time_2 - time_1
-        LSH_file.write('time_con nbits '+str(param_LSH) +' '+str(time_LSH_con)+'\n')
+        LSH_file.write('time_con nbits '+str(param_LSH[0]) +' '+str(time_LSH_con)+'\n')
         print('finish build LSH')
 
         #parameter for PQ
@@ -219,7 +219,7 @@ for i in range(dataset_list):
 
                 recall_record = np.zeros((query_length, 1))
                 time_1 = time.time()
-                dis_HNSW, ID_HNSW = index_IVF.search(query_dataset, k)
+                dis_HNSW, ID_HNSW = index_HNSW.search(query_dataset, k)
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
@@ -238,7 +238,7 @@ for i in range(dataset_list):
                 
                 recall_record = np.zeros((query_length, 1))
                 time_1 = time.time()
-                dis_LSH, ID_LSH = index_IVF.search(query_dataset, k)
+                dis_LSH, ID_LSH = index_LSH.search(query_dataset, k)
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
@@ -252,11 +252,12 @@ for i in range(dataset_list):
                 LSH_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'LSH', query_name+'_'+str(k)+'_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'LSH', query_name+'_'+str(k)+'_dis.npy'), dis_LSH)
+                print('LSH finish')
 
 
                 recall_record = np.zeros((query_length, 1))
                 time_1 = time.time()
-                dis_PQ, ID_PQ = index_IVF.search(query_dataset, k)
+                dis_PQ, ID_PQ = index_PQ.search(query_dataset, k)
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
@@ -270,6 +271,7 @@ for i in range(dataset_list):
                 PQ_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'PQ', query_name+'_'+str(k)+'_recall.npy'), recall_record)
                 np.save(os.path.join(save_path, dataset_name, 'PQ', query_name+'_'+str(k)+'_dis.npy'), dis_PQ)
+                print('PQ finish')
 
 
 
