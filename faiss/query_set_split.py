@@ -128,7 +128,7 @@ dataset_list = [
     'ANN_SIFT10K'
 ]
 
-'''
+
 dataset_path_list = [
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Cifar/cifar-10-batches-py/images_train.npy',
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Deep1M(with PQ from Deep1B)/deep1M/deep1M_base.npy',
@@ -149,22 +149,24 @@ dataset_path_list = [
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy'
 ]
+'''
 
 Metrics_list = [
-    'LID_MLE_500',
-    'LID_MLE_1000',
+    #'LID_MLE_500',
+    #'LID_MLE_1000',
     'LID_RV_500',
     'LID_RV_1000',
     'RC'
     
 ]
 
-#record_path = '/home/yujian/Desktop/LID_and_RC/'
-record_path = '/home/y/yujianfu/similarity_search/datasets/'
+record_path = '/home/yujian/Desktop/LID_and_RC/'
+#record_path = '/home/y/yujianfu/similarity_search/datasets/'
 
 for metric in Metrics_list:
     plt.figure()
     print('now processing ', metric)
+
     for i in range(len(dataset_list)):
         plt.subplot(len(dataset_list), 1, i+1)
         dataset = dataset_list[i]
@@ -172,12 +174,13 @@ for metric in Metrics_list:
         LID_file = os.path.join(record_path, dataset, 'LID_and_RC', metric+'.npy')
         LID_record = np.load(LID_file)
         LID_record = LID_record.reshape(LID_record.shape[0],)
-        sns.kdeplot(LID_record, shade = 'True', color = 'black')
+        sns.kdeplot(LID_record, shade = 'True', color = 'black', label = dataset)
         sns.rugplot(LID_record, color = 'black')
         axes = plt.gca()
         y_min, y_max = axes.get_ylim()
-        plt.vlines(np.median(LID_record), y_min, y_max, color = 'c', linestyles = 'dashed')
+        plt.vlines(np.median(LID_record), y_min, y_max, color = 'black', linestyles = 'dashed')
         #plt.show()
+        '''
         index_ID = np.argsort(LID_record)
         small_set_ID = index_ID[0:1000]
         largest_set_ID = index_ID[-1001:-1]
@@ -195,4 +198,10 @@ for metric in Metrics_list:
         np.save(os.path.join(save_path, 'large_LID.npy'), origin_file[largest_set_ID, :])
         np.save(os.path.join(save_path, 'mean_LID.npy'), origin_file[mean_set_ID, :])
         np.save(os.path.join(save_path, 'multiple_LID.npy'), origin_file[multiple_set_ID, :])
+        '''
+    save_path = os.path.join('/home/yujian/Desktop/Selected Dataset/', metric)
+    if not os.path.exists(save_path):
+            os.makedirs(save_path)
+    plt.legend()
+    plt.suptitle(metric)
     plt.savefig(os.path.join(save_path, metric+'.png'))
