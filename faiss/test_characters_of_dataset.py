@@ -2,15 +2,34 @@ import numpy as np
 import os 
 import faiss
 import time    
+from fvecs_read import fvecs_read
+
+def read_dataset(file_name):
+    if file_name.split('.')[-1] == 'npy':
+        file = np.load(file_name)
+    elif file_name.split('.')[-1] == 'fvecs':
+        file = fvecs_read(file_name)
+    else:
+        print ('the file name', file_name, 'is wrong!')
+
+    return np.ascontiguousarray(file.astype('float32'))
+
 
 dataset_list = [
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
 ]
 
 query_list = [
+    [
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/LID_MLE_500/large_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/LID_MLE_500/small_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/RC/large_RC.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/RC/small_RC.npy'
+    ]
+    ,
     [
         '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/LID_MLE_500/large_LID.npy',
         '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/LID_MLE_500/small_LID.npy',
@@ -25,13 +44,7 @@ query_list = [
         '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/RC/small_RC.npy'
     ]
     ,
-    [
-        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/LID_MLE_500/large_LID.npy',
-        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/LID_MLE_500/small_LID.npy',
-        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/RC/large_RC.npy',
-        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/RC/small_RC.npy'
-    ]
-    ,
+
     [
         '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/deep1M/LID_MLE_500/large_LID.npy',
         '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/deep1M/LID_MLE_500/small_LID.npy',
@@ -41,9 +54,9 @@ query_list = [
 ]
 
 learn_list = [
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
     '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
 
@@ -66,8 +79,8 @@ for i in range(len(dataset_list)):
 
     dataset_name = dataset_list[i].split('/')[-1].split('_')[0]
 
-    search_dataset = np.ascontiguousarray(np.load(dataset_list[i]).astype('float32'))
-    learn_dataset = np.ascontiguousarray(np.load(learn_list[i]).astype('float32'))
+    search_dataset = read_dataset(dataset_list[i])
+    learn_dataset = read_dataset(learn_list[i])
 
     if not os.path.exists(os.path.join(save_path, dataset_name, 'IVFFlat')):
         os.makedirs(os.path.join(save_path, dataset_name, 'IVFFlat'))
@@ -167,7 +180,7 @@ for i in range(len(dataset_list)):
 
 
         for  query_path in  query_list[i]:
-            query_dataset = np.ascontiguousarray(np.load(query_path).astype('float32'))
+            query_dataset = read_dataset(query_path)
             query_name = query_path.split('/')[-1].split('.')[0]
             print('now processing ', dataset_name, ' ', query_name)
 
