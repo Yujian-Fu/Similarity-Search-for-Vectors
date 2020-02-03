@@ -174,7 +174,9 @@ for metric in Metrics_list:
         LID_file = os.path.join(record_path, dataset, 'LID_and_RC', metric+'.npy')
         LID_record = np.load(LID_file)
         LID_record = LID_record.reshape(LID_record.shape[0],)
-        sns.kdeplot(LID_record, shade = 'True', color = 'black', label = dataset)
+        origin_file = np.load(dataset_path_list[i])
+        dimension = origin_file.shape[1]
+        sns.kdeplot(LID_record, shade = 'True', color = 'black', label = dataset+' '+ str(dimension))
         sns.rugplot(LID_record, color = 'black')
         axes = plt.gca()
         y_min, y_max = axes.get_ylim()
