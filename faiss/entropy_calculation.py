@@ -46,7 +46,7 @@ for dataset_path in dataset_path_list:
             
         entropy[i, 0] = compute_entropy(accumulate_column)
     save_path_list = dataset_path.split('/')[0:-1]
-    save_path = ''
+    save_path = '/'
     for i in range(len(save_path_list)):
         save_path = os.path.join(save_path, save_path_list[i])
     np.save(os.path.join(save_path, 'entropy.npy'), entropy)
