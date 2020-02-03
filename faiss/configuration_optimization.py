@@ -92,7 +92,7 @@ for i in range(len(search_set_list)):
     np.save(os.path.join(save_path, dataset_name, 'truth_dis.npy'), dis_truth)
     
     #check 
-    dis_twice, ID_twice = index.search(query_dataset)
+    dis_twice, ID_twice = index.search(query_dataset, k)
     for j in range(query_length):
         ground_truth = ID_truth[j, :]
         search_result = ID_twice[j, :]
