@@ -14,13 +14,13 @@ def compute_entropy(accumulate_column):
     return -entropy
 
 dataset_path_list = [
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/Cifar/images_train.npy',
     '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/Glove/glove_840_300d.npy',
     '/home/y/yujianfu/similarity_search/datasets/MNIST/MNIST_train_data.npy',
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy'
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy'
     #'E:\Datasets_for_Similarity_Search\ANN_SIFT10K\siftsmall\SIFT10K_base.npy'
 ]
 
@@ -45,6 +45,9 @@ for dataset_path in dataset_path_list:
             accumulate_column[int(index), 0] += 1
             
         entropy[i, 0] = compute_entropy(accumulate_column)
-    save_path = dataset_path.split('/')[0:-1]
+    save_path_list = dataset_path.split('/')[0:-1]
+    save_path = ''
+    for i in range(len(save_path_list)):
+        save_path = os.path.join(save_path, save_path_list[i])
     np.save(os.path.join(save_path, 'entropy.npy'), entropy)
 
