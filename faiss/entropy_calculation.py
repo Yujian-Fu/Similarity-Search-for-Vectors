@@ -25,10 +25,13 @@ dataset_path_list = [
 ]
 
 for dataset_path in dataset_path_list:
+    print('now processing ', dataset_path)
     dataset = np.load(dataset_path)
     instances, dimension = dataset.shape
     entropy = np.zeros((dimension, 1))
     for i in range(dimension):
+        if i % 50 == 0:
+            print('now processing ', i, 'dimension in ', dimension)
         accumulate_column = np.zeros((instances, 1))
         feature_column = dataset[:, i]
         max_value = max(feature_column)
