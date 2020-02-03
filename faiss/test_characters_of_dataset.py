@@ -157,7 +157,7 @@ for i in range(len(dataset_list)):
         time_1 = time.time()
         index_PQ = faiss.IndexPQ(dimension, param_PQ[0], param_PQ[1])
         assert not index_PQ.is_trained 
-        index_PQ.learn(learn_dataset)
+        index_PQ.train(learn_dataset)
         assert index_PQ.is_trained 
         index_PQ.add(search_dataset)
         time_2 = time.time()
