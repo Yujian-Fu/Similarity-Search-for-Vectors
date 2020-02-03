@@ -152,10 +152,10 @@ dataset_path_list = [
 
 
 Metrics_list = [
-    'LID_MLE_500',
-    'LID_MLE_1000',
-    'LID_RV_500',
-    'LID_RV_1000',
+    #'LID_MLE_500',
+    #'LID_MLE_1000',
+    #'LID_RV_500',
+    #'LID_RV_1000',
     'RC'
     
 ]
