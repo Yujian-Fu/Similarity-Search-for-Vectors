@@ -66,8 +66,8 @@ for i in range(len(dataset_list)):
 
     dataset_name = dataset_list[i].split('/')[-1].split('_')[0]
 
-    search_dataset = np.load(dataset_list[i])
-    learn_dataset = np.load(learn_list[i])
+    search_dataset = np.ascontiguousarray(np.load(dataset_list[i]).astype('float32'))
+    learn_dataset = np.ascontiguousarray(np.load(learn_list[i]).astype('float32'))
 
     if not os.path.exists(os.path.join(save_path, dataset_name, 'IVFFlat')):
         os.makedirs(os.path.join(save_path, dataset_name, 'IVFFlat'))
@@ -167,8 +167,8 @@ for i in range(len(dataset_list)):
 
 
         for  query_path in  query_list[i]:
-            query_dataset = np.load(query_path)
-            query_name = query_path.split('/')[-1].split('_')[0]
+            query_dataset = np.ascontiguousarray(np.load(query_path).astype('float32'))
+            query_name = query_path.split('/')[-1].split('.')[0]
             print('now processing ', dataset_name, ' ', query_name)
 
             for k in query_k_list:
