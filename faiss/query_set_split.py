@@ -195,4 +195,4 @@ for metric in Metrics_list:
         np.save(os.path.join(save_path, 'large_LID.npy'), origin_file[largest_set_ID, :])
         np.save(os.path.join(save_path, 'mean_LID.npy'), origin_file[mean_set_ID, :])
         np.save(os.path.join(save_path, 'multiple_LID.npy'), origin_file[multiple_set_ID, :])
-    plt.save(os.path.join(save_path, metric+'.png'))
+    plt.savefig(os.path.join(save_path, metric+'.png'))
