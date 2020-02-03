@@ -167,6 +167,7 @@ for metric in Metrics_list:
     print('now processing ', metric)
     for i in range(len(dataset_list)):
         plt.subplot(len(dataset_list), 1, i+1)
+        print('now processing', )
         dataset = dataset_list[i]
         LID_file = os.path.join(record_path, dataset, 'LID_and_RC', metric+'.npy')
         LID_record = np.load(LID_file)
@@ -183,6 +184,7 @@ for metric in Metrics_list:
         mean_set_ID = index_ID[int(len(index_ID)/2)-500:int(len(index_ID)/2)+500]
         multiple_set_ID = index_ID[np.arange( int(len(index_ID)/2) - 500*int(len(index_ID)/1000), int(len(index_ID)/2) + 500*int(len(index_ID)/1000), int(len(index_ID)/1000))]
 
+        print('the index size:', len(small_set_ID), len(largest_set_ID), len(mean_set_ID), len(multiple_set_ID))
         dataset_path = dataset_path_list[i]
         origin_file = np.load(dataset_path)
         save_path = os.path.join('/home/y/yujianfu/similarity_search/datasets/Selected_Dataset', dataset, metric)
