@@ -36,7 +36,6 @@ for dataset_path in dataset_path_list:
         feature_column = dataset[:, i]
         max_value = max(feature_column)
         min_value = min(feature_column)
-        print( 'the max and the min', max_value, min_value)
 
         for j in range(instances):
             index = int((feature_column[j, ] - min_value) / ((max_value - min_value)/instances))
