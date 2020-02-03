@@ -2,10 +2,10 @@ import numpy as np
 import os
 from fvecs_read import fvecs_read
 import sys
-import faiss
+#import faiss
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+'''
 def distance_computing(query_point, search_dataset):
     (instances, dimension) = search_dataset.shape
     a = (query_point ** 2).dot(np.ones((dimension, instances)))
@@ -116,31 +116,59 @@ for dataset_path in dataset_list[start_num:start_num+1]:
     np.save(os.path.join(record_path, 'LID_and_RC', 'LID_MLE_500.npy'), LID_MLE_500)
     np.save(os.path.join(record_path, 'LID_and_RC', 'LID_RV_1000.npy'), LID_RV_1000)
     np.save(os.path.join(record_path, 'LID_and_RC', 'LID_RV_500.npy'), LID_RV_500)
-
-'''
-LID_path = [
-
-]
-
-RC_path = [
-
-]
-
-for LID_file in LID_path:
-    LID_record = np.load(LID_file)
-    sns.kdeplot(LID_record, shade = 'True', color = 'black')
-    sns.rugplot(LID_record, color = 'blue')
-    plt.vline(x, ymin, ymax, color = 'c', linestyles = 'dashed')
-    index_ID = np.argsort(LID_record)
-    small_set_ID = index_ID[0:1000]
-    largest_set_ID = index_ID[-1001:-1]
-    mean_LID = index_ID[int(len(index_ID)/2)-500:int(len(index_ID)/2)+500, :]
-    multiple_LID = index_ID[arange( int(len(index_ID)/2) - 500*int(len(index_ID)/1000), int(len(index_ID)/2) + 500*int(len(index_ID)/1000), int(len(index_ID)/1000), ]
-    origin_file = np.load(dataset_path)
-    np.save(os.path.join(save_path, 'small_LID.npy'), origin_file[small_set_ID, :])
-    np.save(os.path.join(save_path, 'small_LID.npy'), origin_file[small_set_ID, :])
 '''
 
+dataset_list = [
+    'Cifar',
+    'deep1M',
+    'GIST1M',
+    'Glove',
+    'MNIST',
+    'SIFT1M',
+    'SIFT10K'
+]
 
+dataset_path_list = [
+    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Cifar/cifar-10-batches-py/images_train.npy',
+    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Deep1M(with\ PQ\ from\ Deep1B)/deep1M/deep1M_base.npy',
+    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/ANN_GIST1M/gist/GIST1M_base.npy',
+    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Glove/glove_840_300d.npy',
+    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/MNIST/MNIST_train_data.npy',
+    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/ANN_SIFT1M/sift/SIFT1M_base.npy',
+    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/ANN_SIFT10K/siftsmall/SIFT10K_train.npy'
+]
 
+Metrics_list = [
+    'LID_MLE_100.npy',
+    'RC.npy'
+]
 
+record_path = '/home/yujian/Desktop/LID_and_RC/'
+
+for i in range(len(dataset_list)):
+    for metric in Metrics_list:
+        dataset = dataset_list[i]
+        LID_file = os.path.join(record_path, dataset, 'LID_and_RC', metric)
+        LID_record = np.load(LID_file)
+        LID_record = LID_record.reshape(LID_record.shape[0],)
+        sns.kdeplot(LID_record, shade = 'True', color = 'black')
+        sns.rugplot(LID_record, color = 'black')
+        axes = plt.gca()
+        y_min, y_max = axes.get_ylim()
+        plt.vlines(np.median(LID_record), y_min, y_max, color = 'c', linestyles = 'dashed')
+        plt.show()
+        index_ID = np.argsort(LID_record)
+        small_set_ID = index_ID[0:1000]
+        largest_set_ID = index_ID[-1001:-1]
+        mean_set_ID = index_ID[int(len(index_ID)/2)-500:int(len(index_ID)/2)+500]
+        multiple_set_ID = index_ID[np.arange( int(len(index_ID)/2) - 500*int(len(index_ID)/1000), int(len(index_ID)/2) + 500*int(len(index_ID)/1000), int(len(index_ID)/1000))]
+
+        dataset_path = dataset_path_list[i]
+        origin_file = np.load(dataset_path)
+        save_path = os.path.join('/home/yujian/Desktop/Selected Dataset', dataset)
+        if not os.path.exists(os.path.join(save_path, metric)):
+            os.makedirs(os.path.join(record_path, metric))
+        np.save(os.path.join(save_path, metric, 'small_LID.npy'), origin_file[small_set_ID, :])
+        np.save(os.path.join(save_path, metric, 'large_LID.npy'), origin_file[largest_set_ID, :])
+        np.save(os.path.join(save_path, metric, 'mean_LID.npy'), origin_file[mean_set_ID, :])
+        np.save(os.path.join(save_path, mectric, 'multiple_LID.npy'), origin_file[multiple_set_ID, :])

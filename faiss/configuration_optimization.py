@@ -25,9 +25,9 @@ def read_dataset(file_name):
 # the evaluate dataset include ANN_SIFT10K, ANN_SIFT1M and SIFT10M, the dimension is 128 for all
 
 search_set_list = [
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
 
@@ -37,7 +37,7 @@ search_set_list = [
 query_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
-    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
 
@@ -45,9 +45,9 @@ query_set_list = [
 
 
 learn_set_list = [
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
     #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
@@ -91,6 +91,18 @@ for i in range(len(search_set_list)):
     np.save(os.path.join(save_path, dataset_name, 'truth_ID.npy'), ID_truth)
     np.save(os.path.join(save_path, dataset_name, 'truth_dis.npy'), dis_truth)
     
+    #check 
+    dis_twice, ID_twice = index.search(query_dataset)
+    for j in range(query_length):
+        ground_truth = ID_truth[j, :]
+        search_result = ID_twice[j, :]
+        recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+    recall = 0
+    for j in range(query_length):
+        recall += recall_record[j, 0]
+    recall = recall / query_length
+    print('the check recall is', recall)
+
     '''
     # parameters for IVFPQ:
     # the number of centroids
@@ -186,6 +198,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_recall.npy'), recall_record)
             np.save(os.path.join(save_path, dataset_name, 'IVFFlat', ' nlist'+' '+ str(nlist)+' '+ 'nprobe' + str(nprobe) + '_dis.npy'), dis_IVF)
     file.close()
+    '''
     
     
     # parameters for HNSWFlat
@@ -231,7 +244,7 @@ for i in range(len(search_set_list)):
     
     
     
-    
+    ''''
     # parameters for LSH
     nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 8192*2, 8192*4]
 
@@ -266,7 +279,7 @@ for i in range(len(search_set_list)):
         np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + '_recall.npy'), recall_record)
         np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + '_dis.npy'), dis_LSH)
     file.close()
-    '''
+    
     
     # parameters for PQ
     # number of sub-quantilizers
