@@ -128,7 +128,7 @@ dataset_list = [
     'ANN_SIFT10K'
 ]
 
-
+'''
 dataset_path_list = [
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Cifar/cifar-10-batches-py/images_train.npy',
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Deep1M(with PQ from Deep1B)/deep1M/deep1M_base.npy',
@@ -149,7 +149,7 @@ dataset_path_list = [
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy'
 ]
-'''
+
 
 Metrics_list = [
     #'LID_MLE_500',
@@ -160,8 +160,8 @@ Metrics_list = [
     
 ]
 
-record_path = '/home/yujian/Desktop/LID_and_RC/'
-#record_path = '/home/y/yujianfu/similarity_search/datasets/'
+#record_path = '/home/yujian/Desktop/LID_and_RC/'
+record_path = '/home/y/yujianfu/similarity_search/datasets/'
 
 for metric in Metrics_list:
     plt.figure()
@@ -199,7 +199,7 @@ for metric in Metrics_list:
         np.save(os.path.join(save_path, 'mean_LID.npy'), origin_file[mean_set_ID, :])
         np.save(os.path.join(save_path, 'multiple_LID.npy'), origin_file[multiple_set_ID, :])
         '''
-    save_path = os.path.join('/home/yujian/Desktop/Selected Dataset/', metric)
+    save_path = os.path.join('/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/', metric)
     if not os.path.exists(save_path):
             os.makedirs(save_path)
     plt.legend()
