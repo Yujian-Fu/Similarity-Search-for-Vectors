@@ -105,9 +105,9 @@ for i in range(len(dataset_list)):
         quantilizer = faiss.IndexFlatL2(dimension)
         index_IVF = faiss.IndexIVFFlat(quantilizer, dimension, param_IVFFlat[0])
         index_IVF.probe = param_IVFFlat[1]
-        assert not index.is_trained
+        assert not index_IVF.is_trained
         index_IVF.train(learn_dataset)
-        assert index.is_trained 
+        assert index_IVF.is_trained 
         index_IVF.add(search_dataset)
         time_2 = time.time()
         time_IVF_con = time_2 - time_1
