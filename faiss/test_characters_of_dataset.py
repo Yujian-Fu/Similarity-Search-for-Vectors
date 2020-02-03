@@ -102,7 +102,8 @@ for i in range(len(dataset_list)):
         os.makedirs(os.path.join(save_path, dataset_name, 'PQ'))
     PQ_file = open(os.path.join(save_path, dataset_name, 'PQ', 'PQ.txt'), 'w')
 
-    dimension = search_dataset.shape[1]
+    instances, dimension = search_dataset.shape[1]
+    assert instances > dimension
     time_1 = time.time()
     index = faiss.IndexFlatL2(dimension)
     index.add(search_dataset)
