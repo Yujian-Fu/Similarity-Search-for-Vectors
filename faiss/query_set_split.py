@@ -181,6 +181,7 @@ for metric in Metrics_list:
         axes = plt.gca()
         y_min, y_max = axes.get_ylim()
         plt.vlines(np.median(LID_record), y_min, y_max, color = 'black', linestyles = 'dashed')
+        print('the median is ', np.median(LID_record))
         #plt.show()
         '''
         index_ID = np.argsort(LID_record)
