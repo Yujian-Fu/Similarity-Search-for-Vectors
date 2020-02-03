@@ -130,7 +130,7 @@ dataset_list = [
 
 dataset_path_list = [
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Cifar/cifar-10-batches-py/images_train.npy',
-    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Deep1M(with\ PQ\ from\ Deep1B)/deep1M/deep1M_base.npy',
+    '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Deep1M(with PQ from Deep1B)/deep1M/deep1M_base.npy',
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/ANN_GIST1M/gist/GIST1M_base.npy',
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/Glove/glove_840_300d.npy',
     '/media/yujian/Seagate Backup Plus Drive/Datasets_for_Similarity_Search/MNIST/MNIST_train_data.npy',
@@ -139,16 +139,18 @@ dataset_path_list = [
 ]
 
 Metrics_list = [
-    'LID_MLE_100.npy',
-    'RC.npy'
+    'LID_MLE_1000',
+    'RC'
 ]
 
 record_path = '/home/yujian/Desktop/LID_and_RC/'
 
-for i in range(len(dataset_list)):
-    for metric in Metrics_list:
+for metric in Metrics_list:
+    plt.figure()
+    for i in range(len(dataset_list)):
+        plt.subplot(len(dataset_list), 1, i+1)
         dataset = dataset_list[i]
-        LID_file = os.path.join(record_path, dataset, 'LID_and_RC', metric)
+        LID_file = os.path.join(record_path, dataset, 'LID_and_RC', metric+'.npy')
         LID_record = np.load(LID_file)
         LID_record = LID_record.reshape(LID_record.shape[0],)
         sns.kdeplot(LID_record, shade = 'True', color = 'black')
@@ -156,7 +158,7 @@ for i in range(len(dataset_list)):
         axes = plt.gca()
         y_min, y_max = axes.get_ylim()
         plt.vlines(np.median(LID_record), y_min, y_max, color = 'c', linestyles = 'dashed')
-        plt.show()
+        #plt.show()
         index_ID = np.argsort(LID_record)
         small_set_ID = index_ID[0:1000]
         largest_set_ID = index_ID[-1001:-1]
@@ -165,10 +167,11 @@ for i in range(len(dataset_list)):
 
         dataset_path = dataset_path_list[i]
         origin_file = np.load(dataset_path)
-        save_path = os.path.join('/home/yujian/Desktop/Selected Dataset', dataset)
-        if not os.path.exists(os.path.join(save_path, metric)):
-            os.makedirs(os.path.join(record_path, metric))
-        np.save(os.path.join(save_path, metric, 'small_LID.npy'), origin_file[small_set_ID, :])
-        np.save(os.path.join(save_path, metric, 'large_LID.npy'), origin_file[largest_set_ID, :])
-        np.save(os.path.join(save_path, metric, 'mean_LID.npy'), origin_file[mean_set_ID, :])
-        np.save(os.path.join(save_path, mectric, 'multiple_LID.npy'), origin_file[multiple_set_ID, :])
+        save_path = os.path.join('/home/yujian/Desktop/Selected Dataset', dataset, metric)
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+        np.save(os.path.join(save_path, 'small_LID.npy'), origin_file[small_set_ID, :])
+        np.save(os.path.join(save_path, 'large_LID.npy'), origin_file[largest_set_ID, :])
+        np.save(os.path.join(save_path, 'mean_LID.npy'), origin_file[mean_set_ID, :])
+        np.save(os.path.join(save_path, 'multiple_LID.npy'), origin_file[multiple_set_ID, :])
+    plt.show()
