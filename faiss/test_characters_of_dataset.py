@@ -103,7 +103,7 @@ for i in range(len(dataset_list)):
         param_IVFFlat = IVFFlat_list[j]
         time_1 = time.time()
         quantilizer = faiss.IndexFlatL2(dimension)
-        index_IVF = faiss.IVFFlat(quantilizer, dimension, param_IVFFlat[0])
+        index_IVF = faiss.IndexIVFFlat(quantilizer, dimension, param_IVFFlat[0])
         index_IVF.probe = param_IVFFlat[1]
         assert not index.is_trained
         index_IVF.train(learn_dataset)
