@@ -156,7 +156,7 @@ for i in range(len(dataset_list)):
         param_PQ = PQ_list[j]
         time_1 = time.time()
         index_PQ = faiss.IndexPQ(dimension, param_PQ[0], param_PQ[1])
-        assert not inex_PQ.is_trained 
+        assert not index_PQ.is_trained 
         index_PQ.learn(learn_dataset)
         assert index_PQ.is_trained 
         index_PQ.add(search_dataset)
