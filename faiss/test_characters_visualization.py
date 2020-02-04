@@ -34,7 +34,7 @@ for dataset in dataset_list:
         file_path = os.path.join(record_path, dataset, model, model+'.txt')
         file = open(file_path)
         content = file.read()
-        content = content.split('\n')[1:]
+        content = content.split('\n')[1:-1]
         print(content)
         instances = len(content)
         assert instances % 4 == 0
