@@ -189,6 +189,7 @@ for i in range(len(dataset_list)):
                 print('now computing k = ', k)
                 time_1 = time.time()
                 dis_truth, ID_truth = index.search(query_dataset, k)
+                print(ID_truth[0:3])
                 query_length = query_dataset.shape[0]
                 time_2 = time.time()
                 time_brute_sea = time_2 - time_1
@@ -219,7 +220,7 @@ for i in range(len(dataset_list)):
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
-                    search_result = ID_IVF[i, :]
+                    search_result = ID_IVFPQ[i, :]
                     recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
@@ -239,7 +240,7 @@ for i in range(len(dataset_list)):
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
-                    search_result = ID_IVF[i, :]
+                    search_result = ID_HNSW[i, :]
                     recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
@@ -259,7 +260,7 @@ for i in range(len(dataset_list)):
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
-                    search_result = ID_IVF[i, :]
+                    search_result = ID_LSH[i, :]
                     recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
@@ -279,7 +280,7 @@ for i in range(len(dataset_list)):
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
-                    search_result = ID_IVF[i, :]
+                    search_result = ID_PQ[i, :]
                     recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
