@@ -23,7 +23,7 @@ dataset_list = [
 
 metric_list = [
     'large_LID_',
-    'small_LIC_',
+    'small_LID_',
     'large_RC_',
     'small_RC_'
 ]
@@ -36,7 +36,6 @@ for dataset in dataset_list:
         file = open(file_path)
         content = file.read()
         content = content.split('\n')[1:-1]
-        print(content)
         instances = len(content)
         assert instances % 4 == 0
         performance = np.zeros((instances, 2))
