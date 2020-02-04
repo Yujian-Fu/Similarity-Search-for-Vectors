@@ -22,10 +22,10 @@ dataset_list = [
 ]
 
 metric_list = [
-    'large_LID',
-    'small_LIC',
-    'large_RC',
-    'small_RC'
+    'large_LID_',
+    'small_LIC_',
+    'large_RC_',
+    'small_RC_'
 ]
 
 record_path = '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset_performance'
@@ -81,7 +81,7 @@ for dataset in dataset_list:
 
         for k in k_list:
             for metric in metric_list:
-                recall_dis = np.load(os.path.join(record_path, dataset, model,metric+str(k)+'.npy'))
+                recall_dis = np.load(os.path.join(record_path, dataset, model,metric+str(k)+'_recall.npy'))
                 recall_dis = recall_dis.reshape(recall_dis.shape[0],)
                 sns.kdeplot(recall_dis, shade = 'True', color = 'black')
                 sns.rugplot(recall_dis, color = 'black')
@@ -89,7 +89,7 @@ for dataset in dataset_list:
                 y_min, y_max = axes.get_ylim()
                 plt.vlines(np.median(recall_dis), y_min, y_max, color = 'black', linestyles = 'dashed')
                 print('the median is ', np.median(recall_dis))
-                plt.savefig(os.path.join(record_path, dataset, model, metric+str(k)+'.png'))
+                plt.savefig(os.path.join(record_path, dataset, model, metric+'_'+str(k)+'_.png'))
 
                         
 
