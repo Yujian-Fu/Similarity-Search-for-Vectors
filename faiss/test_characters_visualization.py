@@ -81,7 +81,9 @@ for dataset in dataset_list:
         for k in k_list:
             for metric in metric_list:
                 recall_dis = np.load(os.path.join(record_path, dataset, model,metric+str(k)+'_recall.npy'))
+
                 recall_dis = recall_dis.reshape(recall_dis.shape[0],)
+                print(recall_dis.shape, recall_dis)                
                 sns.kdeplot(recall_dis, shade = 'True', color = 'black')
                 sns.rugplot(recall_dis, color = 'black')
                 axes = plt.gca()
