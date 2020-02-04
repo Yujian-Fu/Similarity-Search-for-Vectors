@@ -26,7 +26,7 @@ metric_list = [
     'small_RC'
 ]
 
-record_path = ''
+record_path = '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset_performance'
 
 for dataset in dataset_list:
     for model in model_list:
@@ -85,7 +85,7 @@ for dataset in dataset_list:
                 y_min, y_max = axes.get_ylim()
                 plt.vlines(np.median(recall_dis), y_min, y_max, color = 'black', linestyles = 'dashed')
                 print('the median is ', np.median(recall_dis))
-                plt.savefig(os.path.join(record_path, dataset, model,metric+str(k)+'.png'))
+                plt.savefig(os.path.join(record_path, dataset, model, metric+str(k)+'.png'))
 
                         
 
