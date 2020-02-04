@@ -70,7 +70,7 @@ IVFFlat_list = [[50, 8]]
 IVFPQ_list = [[100, 64, 50]]
 # deep1M 400,64, 50  100,64,20  100, 64, 50  200,64,20 200,64,50  GIST1M 100,64,50 200,64,150 10,64,8 20,64,8 50,64,10
 #  
-HNSW_list = [[16, 100, 20]]
+HNSW_list = [[64, 100, 20]]
 LSH_List = [[8192]]
 PQ_list = [[64, 8]]
 
@@ -189,7 +189,6 @@ for i in range(len(dataset_list)):
                 print('now computing k = ', k)
                 time_1 = time.time()
                 dis_truth, ID_truth = index.search(query_dataset, k)
-                print(ID_truth[0:3])
                 query_length = query_dataset.shape[0]
                 time_2 = time.time()
                 time_brute_sea = time_2 - time_1
