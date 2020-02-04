@@ -1,6 +1,7 @@
 import numpy as np 
 import seaborn as sns
 import os
+import matplolib.pyplot as plt
 
 k_list = [5, 10, 20, 40, 80, 120, 200, 400, 600, 800, 1000]
 
