@@ -77,7 +77,7 @@ for dataset in dataset_list:
         plt.title('recall-qps '+dataset+' '+model)
         plt.legend()
         plt.savefig(os.path.join(record_path, dataset, model, 'recall-qps'+dataset+'-'+model+'.png'))
-
+'''
         for k in k_list:
             for metric in metric_list:
                 recall_dis = np.load(os.path.join(record_path, dataset, model,metric+str(k)+'_recall.npy'))
@@ -91,7 +91,7 @@ for dataset in dataset_list:
                 plt.vlines(np.median(recall_dis), y_min, y_max, color = 'black', linestyles = 'dashed')
                 print('the median is ', np.median(recall_dis))
                 plt.savefig(os.path.join(record_path, dataset, model, metric+'_'+str(k)+'_.png'))
-
+'''
                         
 
               
