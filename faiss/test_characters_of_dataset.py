@@ -200,11 +200,12 @@ for i in range(len(dataset_list)):
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
                     search_result = ID_IVF[i, :]
-                    recall = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+                    recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
                     recall += recall_record[j, 0]
-                recall_record[j, 0] = recall / query_length
+                recall = recall / query_length
+                print('the recall is ', recall)
                 qps = query_length / (time_2 - time_1)
                 IVFFlat_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'IVFFlat', query_name+'_'+str(k)+'_recall.npy'), recall_record)
@@ -218,12 +219,13 @@ for i in range(len(dataset_list)):
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
-                    search_result = ID_IVFPQ[i, :]
-                    recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+                    search_result = ID_IVF[i, :]
+                    recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall = recall / query_length
+                print('the recall is ', recall)
                 qps = query_length / (time_2 - time_1)
                 IVFPQ_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'IVFPQ', query_name+'_'+str(k)+'_recall.npy'), recall_record)
@@ -237,12 +239,13 @@ for i in range(len(dataset_list)):
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
-                    search_result = ID_HNSW[i, :]
-                    recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+                    search_result = ID_IVF[i, :]
+                    recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall = recall / query_length
+                print('the recall is ', recall)
                 qps = query_length / (time_2 - time_1)
                 HNSW_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'HNSW', query_name+'_'+str(k)+'_recall.npy'), recall_record)
@@ -256,12 +259,13 @@ for i in range(len(dataset_list)):
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
-                    search_result = ID_LSH[i, :]
-                    recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+                    search_result = ID_IVF[i, :]
+                    recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall = recall / query_length
+                print('the recall is ', recall)
                 qps = query_length / (time_2 - time_1)
                 LSH_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'LSH', query_name+'_'+str(k)+'_recall.npy'), recall_record)
@@ -275,12 +279,13 @@ for i in range(len(dataset_list)):
                 time_2 = time.time()
                 for i in range(query_length):
                     ground_truth = ID_truth[i, :]
-                    search_result = ID_PQ[i, :]
-                    recall_record[j, 0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+                    search_result = ID_IVF[i, :]
+                    recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
                 recall = 0
                 for j in range(query_length):
                     recall += recall_record[j, 0]
                 recall = recall / query_length
+                print('the recall is ', recall)
                 qps = query_length / (time_2 - time_1)
                 PQ_file.write(query_name + ' k '+str(k)+' recall '+str(recall)+' qps '+str(qps)+'\n')
                 np.save(os.path.join(save_path, dataset_name, 'PQ', query_name+'_'+str(k)+'_recall.npy'), recall_record)
