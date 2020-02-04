@@ -48,7 +48,7 @@ for dataset in dataset_list:
             qps = float(line[-1])
             performance[i, 0] = recall
             performance[i, 1] = qps
-            plt.plot(performance[:,0], performance[:, 1], label = 'large_LID')
+        plt.plot(performance[:,0], performance[:, 1], label = 'large_LID')
         
         for i in range(int(instances/4), int(instances/2)):
             line = content[i].split(' ')
@@ -56,7 +56,7 @@ for dataset in dataset_list:
             qps = float(line[-1])
             performance[i%(int(instances/4)), 0] = recall
             performance[i%(int(instances/4)), 1] = qps
-            plt.plot(performance[:,0], performance[:, 1], label = 'small_LID')
+        plt.plot(performance[:,0], performance[:, 1], label = 'small_LID')
 
         for i in range(int(instances/2), int(instances*3/4)):
             line = content[i].split(' ')
@@ -64,7 +64,7 @@ for dataset in dataset_list:
             qps = float(line[-1])
             performance[i%(int(instances/4)), 0] = recall
             performance[i%(int(instances/4)), 1] = qps
-            plt.plot(performance[:,0], performance[:, 1], label = 'large_RC')
+        plt.plot(performance[:,0], performance[:, 1], label = 'large_RC')
 
         for i in range(int(instances*3/4), int(instances)):
             line = content[i].split(' ')
@@ -72,7 +72,7 @@ for dataset in dataset_list:
             qps = float(line[-1])
             performance[i%(int(instances/4)), 0] = recall
             performance[i%(int(instances/4)), 1] = qps
-            plt.plot(performance[:,0], performance[:, 1], label = 'small_RC')
+        plt.plot(performance[:,0], performance[:, 1], label = 'small_RC')
         
         plt.title('recall-qps '+dataset+' '+model)
         plt.legend()
