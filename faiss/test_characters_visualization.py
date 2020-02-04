@@ -32,6 +32,7 @@ record_path = '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset_perf
 for dataset in dataset_list:
     for model in model_list:
         file_path = os.path.join(record_path, dataset, model, model+'.txt')
+        file = open(file_path)
         content = file.read()
         content = content.split('\n')[1:]
         instances = len(content)
