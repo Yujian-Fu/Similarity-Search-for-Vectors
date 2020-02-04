@@ -16,47 +16,47 @@ def read_dataset(file_name):
 
 
 dataset_list = [
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
 ]
 
 query_list = [
-    #[
-       # '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/LID_MLE_500/large_LID.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/LID_MLE_500/small_LID.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/RC/large_RC.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/RC/small_RC.npy'
-    #]
-    #,
-    #[
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/LID_MLE_500/large_LID.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/LID_MLE_500/small_LID.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/RC/large_RC.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/RC/small_RC.npy'
-    #]
-    #,
-    #[
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/LID_MLE_500/large_LID.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/LID_MLE_500/small_LID.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/RC/large_RC.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/RC/small_RC.npy'
-    #]
-    #,
+    [
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/LID_MLE_500/large_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/LID_MLE_500/small_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/RC/large_RC.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT10K/RC/small_RC.npy'
+    ]
+    ,
+    [
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/LID_MLE_500/large_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/LID_MLE_500/small_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/RC/large_RC.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_GIST1M/RC/small_RC.npy'
+    ]
+    ,
+    [
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/LID_MLE_500/large_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/LID_MLE_500/small_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/RC/large_RC.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/ANN_SIFT1M/RC/small_RC.npy'
+    ]
+    ,
 
     [
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/deep1M/LID_MLE_500/large_LID.npy',
-        #'/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/deep1M/LID_MLE_500/small_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/deep1M/LID_MLE_500/large_LID.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/deep1M/LID_MLE_500/small_LID.npy',
         '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/deep1M/RC/large_RC.npy',
         '/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/deep1M/RC/small_RC.npy'
     ]
 ]
 
 learn_list = [
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
     '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
 ]
 
