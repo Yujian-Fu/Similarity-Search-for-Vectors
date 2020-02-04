@@ -35,6 +35,7 @@ for dataset in dataset_list:
         file = open(file_path)
         content = file.read()
         content = content.split('\n')[1:]
+        print(content)
         instances = len(content)
         assert instances % 4 == 0
         performance = np.zeros((instances, 2))
