@@ -25,31 +25,30 @@ def read_dataset(file_name):
 # the evaluate dataset include ANN_SIFT10K, ANN_SIFT1M and SIFT10M, the dimension is 128 for all
 
 search_set_list = [
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy'
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy'
 
 ]
 
 
 query_set_list = [
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy'
-
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy',
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
 ]
 
 
 learn_set_list = [
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
-    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs'
+    '/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs',
+    '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
 ]
 
 #the path to save your recall and qps
@@ -204,13 +203,13 @@ for i in range(len(search_set_list)):
     
     # parameters for HNSWFlat
     # it seems that the efConstruction and efSearch does not affect the performance
-    num_of_neighbors_list = [4, 8, 16, 32, 48, 64, 96, 128, 256, 512]
+    num_of_neighbors_list = [4, 8, 16, 32, 48, 64, 96]
     #[4, 8, 12, 24, 36, 48, 64, 96]
     #
-    efConstruction_list = [500]
+    efConstruction_list = [300, 400,500,600]
     #[100, 200,  300, 400, 500, 600, 700, 800, 900]
     #
-    efSearch_list = [10]
+    efSearch_list = [10, 20,50, 80, 200, 300]
     #[10, 20, 40, 80, 100, 200, 300, 400, 500, 600, 700, 800, 900]
     if not os.path.exists(os.path.join(save_path, dataset_name, 'HNSW')):
         os.makedirs(os.path.join(save_path, dataset_name, 'HNSW'))
@@ -223,8 +222,8 @@ for i in range(len(search_set_list)):
                 time_start = time.time()
                 quantilizer = faiss.IndexFlatL2(dimension)
                 index = faiss.IndexHNSWFlat(dimension, num_of_neighbors)
-                index.efConstruction = efConstruction
-                index.efSearch = efSearch
+                index.hnsw.efConstruction = efConstruction
+                index.hnsw.efSearch = efSearch
                 index.add(search_dataset)
                 dis_hnsw, ID_hnsw = index.search(query_dataset, k)
                 time_end = time.time()
