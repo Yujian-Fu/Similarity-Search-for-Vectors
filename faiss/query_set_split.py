@@ -123,7 +123,7 @@ dataset_list = [
     'deep1M',
     'ANN_GIST1M',
     'Glove',
-    'MNIST',
+    #'MNIST',
     'ANN_SIFT1M',
     'ANN_SIFT10K'
 ]
@@ -156,7 +156,8 @@ Metrics_list = [
     #'LID_MLE_1000',
     #'LID_RV_500',
     #'LID_RV_1000',
-    'RC'
+    #'RC'
+    'entropy'
     
 ]
 
@@ -171,14 +172,14 @@ for metric in Metrics_list:
         plt.subplot(len(dataset_list), 1, i+1)
         dataset = dataset_list[i]
         print('now processing', dataset)
-        LID_file = os.path.join(record_path, dataset, 'LID_and_RC', metric+'.npy')
+        LID_file = os.path.join(record_path, dataset, 'entropy.npy')
         LID_record = np.load(LID_file)
         LID_record = LID_record.reshape(LID_record.shape[0],)
-        origin_file = np.load(dataset_path_list[i])
-        dimension = origin_file.shape[1]
-        sns.kdeplot(LID_record, shade = 'True', color = 'black', label = dataset+' '+ str(dimension))
+        #origin_file = np.load(dataset_path_list[i])
+        #dimension = origin_file.shape[1]
+        sns.kdeplot(LID_record, shade = 'True', color = 'black', label = dataset)
         sns.rugplot(LID_record, color = 'black')
-        plt.xlim(0, 250)
+        #plt.xlim(0, 250)
         axes = plt.gca()
         y_min, y_max = axes.get_ylim()
         plt.vlines(np.median(LID_record), y_min, y_max, color = 'black', linestyles = 'dashed')
@@ -203,10 +204,10 @@ for metric in Metrics_list:
         np.save(os.path.join(save_path, 'mean_LID.npy'), origin_file[mean_set_ID, :])
         np.save(os.path.join(save_path, 'multiple_LID.npy'), origin_file[multiple_set_ID, :])
         '''
-    save_path = os.path.join('/home/y/yujianfu/similarity_search/datasets/Selected_Dataset/', metric)
+    save_path = os.path.join('/home/y/yujianfu/similarity_search/datasets', dataset)
     if not os.path.exists(save_path):
             os.makedirs(save_path)
     plt.legend()
     plt.suptitle(metric)
-    plt.xlim(0, 250)
-    plt.savefig(os.path.join(save_path, metric+'.png'))
+    #plt.xlim(0, 250)
+    plt.savefig(os.path.join(save_path, 'entropy.png'))
