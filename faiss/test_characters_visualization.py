@@ -84,7 +84,7 @@ for dataset in dataset_list:
 
                 recall_dis = recall_dis.reshape(recall_dis.shape[0],)
                 print(recall_dis.shape, recall_dis)                
-                sns.kdeplot(recall_dis, shade = 'True', color = 'black')
+                sns.distplot(recall_dis, shade = 'True', color = 'black')
                 sns.rugplot(recall_dis, color = 'black')
                 axes = plt.gca()
                 y_min, y_max = axes.get_ylim()
