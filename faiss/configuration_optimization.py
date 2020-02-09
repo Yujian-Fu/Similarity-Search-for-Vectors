@@ -25,38 +25,42 @@ def read_dataset(file_name):
 # the evaluate dataset include ANN_SIFT10K, ANN_SIFT1M and SIFT10M, the dimension is 128 for all
 
 search_set_list = [
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy', 
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_base.npy',
     #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy'
     #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_base.npy'
+    #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_base.npy'
 ]
 
 
 query_set_list = [
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy',
     #/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
     #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_query.npy'
+    #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_query_sub.npy'
 ]
 
 
 learn_set_list = [
-    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
-    #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
+    #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
+    '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_learn.fvecs',
     #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy'
     #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_train.npy'
+    #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_train.npy'
 ]
 
 #the path to save your recall and qps
 save_path = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
 #save_path = '/home/yujian/Downloads/similarity_search_datasets/exp_record'
 k_list = [10, 100, 500]
+
 
 # the tested algorithms include: IVFFlat, IVFPQ,  PQ, HNSWFlat, LSH
 time_weight = 0.5
@@ -103,15 +107,17 @@ for i in range(len(search_set_list)):
         np.save(os.path.join(save_path, dataset_name, str(k) + ' truth_dis.npy'), dis)
     file.close()
 
+
     # parameters for IVFPQ:
     # the number of centroids
-    nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800, ]
+    nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
     # the number of 
     code_size_list = [4, 8, 16, 32, 64]
     # the number of 
     # **********************By testing, nbits must larger than 8, or there is an error *********************
     # Error: 'nbits_per_idx <= 8' failed
-    nbits_list = [2, 3, 5, 8]
+    # Error: 'pq.nbits == 8' failed
+    nbits_list = [8]
     # the number of centroids to be discovered
     nprobe_list = [1, 3, 5, 8, 10, 20, 50, 80, 150]
 
@@ -123,7 +129,7 @@ for i in range(len(search_set_list)):
     for nlist in nlist_list:
         for code_size in code_size_list:
             for nbits in nbits_list:
-                for nprobe in nprobe_list[0 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
+                for nprobe in nprobe_list[np.sum(list(map(lambda x:x<nlist, nprobe_list))) -2 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
 
                     recall_record = np.zeros((query_length, 1))
                     time_start = time.time()
@@ -136,7 +142,6 @@ for i in range(len(search_set_list)):
                     index.add(search_dataset)
                     time_cons = time.time() - time_start
                     file.write('nlist: ' + str(nlist)+ ' code_size: ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe: ' + str(nprobe) + ' time_cons ' + str(time_cons) + '\n')
-                    
                     for k_index in range(len(k_list)):
                         k = k_list[k_index]
                         time_start = time.time()
@@ -178,7 +183,7 @@ for i in range(len(search_set_list)):
         total_number += np.sum(list(map(lambda x:x<=nlist_list[j], nprobe_list)))
 
     for nlist in nlist_list:
-        for nprobe in nprobe_list[0 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
+        for nprobe in nprobe_list[np.sum(list(map(lambda x:x<nlist, nprobe_list))) -2  : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
                 recall_record = np.zeros((query_length, 1))
                 time_start = time.time()
                 quantilizer = faiss.IndexFlatL2(dimension)
@@ -219,13 +224,13 @@ for i in range(len(search_set_list)):
     
     # parameters for HNSWFlat
     # it seems that the efConstruction and efSearch does not affect the performance
-    num_of_neighbors_list = [4, 8, 16, 32, 48, 64, 96]
-    #[4, 8, 12, 24, 36, 48, 64, 96]
+    #num_of_neighbors_list = [4, 8, 16, 32, 48, 64, 96]
+    num_of_neighbors_list = [4, 8, 12, 24, 36, 48, 64]
     #
     efConstruction_list = [300, 400,500,600]
     #[100, 200,  300, 400, 500, 600, 700, 800, 900]
     #
-    efSearch_list = [10, 20,50, 80, 200, 300]
+    efSearch_list = [10, 40, 80, 200, 300]
     #[10, 20, 40, 80, 100, 200, 300, 400, 500, 600, 700, 800, 900]
     if not os.path.exists(os.path.join(save_path, dataset_name, 'HNSW')):
         os.makedirs(os.path.join(save_path, dataset_name, 'HNSW'))
@@ -269,9 +274,8 @@ for i in range(len(search_set_list)):
     
     
     
-    
     # parameters for LSH
-    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 8192*2, 8192*4]
+    nbits_list = [32, 64, 128, 256, 512, 1024, 2048, 4096, 4096*2, 4096*3]
 
     if not os.path.exists(os.path.join(save_path, dataset_name, 'LSH')):
         os.makedirs(os.path.join(save_path, dataset_name, 'LSH'))
@@ -311,15 +315,16 @@ for i in range(len(search_set_list)):
             
             np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + ' k: ' + str(k) + '_recall.npy'), recall_record)
             np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + ' k: ' + str(k) + '_dis.npy'), dis_LSH)
-        file.close()
+    file.close()
     
     
     # parameters for PQ
     # number of sub-quantilizers
     # ********************** dimension should be a multiple of M **********************
-    M_list = [2, 4, 8, 16, 32, 64, 128]
+    M_list = [4, 8, 16, 32, 64]
+    #M_list = [4, 8, 16, 32, 64, 128]
     # bits allocated to every sub-quantilizer, tipically 8, 12, or 16
-    nbits_list = [4, 8, 16]
+    nbits_list = [4, 8]
     
     if not os.path.exists(os.path.join(save_path, dataset_name, 'PQ')):
         os.makedirs(os.path.join(save_path, dataset_name, 'PQ'))
