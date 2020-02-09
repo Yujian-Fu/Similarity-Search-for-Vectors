@@ -112,7 +112,7 @@ for i in range(len(search_set_list)):
     # the number of centroids
     nlist_list = [10, 20 ,50, 100, 200, 400, 800]
     # the number of 
-    code_size_list = [4, 8, 16, 32, 64, 120, 180, 240, 480]
+    code_size_list = [4, 8, 16, 32, 64, 120, 240, 480]
     # the number of 
     # **********************By testing, nbits must larger than 8, or there is an error *********************
     # Error: 'nbits_per_idx <= 8' failed
