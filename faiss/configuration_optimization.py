@@ -107,7 +107,7 @@ for i in range(len(search_set_list)):
         np.save(os.path.join(save_path, dataset_name, str(k) + ' truth_dis.npy'), dis)
     file.close()
 
-
+    
     # parameters for IVFPQ:
     # the number of centroids
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -129,19 +129,21 @@ for i in range(len(search_set_list)):
     for nlist in nlist_list:
         for code_size in code_size_list:
             for nbits in nbits_list:
-                for nprobe in nprobe_list[np.sum(list(map(lambda x:x<nlist, nprobe_list))) -2 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
+                
+                time_start = time.time()
+                quantilizer = faiss.IndexFlatL2(dimension)
+                index = faiss.IndexIVFPQ(quantilizer, dimension, nlist, code_size, nbits)
+                
+                assert not index.is_trained
+                index.train(learn_dataset)
+                assert index.is_trained
+                index.add(search_dataset)
+                time_cons = time.time() - time_start
+                file.write('nlist: ' + str(nlist)+ ' code_size: ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe: ' + str(nprobe) + ' time_cons ' + str(time_cons) + '\n')
 
-                    recall_record = np.zeros((query_length, 1))
-                    time_start = time.time()
-                    quantilizer = faiss.IndexFlatL2(dimension)
-                    index = faiss.IndexIVFPQ(quantilizer, dimension, nlist, code_size, nbits)
+                for nprobe in nprobe_list[np.sum(list(map(lambda x:x<nlist, nprobe_list))) -2 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
                     index.nprobe = nprobe
-                    assert not index.is_trained
-                    index.train(learn_dataset)
-                    assert index.is_trained
-                    index.add(search_dataset)
-                    time_cons = time.time() - time_start
-                    file.write('nlist: ' + str(nlist)+ ' code_size: ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe: ' + str(nprobe) + ' time_cons ' + str(time_cons) + '\n')
+                    recall_record = np.zeros((query_length, 1))
                     for k_index in range(len(k_list)):
                         k = k_list[k_index]
                         time_start = time.time()
@@ -183,18 +185,19 @@ for i in range(len(search_set_list)):
         total_number += np.sum(list(map(lambda x:x<=nlist_list[j], nprobe_list)))
 
     for nlist in nlist_list:
+        time_start = time.time()
+        quantilizer = faiss.IndexFlatL2(dimension)
+        index = faiss.IndexIVFFlat(quantilizer, dimension, nlist) 
+        assert not index.is_trained 
+        index.train(learn_dataset) 
+        assert index.is_trained 
+        index.add(search_dataset) 
+        time_cons = time.time() - time_start
+        file.write('nlist: ' + str(nlist) + ' nprobe: ' + str(nprobe) + ' time_cons ' + str(time_cons) + '\n')
+
         for nprobe in nprobe_list[np.sum(list(map(lambda x:x<nlist, nprobe_list))) -2  : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
                 recall_record = np.zeros((query_length, 1))
-                time_start = time.time()
-                quantilizer = faiss.IndexFlatL2(dimension)
-                index = faiss.IndexIVFFlat(quantilizer, dimension, nlist) 
                 index.nprobe = nprobe 
-                assert not index.is_trained 
-                index.train(learn_dataset) 
-                assert index.is_trained 
-                index.add(search_dataset) 
-                time_cons = time.time() - time_start
-                file.write('nlist: ' + str(nlist) + ' nprobe: ' + str(nprobe) + ' time_cons ' + str(time_cons) + '\n')
                 for k_index in range(len(k_list)):
                     k = k_list[k_index]
                     time_start = time.time()
@@ -237,17 +240,17 @@ for i in range(len(search_set_list)):
 
     file = open(os.path.join(save_path, dataset_name, 'HNSW', 'qps_recall_HNSW.txt'), 'w')
     for num_of_neighbors in num_of_neighbors_list:
+        time_start = time.time()
+        quantilizer = faiss.IndexFlatL2(dimension)
+        index = faiss.IndexHNSWFlat(dimension, num_of_neighbors)
+        index.add(search_dataset)
+        time_cons = time.time() - time_start
+        file.write('num_neigh: '+ str(num_of_neighbors) + ' efCon: ' + str(efConstruction) + ' efS: ' + str(efSearch) + ' time_cons ' + str(time_cons) + '\n')
         for efConstruction in efConstruction_list:
             for efSearch in efSearch_list:
                 recall_record = np.zeros((query_length, 1))
-                time_start = time.time()
-                quantilizer = faiss.IndexFlatL2(dimension)
-                index = faiss.IndexHNSWFlat(dimension, num_of_neighbors)
                 index.hnsw.efConstruction = efConstruction
                 index.hnsw.efSearch = efSearch
-                index.add(search_dataset)
-                time_cons = time.time() - time_start
-                file.write('num_neigh: '+ str(num_of_neighbors) + ' efCon: ' + str(efConstruction) + ' efS: ' + str(efSearch) + ' time_cons ' + str(time_cons) + '\n')
                 for k_index in range(len(k_list)):
                     k = k_list[k_index]
                     time_start = time.time()
@@ -321,8 +324,7 @@ for i in range(len(search_set_list)):
     # parameters for PQ
     # number of sub-quantilizers
     # ********************** dimension should be a multiple of M **********************
-    M_list = [4, 8, 16, 32, 64]
-    #M_list = [4, 8, 16, 32, 64, 128]
+    M_list = [4, 8, 16, 32, 64, 128]
     # bits allocated to every sub-quantilizer, tipically 8, 12, or 16
     nbits_list = [4, 8]
     
