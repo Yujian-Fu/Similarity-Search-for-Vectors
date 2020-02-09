@@ -32,6 +32,7 @@ for dataset_index in range(len(dataset_list)):
     index = faiss.IndexIVFFlat(quantilizer, instances, 5)
     index.probe = 2
     index.train(dataset[0:50,:])
+    index.add(dataset)
 
     for i in range(dimension):
         performance[i, 0] = entropy[i, 0]
