@@ -16,7 +16,8 @@ k_list = [3, 5, 10, 50]
 
 for dataset_index in range(len(dataset_list)):
     dataset_path = dataset_list[dataset_index]
-    dataset_name = dataset_path.split('/')[-1].split('_')[0]
+    dataset_name = 'ANN_SIFT10K'
+    #dataset_path.split('/')[-1].split('_')[0]
     entropy_path = entropy_list[dataset_index]
 
     dataset = np.ascontiguousarray(np.load(dataset_path).astype('float32'))
@@ -45,7 +46,7 @@ for dataset_index in range(len(dataset_list)):
             qps = 1 / (time_end - time_start)
             dis_truth, id_truth = index_brute.search(dataset[i, :].reshape(1, -1), k)
             recall = len(set(id_truth[0,:]) & set(ID_search[0,:]))/len(set(id_truth[0, :]))
-            print(id_truth, ID_search)
+            #print(id_truth, ID_search)
             performance[i, 2*j+1] = recall
             performance[i, 2*j+2] = qps
             print('the result now is: ', i, k, recall, qps)
