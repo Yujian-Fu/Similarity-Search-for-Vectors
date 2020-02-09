@@ -112,7 +112,7 @@ for i in range(len(search_set_list)):
     # the number of centroids
     nlist_list = [10, 20 ,50, 100, 200, 400, 800]
     # the number of 
-    code_size_list = [4, 8, 16, 32, 64]
+    code_size_list = [4, 8, 16, 32, 64, 128, 1192, 256]
     # the number of 
     # **********************By testing, nbits must larger than 8, or there is an error *********************
     # Error: 'nbits_per_idx <= 8' failed
@@ -169,7 +169,7 @@ for i in range(len(search_set_list)):
         
     file.close()
     
-    
+    '''
     # parameter for IVFFlat: 
     # the number of centroids in IVFFlat
     nlist_list = [5, 10, 20 ,50, 100, 200, 400, 800]
@@ -224,7 +224,7 @@ for i in range(len(search_set_list)):
     file.close()
     
     
-    '''
+    
     # parameters for HNSWFlat
     # it seems that the efConstruction and efSearch does not affect the performance
     #num_of_neighbors_list = [4, 8, 16, 32, 48, 64, 96]
@@ -274,7 +274,7 @@ for i in range(len(search_set_list)):
                     np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + ' k: ' + str(k) + '_recall.npy'), recall_record)
                     np.save(os.path.join(save_path, dataset_name, 'HNSW', ' num_neigh '+ str(num_of_neighbors)+' efCon ' + str(efConstruction) + ' efS ' + str(efSearch) + ' k: ' + str(k) + '_dis.npy'), dis_hnsw)
     file.close()
-    '''
+    
     
     
     # parameters for LSH
@@ -319,7 +319,7 @@ for i in range(len(search_set_list)):
             np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + ' k: ' + str(k) + '_recall.npy'), recall_record)
             np.save(os.path.join(save_path, dataset_name, 'LSH', 'nbits ' + str(nbits) + ' k: ' + str(k) + '_dis.npy'), dis_LSH)
     file.close()
-    
+    '''
     
     # parameters for PQ
     # number of sub-quantilizers
