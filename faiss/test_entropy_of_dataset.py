@@ -29,9 +29,9 @@ for dataset_index in range(len(dataset_list)):
     index_brute = faiss.IndexFlatL2(instances)
     index_brute.add(dataset)
     quantilizer = faiss.IndexFlatL2(instances)
-    index = faiss.IndexIVFFlat(quantilizer, instances, 5)
-    index.probe = 2
-    index.train(dataset[0:50,:])
+    index = faiss.IndexHNSWFlat(dimension, 12)
+    index.hnsw.efConstruction = 100
+    index.hnsw.efSearch = 40
     index.add(dataset)
 
     for i in range(dimension):
