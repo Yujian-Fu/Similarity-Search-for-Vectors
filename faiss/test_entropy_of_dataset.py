@@ -35,11 +35,11 @@ for dataset_index in range(len(dataset_list)):
 
     for i in range(dimension):
         performance[i, 0] = entropy[i, 0]
-        dis_truth, id_truth = index_brute.search(dataset[i], k_list[-1])
+        dis_truth, id_truth = index_brute.search(dataset[i, :], k_list[-1])
         for j in range(len(k_list)):
             k = k_list[j]
             time_start = time.time()
-            dis_search, ID_search = index.search(dataset[i], k)
+            dis_search, ID_search = index.search(dataset[i, :], k)
             time_end = time.time()
             qps = 1 / (time_end - time_start)
             recall = len(set(id_truth[:, 0:k]) & set(ID_search))/len(set(id_truth[:, 0:k]))
