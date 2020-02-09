@@ -44,8 +44,9 @@ for dataset_index in range(len(dataset_list)):
             recall = len(set(id_truth[:, 0:k]) & set(ID_search))/len(set(id_truth[:, 0:k]))
             performance[i, 2*j+1] = recall
             performance[i, 2*j+2] = qps
+            print('the result now is: ', i, k, recall, qps)
     
-    np.save(op.path.join(save_path, dataset_name, 'entropy_performance.npy'),performance)
+    np.save(os.path.join(save_path, dataset_name, 'entropy_performance.npy'),performance)
 
 
 
