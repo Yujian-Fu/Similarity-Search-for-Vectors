@@ -24,7 +24,7 @@ for dataset_index in range(len(dataset_list)):
     dataset = np.transpose(dataset)
 
     entropy = np.load(entropy_path)
-    performance = np.zeros(dimension, 7)
+    performance = np.zeros((dimension, 7))
     index_brute = faiss.IndexFlatL2(instances)
     index_brute.add(dataset)
     quantilizer = faiss.IndexFlatL2(instances)
