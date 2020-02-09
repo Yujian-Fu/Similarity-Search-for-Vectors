@@ -343,7 +343,7 @@ for i in range(len(search_set_list)):
             assert index.is_trained
             index.add(search_dataset)
             time_cons = time.time() - time_start
-            file.write(' M ' + str(M) + nbits: ' + str(nbits) + ' time_cons ' + str(time_cons) + '\n')
+            file.write(' M ' + str(M) + 'nbits: ' + str(nbits) + ' time_cons ' + str(time_cons) + '\n')
             for k_index in range(len(k_list)):
                 k = k_list[k_index]
                 time_start = time.time()
