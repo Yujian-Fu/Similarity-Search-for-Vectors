@@ -20,7 +20,8 @@ for dataset_index in range(len(dataset_list)):
     entropy_path = entropy_list[dataset_index]
 
     dataset = np.ascontiguousarray(np.load(dataset_path).astype('float32'))
-    instances, dimension = dataset.shape
+    instances = dataset.shape[0]
+    dimension = dataset.shape[1]
     dataset = np.ascontiguousarray(np.transpose(dataset))
 
     entropy = np.load(entropy_path)
