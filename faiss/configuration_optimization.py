@@ -139,7 +139,7 @@ for i in range(len(search_set_list)):
                 assert index.is_trained
                 index.add(search_dataset)
                 time_cons = time.time() - time_start
-                file.write('nlist: ' + str(nlist)+ ' code_size: ' + str(code_size) + ' nbits ' + str(nbits) + ' nprobe: ' + str(nprobe) + ' time_cons ' + str(time_cons) + '\n')
+                file.write('nlist: ' + str(nlist)+ ' code_size: ' + str(code_size) + ' nbits ' + str(nbits) + ' time_cons ' + str(time_cons) + '\n')
 
                 for nprobe in nprobe_list[np.sum(list(map(lambda x:x<nlist, nprobe_list))) -2 : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
                     index.nprobe = nprobe
@@ -193,7 +193,7 @@ for i in range(len(search_set_list)):
         assert index.is_trained 
         index.add(search_dataset) 
         time_cons = time.time() - time_start
-        file.write('nlist: ' + str(nlist) + ' nprobe: ' + str(nprobe) + ' time_cons ' + str(time_cons) + '\n')
+        file.write('nlist: ' + str(nlist)+ ' time_cons ' + str(time_cons) + '\n')
 
         for nprobe in nprobe_list[np.sum(list(map(lambda x:x<nlist, nprobe_list))) -2  : np.sum(list(map(lambda x:x<nlist, nprobe_list)))]:
                 recall_record = np.zeros((query_length, 1))
@@ -245,7 +245,7 @@ for i in range(len(search_set_list)):
         index = faiss.IndexHNSWFlat(dimension, num_of_neighbors)
         index.add(search_dataset)
         time_cons = time.time() - time_start
-        file.write('num_neigh: '+ str(num_of_neighbors) + ' efCon: ' + str(efConstruction) + ' efS: ' + str(efSearch) + ' time_cons ' + str(time_cons) + '\n')
+        file.write('num_neigh: '+ str(num_of_neighbors) + ' time_cons ' + str(time_cons) + '\n')
         for efConstruction in efConstruction_list:
             for efSearch in efSearch_list:
                 recall_record = np.zeros((query_length, 1))
@@ -343,7 +343,7 @@ for i in range(len(search_set_list)):
             assert index.is_trained
             index.add(search_dataset)
             time_cons = time.time() - time_start
-            file.write('nbits: ' + str(nbits) + ' time_cons ' + str(time_cons) + '\n')
+            file.write(' M ' + str(M) + nbits: ' + str(nbits) + ' time_cons ' + str(time_cons) + '\n')
             for k_index in range(len(k_list)):
                 k = k_list[k_index]
                 time_start = time.time()
