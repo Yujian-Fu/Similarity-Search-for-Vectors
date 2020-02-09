@@ -30,7 +30,7 @@ for dataset_index in range(len(dataset_list)):
     index_brute = faiss.IndexFlatL2(instances)
     index_brute.add(dataset)
     quantilizer = faiss.IndexFlatL2(instances)
-    index = faiss.IndexHNSWFlat(dimension, 12)
+    index = faiss.IndexHNSWFlat(instances, 12)
     index.hnsw.efConstruction = 100
     index.hnsw.efSearch = 40
     index.add(dataset)
