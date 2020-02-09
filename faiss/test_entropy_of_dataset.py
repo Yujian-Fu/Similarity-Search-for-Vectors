@@ -42,8 +42,7 @@ for dataset_index in range(len(dataset_list)):
             dis_search, ID_search = index.search(dataset[i, :].reshape(1, -1), k)
             time_end = time.time()
             qps = 1 / (time_end - time_start)
-            dis_truth, id_truth = index_brute.search(dataset[i, :].reshape(1, -1), k)
-            recall = len(set(id_truth) & set(ID_search))/len(set(id_truth))
+            recall = len(set(id_truth[:, 0:k].reshape(1, -1)) & set(ID_search.reshape(1, -1)))/len(set(id_truth[:, 0:k].reshape(1, -1)))
             performance[i, 2*j+1] = recall
             performance[i, 2*j+2] = qps
             print('the result now is: ', i, k, recall, qps)
