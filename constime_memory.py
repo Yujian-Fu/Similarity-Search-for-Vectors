@@ -48,6 +48,7 @@ save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
 param_list = {'HNSW': [], 'LSH': [], 'IVFPQ': [], 'VP-Tree': []}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def faiss_build(algorithm, dataset):
     dimension = dataset[0].shape[0]
     assert dataset[0].shape[0] == dataset[1].shape[0] == dataset[2].shape[0]
@@ -101,7 +102,7 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
     return recall, dis_ratio, recall_record, dis_record, query_length/(time_end - time_start)
 
 
-
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_build(dataset):
     dimension = dataset[0].shape[0]
     instances = dataset[1].shape[0]
