@@ -167,7 +167,7 @@ def faiss_test(algorithm, dataset_path):
         index_brute.add(search_dataset)
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
-        print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
+        print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio), dis_record)
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
 @profile(precision=4,stream=open('./memory_profiler.log','a'))
