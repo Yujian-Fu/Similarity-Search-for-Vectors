@@ -15,3 +15,11 @@ t.save('test.ann')
 u = AnnoyIndex(f, 'angular')
 u.load('test.ann') # super fast, will just mmap the file
 print(u.get_nns_by_item(0, 1000)) # will find the 1000 nearest neighbors
+
+dimension = 100
+index = AnnoyIndex(dimension, 'euclidean')
+search_dataset = np.random.random((1000, 100))
+for i in range(1000):
+    index.add_item(i, search_dataset[i, :])
+
+index.build(100)
