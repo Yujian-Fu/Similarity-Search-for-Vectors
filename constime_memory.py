@@ -160,7 +160,7 @@ def faiss_test(algorithm, dataset_path):
         index_brute = faiss.IndexFlatL2(search_dataset.shape[0])
         truth_ID, truth_dis = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
-        print('faiss with algorithm '+str(algorithm))+ ' k: ' + str(k) + ' recall: '+str(recall)
+        print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
 def annoy_test(dataset_path):
@@ -177,6 +177,7 @@ def annoy_test(dataset_path):
         index_brute = faiss.IndexFlatL2(search_dataset.shape[0])
         truth_ID, truth_dis = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
+        print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
 
