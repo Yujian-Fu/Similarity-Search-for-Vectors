@@ -94,7 +94,6 @@ def annoy_build(dataset):
 
 def faiss_search(index, dataset, truth_ID, truth_dis, k):
     query_length = dataset[2].shape[0]
-
     time_start = time.time()
     dis, ID = index.search(dataset[2], k)
     time_end = time.time()
@@ -117,7 +116,6 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
 
 def annoy_search(index, dataset, truth_ID, truth_dis, k):
     query_length = dataset[2].shape[0]
-    dis, ID = np.zeros(())
     time_start = time.time()
     search_time = 0
     recall_record = np.zeros((query_length, 1))
