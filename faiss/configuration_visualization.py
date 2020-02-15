@@ -23,7 +23,7 @@ def get_optimal(performance):
     for i in range(instances):
         kick_out = 0
         for j in range(instances):
-            if performance[j, 0] > performance[i, 0]:
+            if j != i and performance[j, 0] > performance[i, 0] - 0.01:
                 if performance[j, 1] > performance [i, 1]:
                     kick_out = 1
         if kick_out == 0:
@@ -36,6 +36,7 @@ def draw_line_figure(optimal_setting, dataset, algo):
     
     recall = optimal_setting[:, 0]
     qps = optimal_setting[:, 1]
+    '''
     A, B, C, D = optimize.curve_fit(f_3, recall, qps)[0]
     recall_new = np.zeros((recall.shape[0]*3-2, ))
 
@@ -51,11 +52,11 @@ def draw_line_figure(optimal_setting, dataset, algo):
 
     for j in range(recall_new.shape[0]):
         qps_new[j,] = f_3(recall_new[j, ], A, B, C, D)
-
+    '''
     if algo != 'HNSW':
-        plt.plot(recall_new, qps_new, label = dataset+' ' + algo)
+        plt.plot(recall, qps, label = dataset+' ' + algo)
     else:
-        plt.plot(recall_new, qps_new, label = dataset+' ' + algo)
+        plt.plot(recall, qps, label = dataset+' ' + algo)
 
     plt.legend(prop={'size':12})
     plt.grid(alpha = 0.5, linestyle= '--')
@@ -65,6 +66,7 @@ def draw_line_figure(optimal_setting, dataset, algo):
     return recall, qps
 
 def draw_scatter_figure(performance, dataset, algo):
+    plt.figure()
     plt.scatter(performance[:, 0], performance[:, 1], label = dataset+' ' + algo, marker= '*')
     plt.xlabel('recall')
     plt.ylabel('qps') 
@@ -72,8 +74,8 @@ def draw_scatter_figure(performance, dataset, algo):
     plt.legend(prop= {'size':12})
     plt.grid(alpha = 0.5, linestyle = '--')
     plt.tight_layout()
-    plt.show()
-    plt.savefig(os.path.join(record_path, dataset, algo, 'configuration_scatter.png'))
+    #plt.show()
+    plt.savefig(os.path.join(record_path, dataset, algo, 'configuration_scatter_500.png'))
     
 
 
@@ -82,8 +84,8 @@ def draw_scatter_figure(performance, dataset, algo):
 dataset_list = [
     #'deep1M',
     #'GIST1M',
-    #'SIFT1M',
-    'SIFT10K',
+    'SIFT1M',
+    #'SIFT10K',
     #'SIFT10M'
 ]
 
@@ -116,7 +118,13 @@ for dataset in dataset_list:
         content = file.read()
         content = content.split('\n')[0:-1]
         instances = len(content)
-        performance = np.zeros((int(instances/4), 2))
+        if instances % 4 == 0:
+            performance = np.zeros((int(instances/4), 2))
+            flag = 1
+        else:
+            performance = np.zeros((int(instances/3), 2))
+            flag = 0
+
         cons_length = len(content[0].split(' '))
         for i in range(instances):
             line = content[i].split(' ')
@@ -125,8 +133,12 @@ for dataset in dataset_list:
                 qps = float(line[-1])
                 k = int(line[-5])
                 if k == 500:
-                    performance[int(i/4), 0] = recall
-                    performance[int(i/4), 1] = qps
+                    if flag == 1:
+                        performance[int(i/4), 0] = recall
+                        performance[int(i/4), 1] = qps
+                    elif flag == 0:
+                        performance[int(i/3)-1, 0] = recall
+                        performance[int(i/3)-1, 1] = qps
         
         #draw_scatter_figure(performance, dataset, algo)
 
@@ -145,7 +157,7 @@ for dataset in dataset_list:
 
         #fig = plt.figure()
         #plt.scatter(performance[:, 0], performance[:, 1], alpha = 0.8)
-    plt.plot(1.0, 7959, marker= '*', label = 'brute_force')
+    plt.plot(1.0, 251, marker= '*', label = 'brute_force')
     plt.xlabel('recall')
     plt.ylabel('qps')
     plt.legend(prop={'size':12})

@@ -1,12 +1,20 @@
-Filename: c:\Users\AA\Documents\similarity_search\Similarity-Search-for-Vectors\faiss\memory_profiler_test.py
+Filename: /home/yujian/Desktop/test_case.py
 
 Line #    Mem usage    Increment   Line Contents
 ================================================
-     3  15.7227 MiB  15.7227 MiB   @profile(precision=4,stream=open('memory_profiler.log','w+'))
-     4                             def test1():
-     5  15.7305 MiB   0.0078 MiB       c = 0
-     6  15.7305 MiB   0.0000 MiB       for item in range(100000):
-     7  15.7305 MiB   0.0000 MiB           c += 1
-     8  15.7305 MiB   0.0000 MiB       print(c)
+     5  59.1211 MiB  59.1211 MiB   @profile(precision=4,stream=open('./memory_profiler.log','w+'))
+     6                             def test_case():
+     7  59.1211 MiB   0.0000 MiB       dimension = 128
+     8  59.1211 MiB   0.0000 MiB       quantilizer = faiss.IndexFlatL2(dimension)
+     9                                 #index = faiss.IndexIVFPQ(quantilizer, dimension, 20, 16, 8)
+    10  59.1211 MiB   0.0000 MiB       index = faiss.IndexHNSWFlat( dimension, 16)
+    11 108.4570 MiB  49.3359 MiB       train_set = np.random.rand(100000,128).astype('float32')
+    12 108.4570 MiB   0.0000 MiB       query_set = np.random.rand(100, 128).astype('float32')
+    13 157.4336 MiB  48.9766 MiB       search_set = np.random.rand(100000, 128).astype('float32')
+    14                             
+    15                                 #index.train(search_set)
+    16 230.5898 MiB  73.1562 MiB       index.add(search_set)
+    17 242.1797 MiB  11.5898 MiB       dis, ID = index.search(search_set, 10)
+    18 242.5000 MiB   0.3203 MiB       print(dis)
 
 

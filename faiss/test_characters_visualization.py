@@ -2,7 +2,8 @@ import numpy as np
 import seaborn as sns
 import os
 import matplotlib.pyplot as plt
-
+import glob
+'''
 k_list = [5, 10, 20, 40, 80, 120, 200, 400, 600, 800, 1000]
 
 model_list = [
@@ -77,7 +78,7 @@ for dataset in dataset_list:
         plt.title('recall-qps '+dataset+' '+model)
         plt.legend()
         plt.savefig(os.path.join(record_path, dataset, model, 'recall-qps'+dataset+'-'+model+'.png'))
-'''
+
         for k in k_list:
             for metric in metric_list:
                 recall_dis = np.load(os.path.join(record_path, dataset, model,metric+str(k)+'_recall.npy'))
@@ -92,7 +93,46 @@ for dataset in dataset_list:
                 print('the median is ', np.median(recall_dis))
                 plt.savefig(os.path.join(record_path, dataset, model, metric+'_'+str(k)+'_.png'))
 '''
-                        
+
+dataset_list = [
+    #'deep1M',
+    #'GIST1M',
+    #'SIFT1M',
+    'SIFT10K',
+    #'SIFT10M'
+]
+
+algo_list = [
+    'LSH',
+    'HNSW',
+    'IVFFlat',
+    'IVFPQ',
+    'PQ'
+]
+
+record_path = '/home/yujian/Downloads/similarity_search_datasets/exp_record'
+
+for algo in algo_list:
+    for dataset in dataset_list:
+        count_performance = np.zeros((1, 10))
+        std_performance = np.zeros((1, 10))
+        file_path = glob.glob(os.path.join(record_path, dataset, algo, '*.npy'))
+        for i in range(len(file_path)):
+            if file_path[i].split('/')[-1].split('_')[-1] == 'recall.npy':
+                recall = np.load(file_path[i])
+                mean_recall = np.mean(recall)
+                std_recall = np.std(recall)
+                if not (np.isnan(mean_recall) and np.isnan(std_recall)):
+                    if mean_recall == 1:
+                        mean_recall = 0.9
+                    count_performance[0, int(mean_recall*10)] += 1
+                    std_performance[0, int(mean_recall*10)] += std_recall
+        for i in range(10):
+            std_performance[0, i] /= count_performance[0, i]
+        np.save(os.path.join(record_path, dataset, algo, 'std_recall.npy'), std_performance)
+        print('the std_recall is', dataset, algo, std_performance)
+
+
 
      
 
