@@ -154,8 +154,8 @@ def faiss_test(algorithm, dataset_path):
         os.makedirs(save_path)
     index, cons_time = faiss_build(algorithm, dataset)
     for k in K_list:
-        search_dataset = np.load(dataset_path[0])
-        query_dataset = np.load(dataset_path[1])
+        search_dataset = np.load(dataset_path[1])
+        query_dataset = np.load(dataset_path[2])
         index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
         index_brute.add(search_dataset)
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
@@ -172,8 +172,8 @@ def annoy_test(dataset_path):
 
     index, cons_time = annoy_build(dataset)
     for k in K_list:
-        search_dataset = np.load(dataset_path[0])
-        query_dataset = np.load(dataset_path[1])
+        search_dataset = np.load(dataset_path[1])
+        query_dataset = np.load(dataset_path[2])
         index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
         index_brute.add(search_dataset)
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
