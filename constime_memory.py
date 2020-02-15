@@ -50,8 +50,8 @@ param_list = {'HNSW': [], 'LSH': [], 'IVFPQ': [], 'VP-Tree': []}
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 @profile(precision=4,stream=open('./memory_profiler.log','a'))
 def faiss_build(algorithm, dataset):
-    dimension = dataset[0].shape[0]
-    assert dataset[0].shape[0] == dataset[1].shape[0] == dataset[2].shape[0]
+    dimension = dataset[0].shape[1]
+    assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
     time_start = time.time()
     if algorithm == 'HNSW':
         param = param_list['HNSW']
@@ -104,9 +104,9 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
 
 @profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_build(dataset):
-    dimension = dataset[0].shape[0]
+    dimension = dataset[0].shape[1]
     instances = dataset[1].shape[0]
-    assert dataset[0].shape[0] == dataset[1].shape[0] == dataset[2].shape[0]
+    assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
     time_start = time.time()
     param = param_list['annoy']
     assert len(param) == 1
