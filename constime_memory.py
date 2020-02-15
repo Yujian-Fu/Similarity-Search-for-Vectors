@@ -117,6 +117,8 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
     dis_matrix = dis / truth_dis
     dis_record = np.mean(dis_matrix, axis = 0)
     dis_ratio = np.mean(dis_matrix)
+    if dis_ratio < 0.5 or dis_ratio > 10:
+        print('there seems to be a distance error, ', dis[-1, :], ID[-1, :], ruth_dis[-1, :], truth_ID[-1, :]) 
     return recall, dis_ratio, recall_record, dis_record, query_length/(time_end - time_start)
 
 
@@ -167,7 +169,7 @@ def faiss_test(algorithm, dataset_path):
         index_brute.add(search_dataset)
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
-        print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio), dis_record)
+        print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
 @profile(precision=4,stream=open('./memory_profiler.log','a'))
