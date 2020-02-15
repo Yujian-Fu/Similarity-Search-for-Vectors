@@ -43,7 +43,7 @@ dataset_list = [
 algorithm_list = ['HNSW', 'LSH', 'IVFPQ']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
-param_list = {'HNSW': [64, 600, 300], 'LSH': [512], 'IVFPQ': [400, 64, 500], 'Annoy': [100]}
+param_list = {'HNSW': [64, 600, 300], 'LSH': [512], 'IVFPQ': [400, 64, 200], 'Annoy': [100]}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 
@@ -56,7 +56,7 @@ def faiss_build(algorithm, dataset):
         assert len(param) == 3
         index = faiss.IndexHNSWFlat(dimension, param[0])
         index.hnsw.efConstruction = param[1]
-        index.hnsw.edSearch = param[2]
+        index.hnsw.efSearch = param[2]
         index.add(dataset[1])
         time_end = time.time()
         return index, time_end-time_start
