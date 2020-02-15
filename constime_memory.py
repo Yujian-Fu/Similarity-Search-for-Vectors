@@ -120,7 +120,7 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
     time_start = time.time()
     search_time = 0
     recall_record = np.zeros((query_length, 1))
-    dis_record = np.array((1, k))
+    dis_record = np.array((1, k)).astype('float')
 
     for i in range(query_length):
         time_start = time.time()
@@ -157,7 +157,7 @@ def faiss_test(algorithm, dataset_path):
         query_dataset = np.load(dataset_path[1])
         index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
         index_brute.add(search_dataset)
-        truth_ID, truth_dis = index_brute.search(query_dataset, k)
+        truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
@@ -175,7 +175,7 @@ def annoy_test(dataset_path):
         query_dataset = np.load(dataset_path[1])
         index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
         index_brute.add(search_dataset)
-        truth_ID, truth_dis = index_brute.search(query_dataset, k)
+        truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
