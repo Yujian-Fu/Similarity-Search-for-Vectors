@@ -43,7 +43,7 @@ dataset_list = [
 algorithm_list = ['HNSW', 'LSH', 'IVFPQ']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
-param_list = {'HNSW': [64, 600, 300], 'LSH': [1024], 'IVFPQ': [400, 480, 200], 'Annoy': [100]}
+param_list = {'HNSW': [64, 600, 300], 'LSH': [1024], 'IVFPQ': [400, 64, 200], 'Annoy': [100]}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 
