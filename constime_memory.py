@@ -89,7 +89,7 @@ def annoy_build(dataset):
     assert len(param) == 1
     index = AnnoyIndex(dimension, 'euclidean')
     for i in range(instances):
-        index.add(i, dataset[1][i, :])
+        index.add_item(i, dataset[1][i, :])
     time_end = time.time()
     return index, time_end - time_start
 
