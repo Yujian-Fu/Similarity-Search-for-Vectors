@@ -176,7 +176,7 @@ def record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, q
 @profile(precision=4,stream=open('./memory_profiler.log','a'))
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
-    dataset = [np.load(dataset_path[i]) for i in range(3)]
+    dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
     save_path = os.path.join(save_dir, dataset_name, algorithm)
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
@@ -185,8 +185,8 @@ def faiss_test(algorithm, dataset_path):
     index, cons_time = faiss_build(algorithm, dataset)
     print('finish build faiss index')
     for k in K_list:
-        search_dataset = np.load(dataset_path[1])
-        query_dataset = np.load(dataset_path[2])
+        search_dataset = np.ascontiguousarray(np.load(dataset_path[1]).astype('float32'))
+        query_dataset = np.ascontiguousarray(np.load(dataset_path[2]).astype('float32'))
         index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
         index_brute.add(search_dataset)
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
@@ -197,7 +197,7 @@ def faiss_test(algorithm, dataset_path):
 @profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
-    dataset = [np.load(dataset_path[i]) for i in range(3)]
+    dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
     save_path = os.path.join(save_dir, dataset_name, 'annoy')
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
@@ -206,8 +206,8 @@ def annoy_test(dataset_path):
     index, cons_time = annoy_build(dataset, dataset_name)
     print('finish building annoy index')
     for k in K_list:
-        search_dataset = np.load(dataset_path[1])
-        query_dataset = np.load(dataset_path[2])
+        search_dataset = np.ascontiguousarray(np.load(dataset_path[1]).astype('float32'))
+        query_dataset = np.ascontiguousarray(np.load(dataset_path[2]).astype('float32'))
         index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
         index_brute.add(search_dataset)
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
