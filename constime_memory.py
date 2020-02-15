@@ -45,7 +45,7 @@ dataset_list = [
 algorithm_list = ['HNSW', 'LSH', 'IVFPQ', 'VP-tree']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
-param_list = {'HNSW': [64, 600, 300], 'LSH': [1024], 'IVFPQ': [400, 480, 200], 'VP-Tree': [100]}
+param_list = {'HNSW': [64, 600, 300], 'LSH': [1024], 'IVFPQ': [400, 480, 200], 'Annoy': [100]}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 @profile(precision=4,stream=open('./memory_profiler.log','a'))
@@ -85,7 +85,7 @@ def annoy_build(dataset):
     instances = dataset[1].shape[0]
     assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
     time_start = time.time()
-    param = param_list['annoy']
+    param = param_list['Annoy']
     assert len(param) == 1
     index = AnnoyIndex(dimension, 'euclidean')
     for i in range(instances):
