@@ -1,6 +1,5 @@
 # This is the code for testing the construction time, memory consumption and recall, qps, distance ratio
 import faiss
-import nmslib
 import numpy as np 
 from memory_profiler import profile
 import os
