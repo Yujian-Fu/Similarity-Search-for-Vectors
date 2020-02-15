@@ -1,5 +1,4 @@
 # This is the code for testing the construction time, memory consumption and recall, qps, distance ratio
-from faiss.faiss_configuration import CONFIG
 import faiss
 import nmslib
 import numpy as np 
