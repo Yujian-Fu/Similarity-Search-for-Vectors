@@ -111,6 +111,8 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
         ground_truth = truth_ID[i, :]
         search_result = ID[i, :]
         recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
+        if recall_record.contains(-1):
+            print(record)
 
     recall = np.mean(recall_record)
 
@@ -118,7 +120,7 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
     dis_record = np.mean(dis_matrix, axis = 0)
     dis_ratio = np.mean(dis_matrix)
     if dis_ratio < 0.5 or dis_ratio > 10:
-        print('there seems to be a distance error, ', dis[-1, :], truth_dis[-1, :], dis_matrix[-1, :], dis_record) 
+        #print('there seems to be a distance error, ', dis[-1, :], truth_dis[-1, :], dis_matrix[-1, :], dis_record) 
     return recall, dis_ratio, recall_record, dis_record, query_length/(time_end - time_start)
 
 
