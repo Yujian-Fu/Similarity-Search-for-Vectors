@@ -184,7 +184,9 @@ def exps():
         annoy_test(dataset_path)
         for algorithm in algorithm_list:
             faiss_test (algorithm, dataset_path)
-            
+
+exps()
+
 
 
 
