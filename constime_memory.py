@@ -45,7 +45,7 @@ dataset_list = [
 algorithm_list = ['HNSW', 'LSH', 'IVFPQ', 'VP-tree']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
-param_list = {'HNSW': [], 'LSH': [], 'IVFPQ': [], 'VP-Tree': []}
+param_list = {'HNSW': [64, 600, 300], 'LSH': [1024], 'IVFPQ': [400, 480, 200], 'VP-Tree': [100]}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 @profile(precision=4,stream=open('./memory_profiler.log','a'))
@@ -140,9 +140,9 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
     return recall, dis_ratio, recall_record, dis_record, query_length/(search_time)
 
 
-def record(save_path, recall, dis_ratio, recall_record, dis_record, qps, k):
+def record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k):
     record_file = open(os.path.join(save_path, 'record.txt'), 'a')
-    record_file.write('the recall, dis_ratio, qps with k = ', str(k) + ' is '+ str(recall)+' '+str(dis_ratio)+' '+str(qps))
+    record_file.write('the constime: '+str(cons_time)+' the recall, dis_ratio, qps with k = ', str(k) + ' is '+ str(recall)+' '+str(dis_ratio)+' '+str(qps))
     np.save(os.path.join(save_path, 'recall_record.npy'), recall_record)
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
@@ -153,14 +153,15 @@ def faiss_test(algorithm, dataset_path):
     save_path = os.path.join(save_dir, dataset_name, algorithm)
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
-    index = faiss_build(algorithm, dataset)
+    index, cons_time = faiss_build(algorithm, dataset)
     for k in K_list:
         search_dataset = np.load(dataset_list[0])
         query_dataset = np.load(dataset_list[1])
         index_brute = faiss.IndexFlatL2(search_dataset.shape[0])
         truth_ID, truth_dis = index_brute.search(query_dataset, K_list[-1])
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
-        record(save_path, recall, dis_ratio, recall_record, dis_record, qps, k)
+        print('faiss with algorithm '+str(algorithm))+ ' k: ' + str(k) + ' recall: '+str(recall)
+        record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
@@ -169,14 +170,14 @@ def annoy_test(dataset_path):
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
 
-    index = annoy_build(dataset)
+    index, cons_time = annoy_build(dataset)
     for k in K_list:
         search_dataset = np.load(dataset_list[0])
         query_dataset = np.load(dataset_list[1])
         index_brute = faiss.IndexFlatL2(search_dataset.shape[0])
         truth_ID, truth_dis = index_brute.search(query_dataset, K_list[-1])
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
-        record(save_path, recall, dis_ratio, recall_record, dis_record, qps, k)
+        record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
 
 def exps():
