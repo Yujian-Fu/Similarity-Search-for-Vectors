@@ -156,7 +156,7 @@ def record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, q
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+#@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.load(dataset_path[i]) for i in range(3)]
@@ -174,7 +174,7 @@ def faiss_test(algorithm, dataset_path):
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+#@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.load(dataset_path[i]) for i in range(3)]
