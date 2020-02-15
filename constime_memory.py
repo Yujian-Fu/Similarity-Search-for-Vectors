@@ -79,6 +79,21 @@ def faiss_build(algorithm, dataset):
     return index, time_end-time_start
         
 
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
+def annoy_build(dataset):
+    dimension = dataset[0].shape[1]
+    instances = dataset[1].shape[0]
+    assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
+    time_start = time.time()
+    param = param_list['annoy']
+    assert len(param) == 1
+    index = AnnoyIndex(dimension, 'euclidean')
+    for i in range(instances):
+        index.add(i, dataset[1][i, :])
+    time_end = time.time()
+    return index, time_end - time_start
+
+
 def faiss_search(index, dataset, truth_ID, truth_dis, k):
     query_length = dataset[2].shape[0]
 
@@ -100,21 +115,6 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
     dis_record = np.mean(dis_matrix, axis = 0)
     dis_ratio = np.mean(dis_matrix)
     return recall, dis_ratio, recall_record, dis_record, query_length/(time_end - time_start)
-
-
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
-def annoy_build(dataset):
-    dimension = dataset[0].shape[1]
-    instances = dataset[1].shape[0]
-    assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
-    time_start = time.time()
-    param = param_list['annoy']
-    assert len(param) == 1
-    index = AnnoyIndex(dimension, 'euclidean')
-    for i in range(instances):
-        index.add(i, dataset[1][i, :])
-    time_end = time.time()
-    return index, time_end - time_start
 
 
 def annoy_search(index, dataset, truth_ID, truth_dis, k):
