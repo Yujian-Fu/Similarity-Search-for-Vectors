@@ -168,7 +168,7 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
 
 def record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k):
     record_file = open(os.path.join(save_path, 'record.txt'), 'a')
-    record_file.write('the constime: '+str(cons_time)+' the recall, dis_ratio, qps with k = '+ str(k) + ' is '+ str(recall)+' '+str(dis_ratio)+' '+str(qps))
+    record_file.write('the constime: '+str(cons_time)+' the recall, dis_ratio, qps with k = '+ str(k) + ' is '+ str(recall)+' '+str(dis_ratio)+' '+str(qps)+'\n')
     np.save(os.path.join(save_path, 'recall_record.npy'), recall_record)
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
