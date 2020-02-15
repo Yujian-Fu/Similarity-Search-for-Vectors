@@ -111,8 +111,8 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
         ground_truth = truth_ID[i, :]
         search_result = ID[i, :]
         recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
-        if recall_record.contains(-1):
-            print(record)
+        if (-1 in recall_record):
+            print(recall_record)
 
     recall = np.mean(recall_record)
 
