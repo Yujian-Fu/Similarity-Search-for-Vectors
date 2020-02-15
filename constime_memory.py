@@ -1,5 +1,5 @@
-from faiss.faiss_configuration import CONFIG
 # This is the code for testing the construction time, memory consumption and recall, qps, distance ratio
+from faiss.faiss_configuration import CONFIG
 import faiss
 import nmslib
 import numpy as np 
@@ -36,15 +36,15 @@ dataset_list = [
     ],
 
     [
-        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/Deep10M_train.npy',
-        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/Deep10M.npy',
-        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/Deep10M_query.npy'
+        '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_train.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M.npy',
+        '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_query.npy'
     ]
     ]
-    
+
 algorithm_list = ['HNSW', 'LSH', 'IVFPQ', 'VP-tree']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500]
-save_dir = '/home/y/yujianfu/similarity_search/datasets/'
+save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
 param_list = {'HNSW': [], 'LSH': [], 'IVFPQ': [], 'VP-Tree': []}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
