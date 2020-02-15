@@ -94,6 +94,8 @@ def annoy_build(dataset):
     index = AnnoyIndex(dimension, 'euclidean')
     for i in range(instances):
         index.add_item(i, dataset[1][i, :])
+        if i % 10000 == 0:
+            print('annoy now finished ', i, ' instances ')
     index.build(param[0])
     time_end = time.time()
     return index, time_end - time_start
@@ -163,7 +165,10 @@ def faiss_test(algorithm, dataset_path):
     save_path = os.path.join(save_dir, dataset_name, algorithm)
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
+    
+    print('start building faiss index with dataset ', dataset_name, ' and algorithm', algorithm)
     index, cons_time = faiss_build(algorithm, dataset)
+    print('finish build faiss index')
     for k in K_list:
         search_dataset = np.load(dataset_path[1])
         query_dataset = np.load(dataset_path[2])
@@ -182,7 +187,9 @@ def annoy_test(dataset_path):
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
 
+    print('start building annoy index with dataset ', dataset_name)
     index, cons_time = annoy_build(dataset)
+    print('finish building annoy index')
     for k in K_list:
         search_dataset = np.load(dataset_path[1])
         query_dataset = np.load(dataset_path[2])
