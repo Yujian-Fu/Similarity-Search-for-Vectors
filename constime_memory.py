@@ -46,7 +46,7 @@ save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
 param_list = {'HNSW': [64, 600, 300], 'LSH': [1024], 'IVFPQ': [400, 480, 200], 'Annoy': [100]}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+
 def faiss_build(algorithm, dataset):
     dimension = dataset[0].shape[1]
     assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
@@ -77,7 +77,6 @@ def faiss_build(algorithm, dataset):
     return index, time_end-time_start
         
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_build(dataset):
     dimension = dataset[0].shape[1]
     instances = dataset[1].shape[0]
@@ -147,6 +146,7 @@ def record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, q
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.load(dataset_path[i]) for i in range(3)]
@@ -164,6 +164,7 @@ def faiss_test(algorithm, dataset_path):
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.load(dataset_path[i]) for i in range(3)]
