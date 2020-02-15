@@ -128,8 +128,8 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
         search_time += time.time() - time_start
         ground_truth = truth_ID[i, :]
         recall_record[i,0] = len(set(ground_truth) & set(ID)) / len(set(ground_truth))
-        print(np.array(dis), truth_dis[i, :], np.square(np.array(dis)) / truth_dis[i, :], ground_truth, ID)
-        print(dataset[2][i,:], dataset[1][truth_ID[0,0],:], dataset[1][ID[0],:])
+        #print(np.array(dis), truth_dis[i, :], np.square(np.array(dis)) / truth_dis[i, :], ground_truth, ID)
+        #print(dataset[2][i,:], dataset[1][truth_ID[0,0],:], dataset[1][ID[0],:])
         dis_record += np.square(np.array(dis)) / truth_dis[i, :]
 
     dis_record /= query_length
@@ -141,7 +141,7 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
 
 def record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k):
     record_file = open(os.path.join(save_path, 'record.txt'), 'a')
-    record_file.write('the constime: '+str(cons_time)+' the recall, dis_ratio, qps with k = ', str(k) + ' is '+ str(recall)+' '+str(dis_ratio)+' '+str(qps))
+    record_file.write('the constime: '+str(cons_time)+' the recall, dis_ratio, qps with k = '+ str(k) + ' is '+ str(recall)+' '+str(dis_ratio)+' '+str(qps))
     np.save(os.path.join(save_path, 'recall_record.npy'), recall_record)
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
