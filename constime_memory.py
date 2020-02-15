@@ -72,10 +72,11 @@ def faiss_build(algorithm, dataset):
         assert len(param) == 3
         index = faiss.IndexIVFPQ(quantilizer, dimension, param[0], param[1], 8)
         index.nprobe = param[2]
+        assert not index.is_trained 
     else:
         print('the algorithm input is wrong! ', algorithm)
 
-    assert not index.is_trained 
+    
     index.train(dataset[0])
     assert index.is_trained
     index.add(dataset[1])
@@ -112,7 +113,6 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
         recall_record[i,0] = len(set(ground_truth) & set(search_result)) / len(set(ground_truth))
 
     recall = np.mean(recall_record)
-    print('the recall for ', str(k), ' is ', str(recall))
 
     dis_matrix = dis / truth_dis
     dis_record = np.mean(dis_matrix, axis = 0)
