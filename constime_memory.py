@@ -57,6 +57,9 @@ def faiss_build(algorithm, dataset):
         index = faiss.IndexHNSWFlat(dimension, param[0])
         index.hnsw.efConstruction = param[1]
         index.hnsw.edSearch = param[2]
+        index.add(dataset[1])
+        time_end = time.time()
+        return index, time_end-time_start
 
     elif algorithm == 'LSH':
         param = param_list['LSH']
@@ -69,6 +72,7 @@ def faiss_build(algorithm, dataset):
         assert len(param) == 3
         index = faiss.IndexIVFPQ(quantilizer, dimension, param[0], param[1], 8)
         index.nprobe = param[2]
+
     assert not index.is_trained 
     index.train(dataset[0])
     assert index.is_trained
