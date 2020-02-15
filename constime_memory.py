@@ -120,7 +120,7 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
     dis_record = np.mean(dis_matrix, axis = 0)
     dis_ratio = np.mean(dis_matrix)
     if dis_ratio > 10:
-       print('there seems to be a distance error, ', dis[dis_matrix > 10], truth_dis[dis_matrix>10], dis_matrix[dis_matrix>10], dis_record) 
+       print('there seems to be a distance error, ', dis[dis_matrix > 10], truth_dis[dis_matrix>10], dis_matrix[dis_matrix>10], ID[dis_matrix>10]) 
     return recall, dis_ratio, recall_record, dis_record, query_length/(time_end - time_start)
 
 
