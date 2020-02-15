@@ -129,7 +129,7 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
         ground_truth = truth_ID[i, :]
         recall_record[i,0] = len(set(ground_truth) & set(ID)) / len(set(ground_truth))
         print(np.array(dis), truth_dis[i, :], np.array(dis) / truth_dis[i, :])
-        dis_record += np.array(dis) / truth_dis[i, :]
+        dis_record += np.square(np.array(dis)) / truth_dis[i, :]
 
     dis_record /= query_length
     dis_ratio = np.mean(dis_record)
