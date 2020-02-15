@@ -1,0 +1,12 @@
+Filename: c:\Users\AA\Documents\similarity_search\Similarity-Search-for-Vectors\faiss\memory_profiler_test.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     3  15.7227 MiB  15.7227 MiB   @profile(precision=4,stream=open('memory_profiler.log','w+'))
+     4                             def test1():
+     5  15.7305 MiB   0.0078 MiB       c = 0
+     6  15.7305 MiB   0.0000 MiB       for item in range(100000):
+     7  15.7305 MiB   0.0000 MiB           c += 1
+     8  15.7305 MiB   0.0000 MiB       print(c)
+
+

@@ -1,10 +1,4 @@
 {
-<<<<<<< HEAD
-    "python.pythonPath": "/home/yujian/anaconda3/envs/similarity_search_gpu/bin/python",
+    "python.pythonPath": "E:\\Anaconda3\\envs\\yujian_env37\\python.exe",
     "python.formatting.provider": "yapf"
-=======
-    "python.pythonPath": "C:\\Users\\workshop\\Anaconda3\\envs\\similarity_search\\python.exe",
-    "python.formatting.provider": "yapf",
-    "git.ignoreLimitWarning": true
->>>>>>> c9960cce54bbb5e1901ad8ce66462980f0e7f82d
 }
