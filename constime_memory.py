@@ -40,7 +40,7 @@ dataset_list = [
     ]
     ]
 
-algorithm_list = ['HNSW', 'LSH', 'IVFPQ', 'VP-tree']
+algorithm_list = ['HNSW', 'LSH', 'IVFPQ']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
 param_list = {'HNSW': [64, 600, 300], 'LSH': [1024], 'IVFPQ': [400, 480, 200], 'Annoy': [100]}
@@ -72,6 +72,8 @@ def faiss_build(algorithm, dataset):
         assert len(param) == 3
         index = faiss.IndexIVFPQ(quantilizer, dimension, param[0], param[1], 8)
         index.nprobe = param[2]
+    else:
+        print('the algorithm input is wrong! ', algorithm)
 
     assert not index.is_trained 
     index.train(dataset[0])
