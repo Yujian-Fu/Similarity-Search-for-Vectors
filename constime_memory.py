@@ -121,17 +121,17 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
     recall_record = np.zeros((query_length, 1))
     dis_record = np.array((1, k))
 
-    dis_ratio = np.zeros((1, k))
     for i in range(query_length):
         time_start = time.time()
         [ID, dis] = index.get_nns_by_vector(dataset[2][i, :], k, include_distances = True)
         search_time += time.time() - time_start
         ground_truth = truth_ID[i, :]
         recall_record[i,0] = len(set(ground_truth) & set(ID)) / len(set(ground_truth))
-        dis_ratio += np.array(dis) / truth_dis[i, :]
+        print(np.array(dis), truth_dis[i, :], np.array(dis) / truth_dis[i, :])
+        dis_record += np.array(dis) / truth_dis[i, :]
 
     dis_record /= query_length
-    dis_ratio = np.mean(dis)
+    dis_ratio = np.mean(dis_record)
     recall = np.mean(recall_record)
 
     return recall, dis_ratio, recall_record, dis_record, query_length/(search_time)
