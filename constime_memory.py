@@ -55,8 +55,8 @@ def faiss_build(algorithm, dataset):
         param = param_list['HNSW']
         assert len(param) == 3
         index = faiss.IndexHNSWFlat(dimension, param[0])
-        index.hnsw.efConstruction = params[1]
-        index.hnsw.edSearch = params[2]
+        index.hnsw.efConstruction = param[1]
+        index.hnsw.edSearch = param[2]
 
     elif algorithm == 'LSH':
         param = param_list['LSH']
