@@ -155,7 +155,8 @@ def faiss_test(algorithm, dataset_path):
     for k in K_list:
         search_dataset = np.load(dataset_path[0])
         query_dataset = np.load(dataset_path[1])
-        index_brute = faiss.IndexFlatL2(search_dataset.shape[0])
+        index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
+        index_brute.add(search_dataset)
         truth_ID, truth_dis = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
@@ -172,7 +173,8 @@ def annoy_test(dataset_path):
     for k in K_list:
         search_dataset = np.load(dataset_path[0])
         query_dataset = np.load(dataset_path[1])
-        index_brute = faiss.IndexFlatL2(search_dataset.shape[0])
+        index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
+        index_brute.add(search_dataset)
         truth_ID, truth_dis = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
