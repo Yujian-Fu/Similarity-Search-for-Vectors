@@ -155,10 +155,10 @@ def faiss_test(algorithm, dataset_path):
         os.makedirs(save_path)
     index, cons_time = faiss_build(algorithm, dataset)
     for k in K_list:
-        search_dataset = np.load(dataset_list[0])
-        query_dataset = np.load(dataset_list[1])
+        search_dataset = np.load(dataset[0])
+        query_dataset = np.load(dataset[1])
         index_brute = faiss.IndexFlatL2(search_dataset.shape[0])
-        truth_ID, truth_dis = index_brute.search(query_dataset, K_list[-1])
+        truth_ID, truth_dis = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm))+ ' k: ' + str(k) + ' recall: '+str(recall)
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
@@ -172,10 +172,10 @@ def annoy_test(dataset_path):
 
     index, cons_time = annoy_build(dataset)
     for k in K_list:
-        search_dataset = np.load(dataset_list[0])
-        query_dataset = np.load(dataset_list[1])
+        search_dataset = np.load(dataset[0])
+        query_dataset = np.load(dataset[1])
         index_brute = faiss.IndexFlatL2(search_dataset.shape[0])
-        truth_ID, truth_dis = index_brute.search(query_dataset, K_list[-1])
+        truth_ID, truth_dis = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
