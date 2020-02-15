@@ -47,7 +47,21 @@ param_list = {'HNSW': [64, 600, 300], 'LSH': [512], 'IVFPQ': [400, 64, 200], 'An
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 
-def faiss_build(algorithm, dataset):
+def get_distance(dataset, ID):
+    search_dataset = dataset[1]
+    query_dataset = dataset[2]
+    dis_result = np.zeros(ID.shape)
+    k = ID.shape[1]
+    query_length = query_dataset.shape[0]
+    for i in range(query_length):
+        query_vector = query_dataset[i, :]
+        for j in range(k):
+            result_vector = search_dataset[int(ID[i, j]),:]
+            dis_result[i, j] = np.sum(np.square(query_vector - result_vector))
+    return dis_result
+
+
+def faiss_build(algorithm, dataset,):
     dimension = dataset[0].shape[1]
     assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
     time_start = time.time()
@@ -82,9 +96,9 @@ def faiss_build(algorithm, dataset):
     index.add(dataset[1])
     time_end = time.time()
     return index, time_end-time_start
-        
 
-def annoy_build(dataset):
+
+def annoy_build(dataset, dataset_name):
     dimension = dataset[0].shape[1]
     instances = dataset[1].shape[0]
     assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
@@ -98,6 +112,7 @@ def annoy_build(dataset):
             print('annoy now finished ', i, ' instances ')
     index.build(param[0])
     time_end = time.time()
+    #index.save(dataset_name+'.ann')
     return index, time_end - time_start
 
 
@@ -118,11 +133,11 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
 
     recall = np.mean(recall_record)
 
-    dis_matrix = dis / truth_dis
+    dis_matrix = get_distance(dataset, ID) / truth_dis
     dis_record = np.mean(dis_matrix, axis = 0)
     dis_ratio = np.mean(dis_matrix)
-    if dis_ratio > 10:
-       print('there seems to be a distance error, ', dis[dis_matrix > 10], truth_dis[dis_matrix>10], dis_matrix[dis_matrix>10], ID[dis_matrix>10]) 
+    #if dis_ratio > 10:
+       #print('there seems to be a distance error, ', dis[dis_matrix > 10], truth_dis[dis_matrix>10], dis_matrix[dis_matrix>10], ID[dis_matrix>10]) 
     return recall, dis_ratio, recall_record, dis_record, query_length/(time_end - time_start)
 
 
@@ -158,7 +173,7 @@ def record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, q
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
-#@profile(precision=4,stream=open('./memory_profiler.log','a'))
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.load(dataset_path[i]) for i in range(3)]
@@ -179,7 +194,7 @@ def faiss_test(algorithm, dataset_path):
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
-#@profile(precision=4,stream=open('./memory_profiler.log','a'))
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.load(dataset_path[i]) for i in range(3)]
@@ -188,7 +203,7 @@ def annoy_test(dataset_path):
         os.makedirs(save_path)
 
     print('start building annoy index with dataset ', dataset_name)
-    index, cons_time = annoy_build(dataset)
+    index, cons_time = annoy_build(dataset, dataset_name)
     print('finish building annoy index')
     for k in K_list:
         search_dataset = np.load(dataset_path[1])
