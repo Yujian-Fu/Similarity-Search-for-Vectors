@@ -121,6 +121,7 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
     recall_record = np.zeros((query_length, 1))
     dis_record = np.array((1, k))
 
+    dis_ratio = np.zeros((1, k))
     for i in range(query_length):
         time_start = time.time()
         [ID, dis] = index.get_nns_by_vector(dataset[2][i, :], k, include_distances = True)
