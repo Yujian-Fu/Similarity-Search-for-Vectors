@@ -40,7 +40,7 @@ query_set_list = [
     #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
     '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
     #'/home/y/yujianfu/similarity_search/datasets/deep1M/deep1M_query.npy',
-    #/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
+    #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
     #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT10K/SIFT10K_query.npy'
     #'/home/yujian/Downloads/similarity_search_datasets/ANN_SIFT1M/SIFT1M_query_sub.npy'
 ]
