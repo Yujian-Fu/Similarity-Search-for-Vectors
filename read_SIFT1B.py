@@ -28,7 +28,7 @@ def fvecs_read(fname):
     return ivecs_read(fname).view('float32')
 
 
-def read_SIFT1B(filename, portion = 10):
+def read_SIFT1B(filename, portion = 100):
     dataset = mmap_bvecs(filename)
     dataset = dataset[0:int(dataset.shape[0]/portion), :]
     return np.ascontiguousarray(dataset.astype('float32'))
@@ -252,9 +252,9 @@ def annoy_test(dataset_path):
 
 def exps():
     for dataset_path in dataset_list:
-        #annoy_test(dataset_path)
+        annoy_test(dataset_path)
         #faiss_test ('LSH', dataset_path)
         #faiss_test ('IVFPQ', dataset_path)
-        faiss_test ('HNSW', dataset_path)
+        #faiss_test ('HNSW', dataset_path)
         
 exps()
