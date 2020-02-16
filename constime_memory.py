@@ -41,8 +41,8 @@ dataset_list = [
     ]
     ]
 
-algorithm_list = ['HNSW', 'LSH', 'IVFPQ']
-K_list = [1, 5, 10, 20, 50, 100, 200, 500]
+algorithm_list = ['LSH','HNSW', 'IVFPQ']
+K_list = [1, 5, 10, 20, 50, 100, 200, 50, 1000]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
 param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 64, 200], 'Annoy': [100]}
 
@@ -142,6 +142,8 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
     dis_ratio = np.mean(dis_matrix)
     #if dis_ratio > 10:
        #print('there seems to be a distance error, ', dis[dis_matrix > 10], truth_dis[dis_matrix>10], dis_matrix[dis_matrix>10], ID[dis_matrix>10]) 
+    if np.isnan(dis_ratio):
+        print(dis_matrix, dis, truth_dis)
     return recall, dis_ratio, recall_record, dis_record, query_length/(time_end - time_start)
 
 
@@ -222,7 +224,7 @@ def annoy_test(dataset_path):
 
 def exps():
     for dataset_path in dataset_list:
-        annoy_test(dataset_path)
+        #annoy_test(dataset_path)
         for algorithm in algorithm_list:
             faiss_test (algorithm, dataset_path)
 
