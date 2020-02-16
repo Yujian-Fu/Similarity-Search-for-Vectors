@@ -209,6 +209,8 @@ def faiss_test(algorithm, dataset_path):
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
+    del dataset, index
+
 
 @profile(precision=4)
 def annoy_test(dataset_path):
@@ -232,7 +234,7 @@ def annoy_test(dataset_path):
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
-
+    del dataset, index
 
 def exps():
     #file = open('./memory_profiler.log', 'a')
