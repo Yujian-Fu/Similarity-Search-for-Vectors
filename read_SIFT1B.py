@@ -111,7 +111,7 @@ def annoy_build(dataset, dataset_name):
     index = AnnoyIndex(dimension, 'euclidean')
     for i in range(instances):
         index.add_item(i, dataset[1][i, :])
-        if i % 10000 == 0:
+        if i % 100000 == 0:
             print('annoy now finished ', i, ' instances ')
     index.build(param[0])
     time_end = time.time()
@@ -187,7 +187,7 @@ def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, 
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
-@profile(precision=4,stream=open('./memory_profiler_LSH_SIFT1B.log','w'))
+@profile(precision=4)
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [read_SIFT1B(dataset_path[i]) for i in range(3)]
@@ -213,12 +213,11 @@ def faiss_test(algorithm, dataset_path):
     print('finish build faiss index')
 
     for k in K_list:
-        truth_dis, truth_ID = index_brute.search(dataset[2], k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID[:, 0:k], truth_dis[:, 0:k], k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
-#@profile(precision=4,stream=open('./memory_profiler_SIFT1B.log','w'))
+@profile(precision=4)
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [read_SIFT1B(dataset_path[i]) for i in range(3)]
