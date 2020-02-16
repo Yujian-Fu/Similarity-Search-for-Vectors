@@ -142,8 +142,8 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
     dis_ratio = np.mean(dis_matrix)
     #if dis_ratio > 10:
        #print('there seems to be a distance error, ', dis[dis_matrix > 10], truth_dis[dis_matrix>10], dis_matrix[dis_matrix>10], ID[dis_matrix>10]) 
-    if np.isnan(dis_ratio):
-        print(dis_matrix, dis, truth_dis)
+    if dis_ratio < 1:
+        print(dis_record, dis_matrix, dis, truth_dis)
     return recall, dis_ratio, recall_record, dis_record, query_length/(time_end - time_start)
 
 
@@ -169,6 +169,7 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
     dis_record /= query_length
     dis_ratio = np.mean(dis_record)
     recall = np.mean(recall_record)
+
 
     return recall, dis_ratio, recall_record, dis_record, query_length/(search_time)
 
