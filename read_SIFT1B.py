@@ -184,7 +184,7 @@ def faiss_test(algorithm, dataset_path):
     index_brute = faiss.IndexFlatL2(dataset[1].shape[1])
     index_brute.add(dataset[1])
     time_end = time.time()
-    brute_file = open(os.path.join(save_dir, dataset, 'record_brute.txt'), 'w')
+    brute_file = open(os.path.join(save_dir, dataset, algorithm+ 'record_brute.txt'), 'w')
     brute_file.write('the cons time of brute force is ', str(time_end - time_start))
 
     record_file = open(os.path.join(save_path, 'record.txt'), 'w')
@@ -213,7 +213,7 @@ def annoy_test(dataset_path):
     brute_file = open(os.path.join(save_dir, dataset, 'record_brute.txt'), 'w')
     brute_file.write('the cons time of brute force is ', str(time_end - time_start))
 
-    record_file = open(os.path.join(save_path, 'record.txt'), 'w')
+    record_file = open(os.path.join(save_path, 'Annoy_record.txt'), 'w')
     print('start building annoy index with dataset ', dataset_name)
     index, cons_time = annoy_build(dataset, dataset_name)
     print('finish building annoy index')
