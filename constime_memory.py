@@ -9,6 +9,13 @@ import time
 dataset_list_ = ['SIFT10K', 'SIFT1M', 'GIST1M', 'SIFT10M', 'Deep10M']
 dataset_list = [
     [
+        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
+
+    ],
+    
+    [
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy',
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
@@ -20,12 +27,6 @@ dataset_list = [
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
     ],
 
-    [
-        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
-        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
-        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
-
-    ],
 
     [
         '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy',
