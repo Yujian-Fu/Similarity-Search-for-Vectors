@@ -189,9 +189,8 @@ def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, 
 
 #@profile(precision=4,stream=open('./memory_profiler.log','a'))
 @profile(precision=4)
-def faiss_test(algorithm, dataset_path):
+def faiss_test(algorithm, dataset):
     dataset_name = dataset_path[0].split('/')[-2]
-    dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
     save_path = os.path.join(save_dir, dataset_name, algorithm)
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
@@ -209,13 +208,13 @@ def faiss_test(algorithm, dataset_path):
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
-    del dataset, index
+    del index
 
 
 @profile(precision=4)
-def annoy_test(dataset_path):
+def annoy_test(dataset):
     dataset_name = dataset_path[0].split('/')[-2]
-    dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
+    
     save_path = os.path.join(save_dir, dataset_name, 'annoy')
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
@@ -234,16 +233,18 @@ def annoy_test(dataset_path):
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
-    del dataset, index
+    del index
 
 def exps():
     #file = open('./memory_profiler.log', 'a')
     for dataset_path in dataset_list:
-        annoy_test(dataset_path)
+        dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
+        annoy_test(dataset)
         #file.write('now processing annoy with dataset'+dataset_path[0].split('/')[-2])
-        for algorithm in algorithm_list:
-            faiss_test (algorithm, dataset_path)
-            #file.write('now processing faiss '+algorithm+' with dataset'+dataset_path[0].split('/')[-2])
+        faiss_test ('HNSW', dataset)
+        faiss_test ('LSH', dataset)
+        faiss_test ('IVFPQ', dataset)
+        #file.write('now processing faiss '+algorithm+' with dataset'+dataset_path[0].split('/')[-2])
 
 exps()
 
