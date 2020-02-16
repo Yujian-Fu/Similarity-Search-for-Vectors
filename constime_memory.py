@@ -113,7 +113,7 @@ def annoy_build(dataset, dataset_name):
             print('annoy now finished ', i, ' instances ')
     index.build(param[0])
     time_end = time.time()
-    index.save('./'+dataset_name+'.ann')
+    #index.save('./'+dataset_name+'.ann')
     return index, time_end - time_start
 
 
@@ -179,14 +179,13 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
     return recall, dis_ratio, recall_record, dis_record, query_length/(search_time)
 
 
-def record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k):
-    record_file = open(os.path.join(save_path, 'record.txt'), 'a')
+def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k):
     record_file.write('the constime: '+str(cons_time)+' the recall, dis_ratio, qps with k = '+ str(k) + ' is '+ str(recall)+' '+str(dis_ratio)+' '+str(qps)+'\n')
     np.save(os.path.join(save_path, 'recall_record.npy'), recall_record)
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+#@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
@@ -194,6 +193,7 @@ def faiss_test(algorithm, dataset_path):
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
     
+    record_file = open(os.path.join(save_path, 'record.txt'), 'w')
     print('start building faiss index with dataset ', dataset_name, ' and algorithm', algorithm)
     index, cons_time = faiss_build(algorithm, dataset)
     print('finish build faiss index')
@@ -205,9 +205,9 @@ def faiss_test(algorithm, dataset_path):
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
-        record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
+        record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+#@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
@@ -215,6 +215,7 @@ def annoy_test(dataset_path):
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
 
+    record_file = open(os.path.join(save_path, 'record.txt'), 'w')
     print('start building annoy index with dataset ', dataset_name)
     index, cons_time = annoy_build(dataset, dataset_name)
     print('finish building annoy index')
@@ -226,7 +227,7 @@ def annoy_test(dataset_path):
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
-        record(save_path, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
+        record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
 
 def exps():
