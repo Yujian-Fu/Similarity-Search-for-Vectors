@@ -1,5 +1,5 @@
 import numpy as np
-
+'''
 def fvecs_read(filename):
     ffile = np.fromfile(filename, dtype = np.float32)
     if ffile.size == 0:
@@ -12,7 +12,16 @@ def fvecs_read(filename):
     ffile = ffile[:, 1:]
     ffile = ffile.copy()
     return ffile
+'''
 
+def ivecs_read(fname):
+    a = np.fromfile(fname, dtype='int32')
+    d = a[0]
+    return a.reshape(-1, d + 1)[:, 1:].copy()
+
+
+def fvecs_read(fname):
+    return ivecs_read(fname).view('float32')
 
 
 
