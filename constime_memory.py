@@ -133,7 +133,10 @@ def faiss_search(index, dataset, truth_ID, truth_dis, k):
 
     recall = np.mean(recall_record)
 
-    dis_matrix = get_distance(dataset, ID) / truth_dis
+    dis = get_distance(dataset, ID)
+    dis_matrix = dis / truth_dis
+
+    dis_matrix[np.isnan(dis_matrix)] = 1.0
     dis_record = np.mean(dis_matrix, axis = 0)
     dis_ratio = np.mean(dis_matrix)
     #if dis_ratio > 10:
