@@ -24,7 +24,7 @@ def read_SIFT1B(filename):
 
 dataset_list = [
     [
-        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1B/lean.bvecs',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1B/learn.bvecs',
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1B/1milliard.p1.siftbin',
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1B/queries.bvecs'
     ]

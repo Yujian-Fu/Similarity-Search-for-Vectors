@@ -8,6 +8,31 @@ import time
 
 dataset_list_ = ['SIFT10K', 'SIFT1M', 'GIST1M', 'SIFT10M', 'Deep10M']
 dataset_list = [
+    [
+        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
+
+    ],
+
+    [
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
+    ],
+
+    [
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_base.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
+    ],
+
+
+    [
+        '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy',
+        '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
+        '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
+    ],
 
     [
         '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_train.npy',
@@ -19,7 +44,7 @@ dataset_list = [
 algorithm_list = ['LSH','HNSW', 'IVFPQ']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500, 1000]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
-param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 48, 200], 'Annoy': [100]}
+param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 64, 200], 'Annoy': [100]}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 
@@ -207,9 +232,9 @@ def annoy_test(dataset_path):
 
 def exps():
     for dataset_path in dataset_list:
-        # annoy_test(dataset_path)
-        # for algorithm in algorithm_list:
-        faiss_test ('IVFPQ', dataset_path)
+        annoy_test(dataset_path)
+        for algorithm in algorithm_list:
+            faiss_test (algorithm, dataset_path)
 
 exps()
 
