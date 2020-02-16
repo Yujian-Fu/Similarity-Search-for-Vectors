@@ -14,7 +14,7 @@ dataset_list = [
         '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
 
     ],
-    
+
     [
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy',

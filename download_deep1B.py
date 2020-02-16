@@ -3,7 +3,7 @@ import subprocess
 yadiskLink = "https://yadi.sk/d/11eDCm7Dsn9GA"
 
 # download base files
-for i in xrange(37):
+for i in xrange(1:2):
     command = 'curl ' + '"https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key=' \
             + yadiskLink + '&path=/base/base_' + str(i).zfill(2) + '"'
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
