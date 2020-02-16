@@ -14,7 +14,7 @@ for i in xrange(37):
     process = subprocess.Popen(wgetCommand, stdin=subprocess.PIPE, shell=True)
     process.stdin.write('e')
     process.wait()
-
+'''
 # download learn files
 for i in xrange(14):
     command = 'curl ' + '"https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key=' \
@@ -27,3 +27,4 @@ for i in xrange(14):
     process = subprocess.Popen(wgetCommand, stdin=subprocess.PIPE, shell=True)
     process.stdin.write('e')
     process.wait()
+'''
