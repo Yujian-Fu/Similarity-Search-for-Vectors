@@ -113,7 +113,7 @@ def annoy_build(dataset, dataset_name):
             print('annoy now finished ', i, ' instances ')
     index.build(param[0])
     time_end = time.time()
-    #index.save('./'+dataset_name+'.ann')
+    index.save('./'+dataset_name+'.ann')
     return index, time_end - time_start
 
 
