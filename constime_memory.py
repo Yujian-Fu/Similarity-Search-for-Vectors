@@ -8,6 +8,7 @@ import time
 
 dataset_list_ = ['SIFT10K', 'SIFT1M', 'GIST1M', 'SIFT10M', 'Deep10M']
 dataset_list = [
+    '''
     [
         '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
         '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
@@ -33,6 +34,7 @@ dataset_list = [
         '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
         '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
     ],
+    '''
 
     [
         '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_train.npy',
@@ -232,9 +234,9 @@ def annoy_test(dataset_path):
 
 def exps():
     for dataset_path in dataset_list:
-        annoy_test(dataset_path)
-        for algorithm in algorithm_list:
-            faiss_test (algorithm, dataset_path)
+        # annoy_test(dataset_path)
+        # for algorithm in algorithm_list:
+        faiss_test ('IVFPQ', dataset_path)
 
 exps()
 
