@@ -191,6 +191,7 @@ def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, 
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [read_SIFT1B(dataset_path[i]) for i in range(3)]
+    print('now processing dataset with scale ', dataset[0].shape)
     save_path = os.path.join(save_dir, dataset_name, algorithm)
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
@@ -221,6 +222,7 @@ def faiss_test(algorithm, dataset_path):
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [read_SIFT1B(dataset_path[i]) for i in range(3)]
+    print('now processing dataset with scale ', dataset[0].shape)
     save_path = os.path.join(save_dir, dataset_name, 'annoy')
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
