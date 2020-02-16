@@ -187,8 +187,9 @@ def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, 
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+
 def faiss_test(algorithm, dataset_path):
+    @profile(precision=4,stream=open('./memory_profiler.log','a'))
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
     save_path = os.path.join(save_dir, dataset_name, algorithm)
@@ -199,18 +200,19 @@ def faiss_test(algorithm, dataset_path):
     print('start building faiss index with dataset ', dataset_name, ' and algorithm', algorithm)
     index, cons_time = faiss_build(algorithm, dataset)
     print('finish build faiss index')
+    search_dataset = dataset[1]
+    query_dataset = dataset[2]
+    index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
+    index_brute.add(search_dataset)
     for k in K_list:
-        search_dataset = np.ascontiguousarray(np.load(dataset_path[1]).astype('float32'))
-        query_dataset = np.ascontiguousarray(np.load(dataset_path[2]).astype('float32'))
-        index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
-        index_brute.add(search_dataset)
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+
 def annoy_test(dataset_path):
+    @profile(precision=4,stream=open('./memory_profiler.log','a'))
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
     save_path = os.path.join(save_dir, dataset_name, 'annoy')
@@ -221,11 +223,12 @@ def annoy_test(dataset_path):
     print('start building annoy index with dataset ', dataset_name)
     index, cons_time = annoy_build(dataset, dataset_name)
     print('finish building annoy index')
-    for k in K_list:
-        search_dataset = np.ascontiguousarray(np.load(dataset_path[1]).astype('float32'))
-        query_dataset = np.ascontiguousarray(np.load(dataset_path[2]).astype('float32'))
-        index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
-        index_brute.add(search_dataset)
+    search_dataset = dataset[1]
+    query_dataset = dataset[2]
+    index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
+    index_brute.add(search_dataset)
+    
+    for k in K_list: 
         truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
