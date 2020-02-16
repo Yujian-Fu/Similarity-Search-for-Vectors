@@ -15,5 +15,5 @@ def read_deep1B(scale_param):
             name = 'base_0' + str(j)
         b = np.fromfile(os.path.join(fname, name), dtype='int32')
         a = np.append(a, b)
-    return a[0:dimension+1*scale].reshape(-1, dimension+1)[ : , 1:].copy().view('float32')
+    return a[0:(dimension+1)*scale].reshape(-1, dimension+1)[ : , 1:].copy().view('float32')
 
