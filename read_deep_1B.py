@@ -10,6 +10,7 @@ def read_deep1B(scale_param):
     a = np.fromfile(os.path.join(fname, 'base_00'), dtype='int32')
     data_length = a.shape[0]
     number_of_file = int((dimension+1) * scale / data_length) + 1
+    print('this dataset requires ', str(number_of_file), ' files with ', str(data_length), ' data point in each file')
     for j in (1, number_of_file):
         if j < 10:
             name = 'base_0' + str(j)
