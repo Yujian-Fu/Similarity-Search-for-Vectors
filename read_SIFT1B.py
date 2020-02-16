@@ -19,7 +19,7 @@ def mmap_bvecs(fname):
     return x.reshape(-1, d + 4)[:, 4:]
     
 def read_SIFT1B(filename):
-    return np.ascontiguousarray(mmap_bvecs(filename))
+    return np.ascontiguousarray(mmap_bvecs(filename).astype('float32'))
 
 
 dataset_list = [
@@ -179,9 +179,14 @@ def faiss_test(algorithm, dataset_path):
     save_path = os.path.join(save_dir, dataset_name, algorithm)
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
-
+    
+    time_start = time.time()
     index_brute = faiss.IndexFlatL2(dataset[1].shape[1])
     index_brute.add(dataset[1])
+    time_end = time.time()
+    brute_file = open(os.path.join(save_dir, dataset, 'record_brute.txt'), 'w')
+    brute_file.write('the cons time of brute force is ', str(time_end - time_start))
+
     record_file = open(os.path.join(save_path, 'record.txt'), 'w')
     print('start building faiss index with dataset ', dataset_name, ' and algorithm', algorithm)
     index, cons_time = faiss_build(algorithm, dataset)
@@ -201,8 +206,13 @@ def annoy_test(dataset_path):
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
 
+    time_start = time.time()
     index_brute = faiss.IndexFlatL2(dataset[1].shape[1])
     index_brute.add(dataset[1])
+    time_end = time.time()
+    brute_file = open(os.path.join(save_dir, dataset, 'record_brute.txt'), 'w')
+    brute_file.write('the cons time of brute force is ', str(time_end - time_start))
+
     record_file = open(os.path.join(save_path, 'record.txt'), 'w')
     print('start building annoy index with dataset ', dataset_name)
     index, cons_time = annoy_build(dataset, dataset_name)
@@ -217,8 +227,8 @@ def annoy_test(dataset_path):
 
 def exps():
     for dataset_path in dataset_list:
-        #annoy_test(dataset_path)
-        faiss_test ('LSH', dataset_path)
+        annoy_test(dataset_path)
+        #faiss_test ('LSH', dataset_path)
         #faiss_test ('IVFPQ', dataset_path)
         #faiss_test ('HNSW', dataset_path)
         
