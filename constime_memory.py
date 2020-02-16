@@ -9,17 +9,19 @@ import time
 dataset_list_ = ['SIFT10K', 'SIFT1M', 'GIST1M', 'SIFT10M', 'Deep10M']
 dataset_list = [
     [
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy',
+        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
+    ],
+
+    [
         '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
         '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
         '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
 
     ],
 
-    [
-        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_train.npy',
-        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_base.npy',
-        '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT10K/SIFT10K_query.npy',
-    ],
+
 
     [
         '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_train.npy',
@@ -44,7 +46,7 @@ dataset_list = [
 algorithm_list = ['LSH','HNSW', 'IVFPQ']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500, 1000]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
-param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 48, 200], 'Annoy': [100]}
+param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 64, 200], 'Annoy': [100]}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 
@@ -60,7 +62,7 @@ def get_distance(dataset, ID):
     return dis_result
 
 
-def faiss_build(algorithm, dataset,):
+def faiss_build(algorithm, dataset):
     dimension = dataset[0].shape[1]
     assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
     time_start = time.time()
@@ -183,7 +185,7 @@ def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, 
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+@profile(precision=4,stream=open('./memory_profiler.log','w'))
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
@@ -203,7 +205,7 @@ def faiss_test(algorithm, dataset_path):
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+@profile(precision=4,stream=open('./memory_profiler.log','w'))
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]

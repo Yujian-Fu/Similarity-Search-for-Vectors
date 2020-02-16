@@ -17,10 +17,25 @@ def mmap_bvecs(fname):
     x = np.memmap(fname, dtype='uint8', mode='r')
     d = x[:4].view('int32')[0]
     return x.reshape(-1, d + 4)[:, 4:]
-    
-def read_SIFT1B(filename):
-    return np.ascontiguousarray(mmap_bvecs(filename).astype('float32'))
 
+def ivecs_read(fname):
+    a = np.fromfile(fname, dtype='int32')
+    d = a[0]
+    return a.reshape(-1, d + 1)[:, 1:].copy()
+
+
+def fvecs_read(fname):
+    return ivecs_read(fname).view('float32')
+
+
+def read_SIFT1B(filename, portion = 10):
+    dataset = mmap_bvecs(filename)
+    dataset = dataset[int(dataset.shape[0]/portion), :]
+    return np.ascontiguousarray(dataset.astype('float32'))
+
+
+truth_dis_path = '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1B/gnd/dis_500M.fvecs'
+truth_id_path = '/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1B/gnd/idx_500M.ivecs'
 
 dataset_list = [
     [
@@ -42,7 +57,7 @@ def get_distance(dataset, ID):
     k = ID.shape[1]
     query_length = dataset[2].shape[0]
     for i in range(query_length):
-        query_vector = datset[2][i, :]
+        query_vector = dataset[2][i, :]
         for j in range(k):
             result_vector = dataset[1][int(ID[i, j]),:]
             dis_result[i, j] = np.sum(np.square(query_vector - result_vector))
@@ -180,13 +195,18 @@ def faiss_test(algorithm, dataset_path):
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
     
+    '''
     time_start = time.time()
     index_brute = faiss.IndexFlatL2(dataset[1].shape[1])
     index_brute.add(dataset[1])
     time_end = time.time()
     brute_file = open(os.path.join(save_dir, dataset, algorithm+ 'record_brute.txt'), 'w')
     brute_file.write('the cons time of brute force is ', str(time_end - time_start))
+    '''
 
+    query_length = dataset[2].shape[0]
+    truth_dis = fvecs_read(truth_dis_path)[0:query_length, :]
+    truth_ID = ivecs_read(truth_id_path)[0:query_length, :]
     record_file = open(os.path.join(save_path, 'record.txt'), 'w')
     print('start building faiss index with dataset ', dataset_name, ' and algorithm', algorithm)
     index, cons_time = faiss_build(algorithm, dataset)
@@ -194,7 +214,7 @@ def faiss_test(algorithm, dataset_path):
 
     for k in K_list:
         truth_dis, truth_ID = index_brute.search(dataset[2], k)
-        recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
+        recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID[:, 0:k], truth_dis[:, 0:k], k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
@@ -206,29 +226,33 @@ def annoy_test(dataset_path):
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
 
+    '''
     time_start = time.time()
     index_brute = faiss.IndexFlatL2(dataset[1].shape[1])
     index_brute.add(dataset[1])
     time_end = time.time()
     brute_file = open(os.path.join(save_dir, dataset, 'record_brute.txt'), 'w')
     brute_file.write('the cons time of brute force is ', str(time_end - time_start))
+    '''
 
+    query_length = dataset[2].shape[0]
+    truth_dis = fvecs_read(truth_dis_path)[0:query_length, :]
+    truth_ID = ivecs_read(truth_id_path)[0:query_length, :]
     record_file = open(os.path.join(save_path, 'Annoy_record.txt'), 'w')
     print('start building annoy index with dataset ', dataset_name)
     index, cons_time = annoy_build(dataset, dataset_name)
     print('finish building annoy index')
 
     for k in K_list:
-        truth_dis, truth_ID = index_brute.search(dataset[2], k)
-        recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
+        recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID[:, 0:k], truth_dis[:, 0:k], k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
 
 def exps():
     for dataset_path in dataset_list:
-        #annoy_test(dataset_path)
-        faiss_test ('LSH', dataset_path)
+        annoy_test(dataset_path)
+        #faiss_test ('LSH', dataset_path)
         #faiss_test ('IVFPQ', dataset_path)
         #faiss_test ('HNSW', dataset_path)
         
