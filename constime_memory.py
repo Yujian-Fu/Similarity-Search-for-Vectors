@@ -207,7 +207,8 @@ def faiss_test(algorithm, dataset, dataset_name):
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
-    del index
+        
+    del save_path, index, cons_time, search_dataset, query_dataset, index_brute, truth_dis, truth_ID, recall, dis_ratio, recall_record, dis_record, qps
 
 
 @profile(precision=4)
@@ -230,7 +231,9 @@ def annoy_test(dataset, dataset_name):
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
-    del index
+    record_file.close()
+
+    del save_path, index, cons_time, search_dataset, query_dataset, index_brute, truth_dis, truth_ID, recall, dis_ratio, recall_record, dis_record, qps
 
 
 def exps():
