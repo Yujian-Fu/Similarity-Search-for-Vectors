@@ -189,7 +189,7 @@ def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, 
 
 #@profile(precision=4,stream=open('./memory_profiler.log','a'))
 @profile(precision=4)
-def faiss_test(algorithm, dataset):
+def faiss_test(algorithm, dataset, dataset_name):
     save_path = os.path.join(save_dir, dataset_name, algorithm)
     if not os.path.exists(os.path.join(save_path)):
         os.makedirs(save_path)
@@ -240,9 +240,9 @@ def exps():
         dataset_name = dataset_path[0].split('/')[-2]
         annoy_test(dataset, dataset_name)
         #file.write('now processing annoy with dataset'+dataset_path[0].split('/')[-2])
-        faiss_test ('HNSW', dataset)
-        faiss_test ('LSH', dataset)
-        faiss_test ('IVFPQ', dataset)
+        faiss_test ('HNSW', dataset, dataset_name)
+        faiss_test ('LSH', dataset, dataset_name)
+        faiss_test ('IVFPQ', dataset, dataset_name)
         #file.write('now processing faiss '+algorithm+' with dataset'+dataset_path[0].split('/')[-2])
 exps()
 
