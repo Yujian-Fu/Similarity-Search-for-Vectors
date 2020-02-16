@@ -19,7 +19,7 @@ def mmap_bvecs(fname):
     return x.reshape(-1, d + 4)[:, 4:]
     
 def read_SIFT1B(filename):
-    return mmap_bvecs(filename)
+    return np.ascontiguousarray(mmap_bvecs(filename))
 
 
 dataset_list = [
