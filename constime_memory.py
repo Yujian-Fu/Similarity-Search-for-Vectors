@@ -42,7 +42,7 @@ dataset_list = [
     ]
 
 algorithm_list = ['LSH','HNSW', 'IVFPQ']
-K_list = [1, 5, 10, 20, 50, 100, 200, 50, 1000]
+K_list = [1, 5, 10, 20, 50, 100, 200, 500, 1000]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
 param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 64, 200], 'Annoy': [100]}
 
@@ -165,6 +165,7 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
         for j in range(k):
             dis_record[0, j] += np.square(dis[j]) / truth_dis[i, j]
 
+    dis_record[np.isnan(dis_record)] = 1.0
     dis_record /= query_length
     dis_ratio = np.mean(dis_record)
     recall = np.mean(recall_record)
