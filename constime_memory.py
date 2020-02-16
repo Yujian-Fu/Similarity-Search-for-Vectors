@@ -169,7 +169,6 @@ def annoy_search(index, dataset, truth_ID, truth_dis, k):
         #print(np.array(dis), truth_dis[i, :], np.square(np.array(dis)) / truth_dis[i, :], ground_truth, ID)
         #print(dataset[2][i,:], dataset[1][truth_ID[0,0],:], dataset[1][ID[0],:])
         for j in range(k):
-            
             dis_record[0, j] += dis[j] / truth_dis[i, j]
 
     dis_record[np.isnan(dis_record)] = 1.0
@@ -233,7 +232,7 @@ def annoy_test(dataset_path):
 
 def exps():
     for dataset_path in dataset_list:
-        #annoy_test(dataset_path)
+        annoy_test(dataset_path)
         for algorithm in algorithm_list:
             faiss_test (algorithm, dataset_path)
 
