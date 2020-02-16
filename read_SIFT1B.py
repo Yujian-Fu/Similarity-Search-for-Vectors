@@ -28,7 +28,7 @@ def fvecs_read(fname):
     return ivecs_read(fname).view('float32')
 
 
-def read_SIFT1B(filename, portion = 100):
+def read_SIFT1B(filename, portion = 10):
     dataset = mmap_bvecs(filename)
     dataset = dataset[0:int(dataset.shape[0]/portion), :]
     return np.ascontiguousarray(dataset.astype('float32'))
