@@ -30,7 +30,7 @@ def fvecs_read(fname):
 
 def read_SIFT1B(filename, portion = 10):
     dataset = mmap_bvecs(filename)
-    dataset = dataset[int(dataset.shape[0]/portion), :]
+    dataset = dataset[0:int(dataset.shape[0]/portion), :]
     return np.ascontiguousarray(dataset.astype('float32'))
 
 
