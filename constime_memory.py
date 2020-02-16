@@ -187,7 +187,8 @@ def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, 
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+#@profile(precision=4,stream=open('./memory_profiler.log','a'))
+@profile(precision=4)
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
@@ -209,7 +210,7 @@ def faiss_test(algorithm, dataset_path):
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
-@profile(precision=4,stream=open('./memory_profiler.log','a'))
+@profile(precision=4)
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
@@ -234,13 +235,13 @@ def annoy_test(dataset_path):
 
 
 def exps():
-    file = open('./memory_profiler.log', 'a')
+    #file = open('./memory_profiler.log', 'a')
     for dataset_path in dataset_list:
         annoy_test(dataset_path)
-        file.write('now processing annoy with dataset'+dataset_path[0].split('/')[-2])
+        #file.write('now processing annoy with dataset'+dataset_path[0].split('/')[-2])
         for algorithm in algorithm_list:
             faiss_test (algorithm, dataset_path)
-            file.write('now processing faiss '+algorithm+' with dataset'+dataset_path[0].split('/')[-2])
+            #file.write('now processing faiss '+algorithm+' with dataset'+dataset_path[0].split('/')[-2])
 
 exps()
 
