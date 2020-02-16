@@ -51,18 +51,20 @@ param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 64, 200], 'A
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 
 def get_distance(dataset, ID):
+    search_dataset = dataset[1]
+    query_dataset = dataset[2]
     dis_result = np.zeros(ID.shape)
     k = ID.shape[1]
-    query_length = dataset[2].shape[0]
+    query_length = query_dataset.shape[0]
     for i in range(query_length):
-        query_vector = dataset[2][i, :]
+        query_vector = query_dataset[i, :]
         for j in range(k):
-            result_vector = dataset[1][int(ID[i, j]),:]
+            result_vector = search_dataset[int(ID[i, j]),:]
             dis_result[i, j] = np.sum(np.square(query_vector - result_vector))
     return dis_result
 
 
-def faiss_build(algorithm, dataset):
+def faiss_build(algorithm, dataset,):
     dimension = dataset[0].shape[1]
     assert dataset[0].shape[1] == dataset[1].shape[1] == dataset[2].shape[1]
     time_start = time.time()
@@ -185,7 +187,7 @@ def record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, 
     np.save(os.path.join(save_path, 'dis_record.npy'), dis_record)
 
 
-@profile(precision=4,stream=open('./memory_profiler.log','w'))
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def faiss_test(algorithm, dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
@@ -197,15 +199,17 @@ def faiss_test(algorithm, dataset_path):
     print('start building faiss index with dataset ', dataset_name, ' and algorithm', algorithm)
     index, cons_time = faiss_build(algorithm, dataset)
     print('finish build faiss index')
-    index_brute = faiss.IndexFlatL2(dataset[1].shape[1])
-    index_brute.add(dataset[2])
     for k in K_list:
-        truth_dis, truth_ID = index_brute.search(dataset[2], k)
+        search_dataset = np.ascontiguousarray(np.load(dataset_path[1]).astype('float32'))
+        query_dataset = np.ascontiguousarray(np.load(dataset_path[2]).astype('float32'))
+        index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
+        index_brute.add(search_dataset)
+        truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = faiss_search(index, dataset, truth_ID, truth_dis, k)
         print('faiss with algorithm '+str(algorithm)+ ' k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
 
-@profile(precision=4,stream=open('./memory_profiler.log','w'))
+@profile(precision=4,stream=open('./memory_profiler.log','a'))
 def annoy_test(dataset_path):
     dataset_name = dataset_path[0].split('/')[-2]
     dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
@@ -217,11 +221,12 @@ def annoy_test(dataset_path):
     print('start building annoy index with dataset ', dataset_name)
     index, cons_time = annoy_build(dataset, dataset_name)
     print('finish building annoy index')
-    index_brute = faiss.IndexFlatL2(dataset[1].shape[1])
-    index_brute.add(dataset[2])
-    
     for k in K_list:
-        truth_dis, truth_ID = index_brute.search(dataset[2], k)
+        search_dataset = np.ascontiguousarray(np.load(dataset_path[1]).astype('float32'))
+        query_dataset = np.ascontiguousarray(np.load(dataset_path[2]).astype('float32'))
+        index_brute = faiss.IndexFlatL2(search_dataset.shape[1])
+        index_brute.add(search_dataset)
+        truth_dis, truth_ID = index_brute.search(query_dataset, k)
         recall, dis_ratio, recall_record, dis_record, qps = annoy_search(index, dataset, truth_ID, truth_dis, k)
         print('Annoy with k: ' + str(k) + ' recall: '+str(recall) + ' dis_ratio: ' + str(dis_ratio))
         record(save_path, record_file, cons_time, recall, dis_ratio, recall_record, dis_record, qps, k)
