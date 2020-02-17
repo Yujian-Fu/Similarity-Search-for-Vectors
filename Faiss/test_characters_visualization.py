@@ -95,11 +95,11 @@ for dataset in dataset_list:
 '''
 
 dataset_list = [
-    #'deep1M',
-    #'GIST1M',
-    #'SIFT1M',
+    'deep1M',
+    'GIST1M',
+    'SIFT1M',
     'SIFT10K',
-    #'SIFT10M'
+    'SIFT10M'
 ]
 
 algo_list = [

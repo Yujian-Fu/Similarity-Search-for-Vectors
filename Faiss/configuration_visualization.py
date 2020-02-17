@@ -82,70 +82,100 @@ def draw_scatter_figure(performance, dataset, algo):
 
 
 dataset_list = [
-    #'deep1M',
-    #'GIST1M',
-    'SIFT1M',
-    #'SIFT10K',
-    #'SIFT10M'
+    'ANN_SIFT10K',
+    'ANN_SIFT1M',
+    'ANN_GIST1M',
+    'Deep10M',
+    'SIFT10M'
+    
+    
 ]
 
 algo_list = [
     'LSH',
     'HNSW',
-    'IVFFlat',
     'IVFPQ',
-    'PQ'
+    'annoy'
 ]
 
-record_path = '/home/yujian/Downloads/similarity_search_datasets/exp_record'
+record_path = '/home/yujian/Downloads/exp_record_Feb16_1st/'
 
+i = -1
+for algo in algo_list:
+    cons_times = []
+    x = np.arange(5)
+    bar_width = 0.1
 
-for dataset in dataset_list:
-    plt.figure()
-
-    for algo in algo_list:
+    '''
+    plt.suptitle(dataset)
+    k_list = [50,100,200,500,1000]
+    axis1 = plt.subplot(1,3,1)
+    axis2 = plt.subplot(1,3,2)
+    axis3 = plt.subplot(1,3,3)
+    axis1.set_title('recall')
+    axis2.set_title('qps')
+    axis3.set_title('dis_ratio')
+    '''
+    cons_time = []
+    for dataset in dataset_list:
         #file_path = os.path.join(record_path, algo, dataset)
-        file_path = glob.glob(os.path.join(record_path, dataset, algo, '*.txt'))
-        if file_path[0].split('/')[-1] == 'optimal_configuration.txt':
-            file_path = file_path[1]
-        else:
-            file_path = file_path[0]
+        #file_path = glob.glob(os.path.join(record_path, dataset, algo, '*.txt'))
+        record_file = os.path.join(record_path, dataset, algo, 'record.txt')
+        #if file_path[0].split('/')[-1] == 'optimal_configuration.txt':
+            #file_path = file_path[1]
+        #else:
+            #file_path = file_path[0]
         
         #'/home/yujian/Downloads/similarity_search_datasets/exp_record/SIFT10K/LSH/qps_recall_LSH.txt'
 
-        file = open(file_path, 'r')
+        file = open(record_file, 'r')
 
         content = file.read()
         content = content.split('\n')[0:-1]
         instances = len(content)
-        if instances % 4 == 0:
-            performance = np.zeros((int(instances/4), 2))
-            flag = 1
-        else:
-            performance = np.zeros((int(instances/3), 2))
-            flag = 0
+        cons_time.append(float(content[0].split(' ')[2]))
+    
+    print(x, bar_width, cons_time)
+    plt.bar(x+i*bar_width, cons_time, bar_width, label = algo)
+    i += 1
 
-        cons_length = len(content[0].split(' '))
-        for i in range(instances):
-            line = content[i].split(' ')
-            if len(line) > cons_length:
-                recall = float(line[-3])
-                qps = float(line[-1])
-                k = int(line[-5])
-                if k == 500:
-                    if flag == 1:
-                        performance[int(i/4), 0] = recall
-                        performance[int(i/4), 1] = qps
-                    elif flag == 0:
-                        performance[int(i/3)-1, 0] = recall
-                        performance[int(i/3)-1, 1] = qps
+plt.legend()
+plt.xticks(x + bar_width / 4, dataset_list)
+plt.yscale('log') 
+plt.title('construction time')
+plt.show()
+'''
+        recall = []
+        qps = []
+        dis_ratio = []
+
+        for i in range(4,instances):
+            each_line = content[i].split(' ')
+            recall.append(float(each_line[-3]))
+            qps.append(float(each_line[-1]))
+            dis_ratio.append(float(each_line[-2]))
+        
+        
+        axis1.plot(k_list, recall, label = algo)
+        axis1.set_xlabel('K')
+        axis2.plot(k_list, qps, label = algo)
+        axis2.set_xlabel('K')
+        axis3.plot(k_list, dis_ratio, label = algo)
+        axis3.set_xlabel('K')
+
+
+    plt.legend(loc = 'upper right')
+    #plt.savefig(os.path.join(record_path, dataset,'performance.png'))
+    plt.show()
+    '''
         
         #draw_scatter_figure(performance, dataset, algo)
 
-        index = get_optimal(performance)
+        #index = get_optimal(performance)
 
 
-        optimal_setting = performance[index, :]
+        #optimal_setting = performance[index, :]
+'''
         new_file = open(os.path.join(record_path, dataset, algo,'optimal_configuration.txt'), 'w')
         for i in range(len(index)):
             new_file.write(content[index[i]]+'\n')
@@ -166,7 +196,7 @@ for dataset in dataset_list:
     plt.title('configuration skyline (k = 500)')
     plt.show()
     #plt.savefig(os.path.join(record_path, dataset, 'configuration_skyline.png'))
-
+    '''
 
 
 

@@ -21,20 +21,20 @@ dataset_list = [
         #'/home/y/yujianfu/similarity_search/datasets/ANN_SIFT1M/SIFT1M_query_sub.npy',
    # ],
 
-    [
-        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
-        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
-        '/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
+    #[
+        #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_learn.npy',
+        #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_base.npy',
+        #'/home/y/yujianfu/similarity_search/datasets/ANN_GIST1M/GIST1M_query.npy',
 
-    ],
+    #],
 
 
 
-    [
-        '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy',
-        '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
-        '/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
-    ],
+    #[
+        #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_learn.npy',
+        #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature.npy',
+        #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
+    #],
 
     [
         '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_train.npy',
@@ -43,7 +43,7 @@ dataset_list = [
     ]
     ]
 
-algorithm_list = ['LSH','HNSW', 'IVFPQ']
+algorithm_list = ['IVFPQ']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500, 1000]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
 param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 64, 200], 'Annoy': [100]}
