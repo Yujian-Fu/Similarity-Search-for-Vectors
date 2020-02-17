@@ -241,10 +241,10 @@ def exps():
     for dataset_path in dataset_list:
         dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
         dataset_name = dataset_path[0].split('/')[-2]
-        annoy_test(dataset, dataset_name)
+        #annoy_test(dataset, dataset_name)
         #file.write('now processing annoy with dataset'+dataset_path[0].split('/')[-2])
-        faiss_test ('HNSW', dataset, dataset_name)
-        faiss_test ('LSH', dataset, dataset_name)
+        #faiss_test ('HNSW', dataset, dataset_name)
+        #faiss_test ('LSH', dataset, dataset_name)
         faiss_test ('IVFPQ', dataset, dataset_name)
         #file.write('now processing faiss '+algorithm+' with dataset'+dataset_path[0].split('/')[-2])
 exps()
