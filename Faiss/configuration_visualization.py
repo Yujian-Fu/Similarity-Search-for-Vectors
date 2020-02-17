@@ -101,10 +101,10 @@ algo_list = [
 record_path = '/home/yujian/Downloads/exp_record_Feb16_1st/'
 
 
-SIFT10K_list = []
-
-SIFT10M_list = []
-Deep10M_list = []
+SIFT10K_list = [30.73, 5.2, 26.29, 25.49]
+SIFT1M_list = [1994, ]
+SIFT10M_list = [20818, 12566, 2723, 989]
+Deep10M_list = [15757, 8748, 2438, 865]
 
 i = -1
 for algo in algo_list:
