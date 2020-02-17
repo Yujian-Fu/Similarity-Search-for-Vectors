@@ -100,6 +100,12 @@ algo_list = [
 
 record_path = '/home/yujian/Downloads/exp_record_Feb16_1st/'
 
+
+SIFT10K_list = []
+
+SIFT10M_list = []
+Deep10M_list = []
+
 i = -1
 for algo in algo_list:
     cons_times = []

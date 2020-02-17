@@ -36,17 +36,17 @@ dataset_list = [
         #'/home/y/yujianfu/similarity_search/datasets/SIFT10M/SIFT10M_feature_query.npy'
     #],
 
-    [
-        '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_train.npy',
-        '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M.npy',
-        '/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_query.npy'
-    ]
+    #[
+        #'/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_train.npy',
+        #'/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M.npy',
+        #'/home/y/yujianfu/similarity_search/datasets/Deep1B/Deep10M_query.npy'
+    #]
     ]
 
 algorithm_list = ['IVFPQ']
 K_list = [1, 5, 10, 20, 50, 100, 200, 500, 1000]
 save_dir = '/home/y/yujianfu/similarity_search/datasets/exp_record/'
-param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 48, 200], 'Annoy': [100]}
+param_list = {'HNSW': [64, 600, 300], 'LSH': [2048], 'IVFPQ': [400, 64, 200], 'Annoy': [100]}
 
 #dataset is a list contains [train_dataset, search_dataset, query_dataset]
 
@@ -241,10 +241,10 @@ def exps():
     for dataset_path in dataset_list:
         dataset = [np.ascontiguousarray(np.load(dataset_path[i]).astype('float32')) for i in range(3)]
         dataset_name = dataset_path[0].split('/')[-2]
-        #annoy_test(dataset, dataset_name)
+        annoy_test(dataset, dataset_name)
         #file.write('now processing annoy with dataset'+dataset_path[0].split('/')[-2])
-        #faiss_test ('HNSW', dataset, dataset_name)
-        #faiss_test ('LSH', dataset, dataset_name)
+        faiss_test ('HNSW', dataset, dataset_name)
+        faiss_test ('LSH', dataset, dataset_name)
         faiss_test ('IVFPQ', dataset, dataset_name)
         #file.write('now processing faiss '+algorithm+' with dataset'+dataset_path[0].split('/')[-2])
 exps()
