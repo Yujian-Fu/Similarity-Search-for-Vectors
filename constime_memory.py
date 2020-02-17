@@ -111,8 +111,8 @@ def annoy_build(dataset, dataset_name):
     index = AnnoyIndex(dimension, 'euclidean')
     for i in range(instances):
         index.add_item(i, dataset[1][i, :])
-        if i % 10000 == 0:
-            print('annoy now finished ', i, ' instances ')
+        #if i % 10000 == 0:
+            #print('annoy now finished ', i, ' instances ')
     index.build(param[0])
     time_end = time.time()
     #index.save('./'+dataset_name+'.ann')
